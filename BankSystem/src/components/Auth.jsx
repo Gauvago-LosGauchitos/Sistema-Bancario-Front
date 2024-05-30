@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { useAuth } from "../shared/hooks/useAuth.jsx";
 import { Input } from "./Input.jsx";
+import { useNavigate } from "react-router-dom";
 import { identifierValidationMessage, passwordValidationMessage, validateIdentifier, validatePassword } from "../shared/validators/validator"
+import fotoOn from '../assets/img/fotoON.png'
 
 export const Auth = () => {
-  const {login, isLoading} = useAuth()
+  const { login, isLoading } = useAuth()
+  const navigate = useNavigate()
 
   const [formData, setFormData] = useState({
     identifier: {
@@ -21,7 +24,7 @@ export const Auth = () => {
 
   const isSubmitButtonDisabled = !formData.identifier.isValid || !formData.password.isValid
 
-  const handleValueChange = (value, field) =>{
+  const handleValueChange = (value, field) => {
     setFormData((prevData) => ({
       ...prevData,
       [field]: {
@@ -33,15 +36,15 @@ export const Auth = () => {
 
   const handleValidationOnBlur = (value, field) => {
     let isValid = false
-    switch(field){
+    switch (field) {
       case "identifier":
         isValid = validateIdentifier(value)
         break
       case "password":
         isValid = validatePassword(value)
         break
-        default:
-          break
+      default:
+        break
     }
     setFormData((prevData) => ({
       ...prevData,
@@ -49,21 +52,24 @@ export const Auth = () => {
         ...prevData[field],
         isValid,
         showError: !isValid
-        }
+      }
     }))
   }
 
   const handleLogin = async (e) => {
     e.preventDefault()
     const success = await login(formData.identifier.value, formData.password.value)
+    if (success) {
+      navigate('/Home')
   }
- 
+  }
+
 
   return (
-    <div>
+    <div className="body-login">
       <div className='container'>
         <div className="signin-signup">
-        <form onSubmit={handleLogin} className="sign-in-form">
+          <form onSubmit={handleLogin} className="sign-in-form">
             <h2 className="title">Sign in</h2>
             <div className="input-field">
               <Input
@@ -93,26 +99,13 @@ export const Auth = () => {
               Login
             </button>
           </form>
-          <form action="" className="sign-up-form">
-            <h2 className="title">Sign up</h2>
-            <div className="input-field">
-              <i className="fas fa-user"></i>
-              <input type="text" placeholder="Username" />
-            </div>
-            <div className="input-field">
-              <i className="fas fa-envelope"></i>
-              <input type="text" placeholder="Email" />
-            </div>
-            <div className="input-field">
-              <i className="fas fa-lock"></i>
-              <input type="password" placeholder="Password" />
-            </div>
-            <input type="submit" value="Sign up" className="btn" />
-          </form>
         </div>
         <div className="panels-container">
-          
+          <img className="imgPanel" src={fotoOn} />
+
         </div>
+
+
       </div>
     </div>
   );
