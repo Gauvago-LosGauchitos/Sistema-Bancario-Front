@@ -7,47 +7,46 @@ export const Input = ({
     onChangeHandler,
     type,
     showErrorMessage,
+    validationMessage,
     onBlurHandler,
     textarea
 }) => {
-    const handleValueChange = (e)=>{
+    const handleValueChange = (e) => {
         onChangeHandler(e.target.value, field)
     }
 
-    const handleOnBlur = (e)=>{
+    const handleOnBlur = (e) => {
         onBlurHandler(e.target.value, field)
     }
-    
 
-  return (
-    <>
-        <div className="auth-form-label">
-            <span className='label'>{label}</span>
-        </div>
-        {
-            textarea ? (
-                <textarea 
+    return (
+        <div className="form__group field">
+            {textarea ? (
+                <textarea
+                    className="form__field"
                     type={type}
                     value={value}
                     onChange={handleValueChange}
                     onBlur={handleOnBlur}
                     rows={5}
-                    style={{maxWidth: '400px'}}
+                    placeholder={label}
                 />
             ) : (
-                <input 
+                <input
+                    className="form__field"
                     type={type}
                     value={value}
                     onChange={handleValueChange}
                     onBlur={handleOnBlur}
+                    placeholder={label}
                 />
-            )
-        }
-        <span className="auth-form-validation-message">
-            {showErrorMessage && validationMessage}
-        </span>
-    </>
-  )
+            )}
+            <label className="form__label">{label}</label>
+            {showErrorMessage && (
+                <span className="error-message">{validationMessage}</span>
+            )}
+        </div>
+    )
 }
 
 Input.propTypes = {
@@ -61,4 +60,3 @@ Input.propTypes = {
     onBlurHandler: PropTypes.func.isRequired,
     textarea: PropTypes.bool
 }
-
