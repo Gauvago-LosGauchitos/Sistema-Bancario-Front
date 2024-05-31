@@ -11,7 +11,7 @@ export const HomePage = () => {
     // Simula la carga con un timeout de 0.300 segundos
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 300);
+    }, 600);
 
     return () => clearTimeout(timer);
   }, []);

@@ -15,7 +15,7 @@ body{
 }
 .img-container{
     grid-column: 2 / 2;
-  grid-row: 1 / 2;
+  grid-row: 1;
   padding-left: 21.2%;
 }
 
