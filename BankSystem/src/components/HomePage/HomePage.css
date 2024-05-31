@@ -1,8 +1,45 @@
-.container-homePage{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f0f0f0;
+body{
+    background-color: #6b6b6b;
+}
 
+.container-home{
+    display: grid;
+    grid-template-columns: 2;
+}
+
+.text-container{
+    width: 750px;
+    grid-column: 1 / 2;
+    grid-row: 1;
+    padding-left: 50px;
+}
+.img-container{
+    grid-column: 2 / 2;
+  grid-row: 1 / 2;
+  padding-left: 21.2%;
+}
+
+.img-home-container{
+    height: 686px;
+    width: 550px;
+    
+}
+
+.titulo-container{
+    color: #ffff;
+}
+
+.parrafo-container{
+    color: #ffff;
+}
+
+.button-home{
+    border-radius: 45px ;
+    background-color: #fb9c0d;
+    border: #fb9c0d;
+    color: #fff;
+    width: 162px;
+    height: 55.45px;
+    font-weight: bold;
+    font-size: large;
 }
