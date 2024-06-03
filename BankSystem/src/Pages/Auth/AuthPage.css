@@ -14,7 +14,15 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    position: relative;
 }
+.bottom-left-image {
+    width: 70px;
+    height: auto;
+    position: absolute;
+    top: 40%; /* Ajusta según sea necesario */
+    right: 40%;  /* Ajusta según sea necesario */
+  }
 .container {
     position: relative;
     width: 70vw;

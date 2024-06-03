@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useAuth } from "../shared/hooks/useAuth.jsx";
-import { Input } from "./input.jsx";
+import { Input } from "./Input.jsx";
 import { useNavigate } from "react-router-dom";
 import { identifierValidationMessage, passwordValidationMessage, validateIdentifier, validatePassword } from "../shared/validators/validator"
 import fotoOn from '../assets/img/fotoON.png'
+import logo from '../assets/img/logo.png'
+
 
 export const Auth = () => {
   const { login, isLoading } = useAuth()
@@ -61,7 +63,7 @@ export const Auth = () => {
     const success = await login(formData.identifier.value, formData.password.value)
     if (success) {
       navigate('/Home')
-  }
+    }
   }
 
 
@@ -102,11 +104,12 @@ export const Auth = () => {
         </div>
         <div className="panels-container">
           <img className="imgPanel" src={fotoOn} />
-
         </div>
-
-
+        <div className="bottom-left-image">
+          <img src={logo} alt="Bottom Left" />
+        </div>
       </div>
+
     </div>
   );
 };
