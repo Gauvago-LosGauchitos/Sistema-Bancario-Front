@@ -8,7 +8,6 @@
   body-navbar {
     body {
       font-family: 'Roboto', sans-serif;
-      
     }
   }
   
@@ -26,7 +25,7 @@
   .btn-navbar {
     display: inline-block;
     font-size: 18px;
-    color: #aa1414;
+    color: #e20000;
     padding: 13px 20px;
     border: none;
     cursor: pointer;
@@ -99,7 +98,7 @@
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 5px rgba(209, 24, 24, 0.1);
     display: none;
     z-index: 1000;
   }
@@ -112,6 +111,7 @@
     list-style: none;
     padding: 5px 0;
   }
+
   
   .dropdown-content li {
     padding: 5px 20px;
@@ -159,7 +159,7 @@
   }
   
   #header .nav-links li {
-    display: inline-block;
+    list-style: none;
     padding: 10px 20px; 
   }
   
@@ -180,7 +180,7 @@
   
   #header .btn-navbar button {
     font-weight: 700;
-    color: #1b3039;
+    color: #4dc8eb;
     padding: 9px 25px;
     background: transparent;
     border: none;
@@ -229,7 +229,7 @@
     z-index: 1000;
   }
   
-  .dropdown.active {
+  .dropdown .active {
     display: block;
   }
   
@@ -249,7 +249,7 @@
   
   .btn-perfil{
     font-weight: 700;
-    color: #1b3039;
+    color: #1b3920;
     padding: 9px 25px;
     background: transparent;
     border: none;
@@ -262,4 +262,6 @@
     width: 100x;
     height: 50px;
   }
+
+
   

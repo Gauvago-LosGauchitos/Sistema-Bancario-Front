@@ -9,6 +9,7 @@ import { useUser } from '../../shared/hooks/useUser.jsx';
 export const NavBar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [dropdownActive, setDropdownActive] = useState(false);
+  const [dropdownActiveService, setDropdownActiveService] = useState(false);
   const navigate = useNavigate();
   const { user, loading } = useUser()
 
@@ -42,6 +43,10 @@ export const NavBar = () => {
     setDropdownActive(!dropdownActive);
   };
 
+  const toggleDropdownService = () => {
+    setDropdownActiveService(!dropdownActiveService);
+  };
+
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
@@ -54,12 +59,31 @@ export const NavBar = () => {
         <div className="btn-navbar-logo" ><button><img className='img-logito' src={logo} /></button></div>
         <nav className='container-nav'>
           <ul className="nav-links">
-            <li><a onClick={handleHome}>Home</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">About</a></li>
+            <div className="btn-navbar" >
+
+              <button onClick={handleHome}><li>Home</li></button>
+            </div>
+            <div className="btn-navbar" >
+
+              <button ><li>About</li></button>
+            </div>
+            <div className="btn-navbar" onClick={toggleDropdownService}>
+
+              <button ><li>Service</li></button>
+              <div className={`dropdown ${dropdownActiveService ? 'active' : ''}`}>
+                <ul className=".dropdown-content">
+                  <li><span className='btn-perfil'>Transacción</span></li>
+                  <li><span className='btn-perfil'>Déposito</span></li>
+                  <li><span className='btn-perfil'>Compra </span></li>
+                </ul>
+              </div>
+            </div>
           </ul>
         </nav>
         <div>
+          <div className="btn-navbar" onClick={toggleDropdown}>
+        <div>
+
           <div className="btn-navbar" onClick={toggleDropdown}>
 
             {!loading && user && user.userLogged && (
@@ -79,6 +103,19 @@ export const NavBar = () => {
 
             )}
 
+          </div>
+        </div>
+            <button><img className='imgButton' src={imgPerfil} alt="Profile" /></button>
+            <div className={`dropdown ${dropdownActive ? 'active' : ''}`}>
+              <ul className="dropdown-content">
+                <li><span className='btn-perfil'>Profile</span></li>
+                <li><span className='btn-perfil'>Settings</span></li>
+
+
+
+                <li><span className='btn-perfil' onClick={handleLogout}>LogOut</span></li>
+              </ul>
+            </div>
           </div>
         </div>
 

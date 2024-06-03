@@ -4,8 +4,23 @@ import logoFooter from '../../assets/img/logo.png';
 import facebookIcon from '../../assets/img/facebook.png';
 import twitterIcon from '../../assets/img/x.png';
 import instagramIcon from '../../assets/img/instagram.png';
+import { useNavigate } from 'react-router-dom';
 
 export const Footer = () => {
+    const navigate = useNavigate()
+
+    const handleTransfer = () => {
+        navigate('/Transfer')
+    }
+
+    const handleDeposit = () => {
+        navigate('/Deposit')
+    }
+
+    const handleBuyed = () => {
+        navigate('/Buyed')
+    }
+
     return (
         <footer className='body-footer'>
             <div className='container-footer'>
@@ -38,19 +53,17 @@ export const Footer = () => {
                     <div className='footer-widget'>
                         <h6>Quick Link</h6>
                         <ul className='links'>
-                            <li><a href="#">home</a></li>
+                            <li><a href="/Home">home</a></li>
                             <li><a href="#">about</a></li>
-                            <li><a href="#">service</a></li>
                             <li><a href="#">contact</a></li>
                         </ul>
                     </div>
                     <div className='footer-widget'>
                         <h6>Services</h6>
                         <ul className='links'>
-                            <li><a href="#">transaccion</a></li>
-                            <li><a href="#">deposito</a></li>
-                            <li><a href="#">credito</a></li>
-                            <li><a href="#">compra</a></li>
+                            <li><a onClick={handleTransfer}>Transaccion</a></li>
+                            <li><a onClick={handleDeposit}>Deposito</a></li>
+                            <li><a onClick={handleBuyed}>Compra</a></li>
                         </ul>
                     </div>
                     <div className='footer-widget'>
