@@ -7,7 +7,7 @@
 .body-footer {
     margin: 0;
     padding: 0;
-    min-height: 100vh;
+    height: 100vh;
     background-color: black;
     font-family: "Heebo", sans-serif;
     display: flex;
@@ -21,7 +21,7 @@
     background-color: black;
 }
 
-.container {
+.container-footer {
     background-color: black;
     width: 100%;
     max-width: 1320px;

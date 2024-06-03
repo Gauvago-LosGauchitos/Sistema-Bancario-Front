@@ -8,7 +8,7 @@ import instagramIcon from '../../assets/img/instagram.png';
 export const Footer = () => {
     return (
         <footer className='body-footer'>
-            <div className='container'>
+            <div className='container-footer'>
                 <div className='wrapper'>
                     <div className='footer-widget'>
                         <a href='#'>
