@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../shared/hooks/useAuth.jsx";
-import { Input } from "./input.jsx";
+import { Input } from "./Input.jsx";
 import { useNavigate } from "react-router-dom";
 import { identifierValidationMessage, passwordValidationMessage, validateIdentifier, validatePassword } from "../shared/validators/validator"
 import fotoOn from '../assets/img/fotoON.png'

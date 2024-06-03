@@ -3,12 +3,17 @@ import { useNavigate } from 'react-router-dom';
 import './Navbar.css'
 import imgPerfil from '../../assets/img/servicio-al-cliente.png';
 import logo from '../../assets/img/logo.png'
+import { useUser } from '../../shared/hooks/useUser.jsx';
+
 
 export const NavBar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [dropdownActive, setDropdownActive] = useState(false);
   const [dropdownActiveService, setDropdownActiveService] = useState(false);
   const navigate = useNavigate();
+  const { user, loading } = useUser()
+
+  console.log(user)
 
 
 
@@ -87,9 +92,30 @@ export const NavBar = () => {
           </ul>
         </nav>
         <div>
+          <div className="btn-navbar" onClick={toggleDropdown}>
+        <div>
 
           <div className="btn-navbar" onClick={toggleDropdown}>
 
+            {!loading && user && user.userLogged && (
+              <div>
+                <button><img className='imgButton' src={user.userLogged.imgProfile || imgPerfil} alt="Profile" /></button>
+                <div className={`dropdown ${dropdownActive ? 'active' : ''}`}>
+                  <ul className="dropdown-content">
+                    <li><span className='btn-perfil'>Profile</span></li>
+                    <li><span className='btn-perfil'>Settings</span></li>
+                    <li><span className='btn-perfil' onClick={handleLogout}>LogOut</span></li>
+                    {user.userLogged.role === 'ADMIN' && (
+                      <li><span className='btn-perfil'>Admin Panel</span></li>
+                    )}
+                  </ul>
+                </div>
+              </div>
+
+            )}
+
+          </div>
+        </div>
             <button><img className='imgButton' src={imgPerfil} alt="Profile" /></button>
             <div className={`dropdown ${dropdownActive ? 'active' : ''}`}>
               <ul className="dropdown-content">

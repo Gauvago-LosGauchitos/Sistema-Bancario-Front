@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { getToken } from '../utils/auth'
 
 const apiClient = axios.create({
     baseURL: 'http://localhost:2670',
@@ -13,6 +14,25 @@ export const loginRequest = async (user)=>{
         return{
             error: true,
             err
+        }
+        
+    }
+}
+
+export const getLoguedUser = async ()=>{
+    try {
+        const tokenUser = getToken()
+        const response = await apiClient.get('/user/getLogued', {
+            headers: {
+                Authorization: tokenUser
+            }
+        })
+        return response
+        
+    } catch (error) {
+        return{
+            error: true,
+            error
         }
         
     }
