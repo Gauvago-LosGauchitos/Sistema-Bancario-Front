@@ -30,6 +30,17 @@ export const NavBar = () => {
     navigate('/Home')
   };
 
+  const handleTransfer = () => {
+    navigate('/Transfer')
+  };
+
+  const handleDeposit = () => {
+    navigate('/Deposit')
+  };
+
+  const handleBuyed = () => {
+    navigate('/Buyed')
+  };
 
   const handleLogout = () => {
     // Eliminar el token de localStorage
@@ -72,9 +83,9 @@ export const NavBar = () => {
               <button ><li>Service</li></button>
               <div className={`dropdown ${dropdownActiveService ? 'active' : ''}`}>
                 <ul className=".dropdown-content">
-                  <li><span className='btn-perfil'>Transacción</span></li>
-                  <li><span className='btn-perfil'>Déposito</span></li>
-                  <li><span className='btn-perfil'>Compra </span></li>
+                  <li><span onClick={handleTransfer} className='btn-perfil'>Transacción</span></li>
+                  <li><span onClick={handleDeposit} className='btn-perfil'>Déposito</span></li>
+                  <li><span onClick={handleBuyed} className='btn-perfil'>Compra </span></li>
                 </ul>
               </div>
             </div>
