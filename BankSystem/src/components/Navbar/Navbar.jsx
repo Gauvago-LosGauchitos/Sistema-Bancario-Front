@@ -82,40 +82,30 @@ export const NavBar = () => {
         </nav>
         <div>
           <div className="btn-navbar" onClick={toggleDropdown}>
-        <div>
+            <div>
 
-          <div className="btn-navbar" onClick={toggleDropdown}>
+              <div className="btn-navbar" onClick={toggleDropdown}>
 
-            {!loading && user && user.userLogged && (
-              <div>
-                <button><img className='imgButton' src={user.userLogged.imgProfile || imgPerfil} alt="Profile" /></button>
-                <div className={`dropdown ${dropdownActive ? 'active' : ''}`}>
-                  <ul className="dropdown-content">
-                    <li><span className='btn-perfil'>Profile</span></li>
-                    <li><span className='btn-perfil'>Settings</span></li>
-                    <li><span className='btn-perfil' onClick={handleLogout}>LogOut</span></li>
-                    {user.userLogged.role === 'ADMIN' && (
-                      <li><span className='btn-perfil'>Admin Panel</span></li>
-                    )}
-                  </ul>
-                </div>
+                {!loading && user && user.userLogged && (
+                  <div>
+                    <button><img className='imgButton' src={user.userLogged.imgProfile || imgPerfil} alt="Profile" /></button>
+                    <div className={`dropdown ${dropdownActive ? 'active' : ''}`}>
+                      <ul className="dropdown-content">
+                        <li><span className='btn-perfil'>Profile</span></li>
+                        <li><span className='btn-perfil'>Settings</span></li>
+                        <li><span className='btn-perfil' onClick={handleLogout}>LogOut</span></li>
+                        {user.userLogged.role === 'ADMIN' && (
+                          <li><span className='btn-perfil'>Admin Panel</span></li>
+                        )}
+                      </ul>
+                    </div>
+                  </div>
+
+                )}
+
               </div>
-
-            )}
-
-          </div>
-        </div>
-            <button><img className='imgButton' src={imgPerfil} alt="Profile" /></button>
-            <div className={`dropdown ${dropdownActive ? 'active' : ''}`}>
-              <ul className="dropdown-content">
-                <li><span className='btn-perfil'>Profile</span></li>
-                <li><span className='btn-perfil'>Settings</span></li>
-
-
-
-                <li><span className='btn-perfil' onClick={handleLogout}>LogOut</span></li>
-              </ul>
             </div>
+            
           </div>
         </div>
 
