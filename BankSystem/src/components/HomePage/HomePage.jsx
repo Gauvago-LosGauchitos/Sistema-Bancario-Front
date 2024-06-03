@@ -7,6 +7,7 @@ import { Footer } from '../Footer/Footer.jsx';
 
 export const HomePage = () => {
   const [loading, setLoading] = useState(true);
+  
 
   useEffect(() => {
     // Simula la carga con un timeout de 0.300 segundos
