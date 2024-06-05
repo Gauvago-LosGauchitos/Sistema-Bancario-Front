@@ -13,8 +13,6 @@ export const NavBar = () => {
   const navigate = useNavigate();
   const { user, loading } = useUser()
 
-  console.log(user)
-
 
 
   const handleScroll = () => {
@@ -57,6 +55,10 @@ export const NavBar = () => {
   const toggleDropdownService = () => {
     setDropdownActiveService(!dropdownActiveService);
   };
+
+  const handleAdminPanel = () =>{
+    navigate('/AdminPanel')
+  }
 
 
   useEffect(() => {
@@ -106,7 +108,7 @@ export const NavBar = () => {
                         <li><span className='btn-perfil'>Settings</span></li>
                         <li><span className='btn-perfil' onClick={handleLogout}>LogOut</span></li>
                         {user.userLogged.role === 'ADMIN' && (
-                          <li><span className='btn-perfil'>Admin Panel</span></li>
+                          <li><span className='btn-perfil' onClick={handleAdminPanel}>Admin Panel</span></li>
                         )}
                       </ul>
                     </div>
