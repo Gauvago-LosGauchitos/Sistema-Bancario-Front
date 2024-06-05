@@ -25,15 +25,10 @@ export const HomePage = () => {
       ) : (
         <div>
           <NavBar />
-          <br />
-          <br />
-          <br />
+
           <div className="container-home">
             <div className="text-container">
-              <br />
-              <br />
-              <br />
-              <br />
+ 
               <div className="titulo-container"><h1>SU ALIADO FINANCIERO DE CONFIANZA</h1></div>
               <div>
                 <p className="parrafo-container">

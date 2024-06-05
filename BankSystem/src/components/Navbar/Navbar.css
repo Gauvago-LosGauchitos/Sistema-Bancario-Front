@@ -129,7 +129,6 @@
     align-items: center;
     height: 85px;
     padding: 5px 10%;
-    position: fixed;
     width: 100%;
     z-index: 1000;
     transition: background-color 0.3s ease; /* Agregamos una transición para el cambio de color de fondo */

@@ -6,7 +6,6 @@ export const AdminPanel = () => {
     return (
         <div>
             <NavBar  />
-            <br /><br /><br /><br /><br />
             <div className="widget-container">
                 <div className="grid-container">
                     <div className="grid-item">
