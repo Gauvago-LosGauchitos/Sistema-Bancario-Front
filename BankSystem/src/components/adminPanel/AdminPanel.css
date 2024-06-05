@@ -114,6 +114,14 @@
   border-bottom: 1px solid #d1d5db; /* Light mode border */
 }
 
+.data-table th {
+  text-align: center;
+}
+
+.data-table td {
+  text-align: center;
+}
+
 .staff-grid {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
