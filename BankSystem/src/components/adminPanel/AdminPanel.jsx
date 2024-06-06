@@ -13,7 +13,7 @@ export const AdminPanel = () => {
                             <img src="https://placehold.co/50x50" alt="icon" className="grid-icon" />
                             <div>
                                 <p className="stat-number">520</p>
-                                <p className="stat-label">Doctors</p>
+                                <p className="stat-label"></p>
                             </div>
                         </div>
                     </div>
@@ -22,7 +22,7 @@ export const AdminPanel = () => {
                             <img src="https://placehold.co/50x50" alt="icon" className="grid-icon" />
                             <div>
                                 <p className="stat-number">6969</p>
-                                <p className="stat-label">Nurses</p>
+                                <p className="stat-label"></p>
                             </div>
                         </div>
                     </div>
@@ -31,7 +31,7 @@ export const AdminPanel = () => {
                             <img src="https://placehold.co/50x50" alt="icon" className="grid-icon" />
                             <div>
                                 <p className="stat-number">7509</p>
-                                <p className="stat-label">Patients</p>
+                                <p className="stat-label"></p>
                             </div>
                         </div>
                     </div>
@@ -40,29 +40,31 @@ export const AdminPanel = () => {
                             <img src="https://placehold.co/50x50" alt="icon" className="grid-icon" />
                             <div>
                                 <p className="stat-number">2110</p>
-                                <p className="stat-label">Pharmacists</p>
+                                <p className="stat-label"></p>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div className="chart-container">
-                    <h2 className="section-title">Hospital Survey</h2>
+                    <h2 className="section-title">Bauchito</h2>
                     <img src="https://placehold.co/800x200" alt="chart" className="chart" />
                 </div>
 
                 <div className="table-container">
-                    <h2 className="section-title">Patients</h2>
+                    <h2 className="section-title">Clients</h2>
                     <div className="table-responsive">
                         <table className="data-table">
                             <thead>
                                 <tr>
-                                    <th>User Image</th>
-                                    <th>Patient Name</th>
-                                    <th>Registered</th>
-                                    <th>Appointment Date</th>
-                                    <th>Contact</th>
+                                    <th>Profile Picture</th>
+                                    <th>Client Name</th>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                    <th>DPI</th>
                                     <th>Amount</th>
+                                    <th>Phone</th>
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -80,12 +82,12 @@ export const AdminPanel = () => {
                 </div>
 
                 <div className="staff-container">
-                    <h2 className="section-title">Hospital Staff</h2>
+                    <h2 className="section-title">Admin Staff</h2>
                     <div className="staff-grid">
                         <div className="staff-member">
                             <img src="https://placehold.co/100x100" alt="staff" className="staff-icon" />
-                            <p className="staff-name">Dr. John Smith</p>
-                            <p className="staff-role">Dentist</p>
+                            <p className="staff-name">John Smith</p>
+                            <p className="staff-role">Admin</p>
                         </div>
                     </div>
                 </div>
