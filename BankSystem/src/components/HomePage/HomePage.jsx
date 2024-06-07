@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Spinner } from '../../assets/spinner/Spinner.jsx';
-import { NavBar } from '../Navbar/Navbar.jsx';
+import { NavBar } from '../Navbar/Navbar.jsx'
 import '../HomePage/HomePage.css';
 import imgHome from '../../assets/img/img-home.png';
 import imgTransaccion from '../../assets/img/img-transaccion.png';

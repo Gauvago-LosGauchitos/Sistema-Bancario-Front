@@ -19,10 +19,8 @@ export const Transfer = () => {
             ) : (
                 <div>
                     <NavBar />
+                    
                     <br />
-                    <br />
-                    <br />
-                     <br />
                     <center><div class="modal">
                         <form class="form">
                             <div class="separator">
