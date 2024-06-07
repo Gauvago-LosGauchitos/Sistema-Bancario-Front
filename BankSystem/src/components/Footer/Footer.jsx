@@ -54,7 +54,7 @@ export const Footer = () => {
                         <h6>Quick Link</h6>
                         <ul className='links'>
                             <li><a href="/Home">home</a></li>
-                            <li><a href="#">about</a></li>
+                            <li><a href="/About">about</a></li>
                             <li><a href="#">contact</a></li>
                         </ul>
                     </div>
