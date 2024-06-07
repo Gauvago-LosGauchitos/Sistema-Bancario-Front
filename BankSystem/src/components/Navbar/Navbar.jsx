@@ -40,6 +40,10 @@ export const NavBar = () => {
     navigate('/Buyed')
   };
 
+  const handleHistory = ()=>{
+    navigate('/History')
+  }
+
   const handleLogout = () => {
     // Eliminar el token de localStorage
     localStorage.removeItem('authToken');
@@ -105,7 +109,7 @@ export const NavBar = () => {
                     <div className={`dropdown ${dropdownActive ? 'active' : ''}`}>
                       <ul className="dropdown-content">
                         <li><span className='btn-perfil'>Profile</span></li>
-                        <li><span className='btn-perfil'>Settings</span></li>
+                        <li><span onClick={handleHistory} className='btn-perfil'>History</span></li>
                         <li><span className='btn-perfil' onClick={handleLogout}>LogOut</span></li>
                         {user.userLogged.role === 'ADMIN' && (
                           <li><span className='btn-perfil' onClick={handleAdminPanel}>Admin Panel</span></li>

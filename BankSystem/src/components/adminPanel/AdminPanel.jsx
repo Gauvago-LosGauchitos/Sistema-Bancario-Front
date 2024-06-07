@@ -1,11 +1,22 @@
 import { NavBar } from '../Navbar/Navbar.jsx';
 import { Footer } from '../Footer/Footer.jsx';
+import { useUser } from '../../shared/hooks/useUser.jsx';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper';
+import Divider from '@mui/material/Divider';
 import './AdminPanel.css';
+import dolar from '../../assets/img/dolar.png'
+import euro from '../../assets/img/euro.png'
+
 
 export const AdminPanel = () => {
+    const { users, admins, loading, exchangeRate, exchangeRateEUR } = useUser();
+
+
     return (
         <div>
-            <NavBar  />
+            <NavBar />
             <div className="widget-container">
                 <div className="grid-container">
                     <div className="grid-item">
@@ -46,10 +57,36 @@ export const AdminPanel = () => {
                     </div>
                 </div>
 
-                <div className="chart-container">
-                    <h2 className="section-title">Bauchito</h2>
-                    <img src="https://placehold.co/800x200" alt="chart" className="chart" />
-                </div>
+                <Box className="chart-container" sx={{ mb: 3 }}>
+                    <Typography variant="h5" className="section-title">Tipo de Cambio (USD/GTQ/EUR)</Typography>
+                    <Divider sx={{ mb: 2 }} />
+                    {exchangeRate ? (
+                        <Paper elevation={3} className="exchange-rate-container" sx={{ p: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #ddd', borderRadius: '8px', backgroundColor: '#f5f5f5', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+                            <img src={dolar} alt="exchange icon" className="exchange-rate-icon" />
+                            <Typography variant="h6" className="exchange-rate-title">1 USD =</Typography>
+                            <Typography variant="h6" className="exchange-rate">{exchangeRate}</Typography>
+                            <Typography variant="h6" className="exchange-rate-symbol">GTQ</Typography>
+                        </Paper>
+
+                    ) : (
+                        <Paper elevation={3} className="exchange-rate-container" sx={{ p: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #ddd', borderRadius: '8px', backgroundColor: '#f5f5f5', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+                            No se pudo obtener el tipo de cambio
+                        </Paper>
+                    )}
+                    {exchangeRate ? (
+                        <Paper elevation={3} className="exchange-rate-container" sx={{ p: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #ddd', borderRadius: '8px', backgroundColor: '#f5f5f5', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+                            <img src={euro} alt="exchange icon" className="exchange-rate-icon" />
+                            <Typography variant="h6" className="exchange-rate-title">1 EUR =</Typography>
+                            <Typography variant="h6" className="exchange-rate">{exchangeRateEUR}</Typography>
+                            <Typography variant="h6" className="exchange-rate-symbol">GTQ</Typography>
+                        </Paper>
+
+                    ) : (
+                        <Paper elevation={3} className="exchange-rate-container" sx={{ p: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #ddd', borderRadius: '8px', backgroundColor: '#f5f5f5', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+                            No se pudo obtener el tipo de cambio
+                        </Paper>
+                    )}
+                </Box>
 
                 <div className="table-container">
                     <h2 className="section-title">Clients</h2>
@@ -64,18 +101,20 @@ export const AdminPanel = () => {
                                     <th>DPI</th>
                                     <th>Amount</th>
                                     <th>Phone</th>
-
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td><img src="https://placehold.co/50x50" alt="icon" className="grid-icon" /></td>
-                                    <td>John Doe</td>
-                                    <td>Mar 10, 2023</td>
-                                    <td>Apr 15, 2023</td>
-                                    <td>123-456-7890</td>
-                                    <td>$200</td>
-                                </tr>
+                                {Array.isArray(users) && users.map(user => (
+                                    <tr key={user._id}>
+                                        <td><img src="https://placehold.co/50x50" alt="icon" className="grid-icon" /></td>
+                                        <td>{user.name}</td>
+                                        <td>{user.username}</td>
+                                        <td>{user.email}</td>
+                                        <td>{user.DPI}</td>
+                                        <td>Q{user.monthlyIncome}</td>
+                                        <td>{user.phone}</td>
+                                    </tr>
+                                ))}
                             </tbody>
                         </table>
                     </div>
@@ -84,11 +123,13 @@ export const AdminPanel = () => {
                 <div className="staff-container">
                     <h2 className="section-title">Admin Staff</h2>
                     <div className="staff-grid">
-                        <div className="staff-member">
-                            <img src="https://placehold.co/100x100" alt="staff" className="staff-icon" />
-                            <p className="staff-name">John Smith</p>
-                            <p className="staff-role">Admin</p>
-                        </div>
+                        {Array.isArray(admins) && admins.map(admin => (
+                            <div className="staff-member" key={admin._id}>
+                                <img src="https://placehold.co/100x100" alt="staff" className="staff-icon" />
+                                <p className="staff-name">{admin.name}</p>
+                                <p className="staff-role">{admin.role}</p>
+                            </div>
+                        ))}
                     </div>
                 </div>
 

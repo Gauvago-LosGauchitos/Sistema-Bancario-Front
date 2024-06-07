@@ -6,6 +6,7 @@ import {Transfer} from './src/components/Transfer/Transfer.jsx'
 import { Deposit } from './src/components/Deposit/Deposit.jsx';
 import { Buyed } from './src/components/Buyed/Buyed.jsx';
 import { AdminPanel } from './src/components/adminPanel/AdminPanel.jsx';
+import { History } from './src/components/history/History.jsx';
 
 
 
@@ -21,6 +22,7 @@ export const AppRoutes = () => {
         <Route path='/Deposit' element={<Deposit />} />
         <Route path='/Buyed' element={<Buyed />} />
         <Route path='/AdminPanel' element={<AdminPanel/>}/>
+        <Route path='/History' element={<History />} />
 
         </Routes>
     </Router>
