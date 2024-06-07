@@ -23,6 +23,9 @@ export const AppRoutes = () => {
         <Route path='/Deposit' element={<Deposit />} />
         <Route path='/Buyed' element={<Buyed />} />
         <Route path='/AdminPanel' element={<AdminPanel/>}/>
+        <Route path='/About' element={<About />} />
+        <Route path='/History' element={<History />} />
+
 
         </Routes>
     </Router>
