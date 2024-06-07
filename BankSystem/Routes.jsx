@@ -8,6 +8,7 @@ import { Buyed } from './src/components/Buyed/Buyed.jsx';
 import { AdminPanel } from './src/components/adminPanel/AdminPanel.jsx';
 import { About } from './src/components/About/About.jsx';
 import { History } from './src/components/history/History.jsx';
+import { Perfil } from './src/components/Perfil/Perfil.jsx';
 
 
 
@@ -25,7 +26,7 @@ export const AppRoutes = () => {
         <Route path='/AdminPanel' element={<AdminPanel/>}/>
         <Route path='/About' element={<About />} />
         <Route path='/History' element={<History />} />
-
+        <Route path='/Perfil' element={<Perfil/>} />
 
         </Routes>
     </Router>
