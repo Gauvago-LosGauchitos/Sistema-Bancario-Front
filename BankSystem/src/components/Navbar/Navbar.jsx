@@ -48,6 +48,11 @@ export const NavBar = () => {
     navigate('/History')
   }
 
+  const handlePerfil = ()=>{
+    navigate('/Perfil')
+  }
+
+
   const handleLogout = () => {
     // Eliminar el token de localStorage
     localStorage.removeItem('authToken');
@@ -77,7 +82,7 @@ export const NavBar = () => {
   return (
     <div className='body-navbar'>
       <header id="header" className={scrolled ? 'scrolled' : ''}>
-        <div className="btn-navbar-logo" ><button><img className='img-logito' src={logo} /></button></div>
+        <div className="btn-navbar-logo" ><button onClick={handleHome}><img className='img-logito' src={logo} /></button></div>
         <nav className='container-nav'>
           <ul className="nav-links">
             <div className="btn-navbar" >
@@ -112,7 +117,7 @@ export const NavBar = () => {
                     <button><img className='imgButton' src={user.userLogged.imgProfile || imgPerfil} alt="Profile" /></button>
                     <div className={`dropdown ${dropdownActive ? 'active' : ''}`}>
                       <ul className="dropdown-content">
-                        <li><span className='btn-perfil'>Profile</span></li>
+                        <li><span onClick={handlePerfil} className='btn-perfil'>Profile</span></li>
                         <li><span onClick={handleHistory} className='btn-perfil'>History</span></li>
                         <li><span className='btn-perfil' onClick={handleLogout}>LogOut</span></li>
                         {user.userLogged.role === 'ADMIN' && (
