@@ -40,6 +40,10 @@ export const NavBar = () => {
     navigate('/Buyed')
   };
 
+  const handleAbout = () => {
+    navigate('/About')
+  };
+
   const handleLogout = () => {
     // Eliminar el token de localStorage
     localStorage.removeItem('authToken');
@@ -78,7 +82,7 @@ export const NavBar = () => {
             </div>
             <div className="btn-navbar" >
 
-              <button ><li>About</li></button>
+              <button onClick={handleAbout} ><li>About</li></button>
             </div>
             <div className="btn-navbar" onClick={toggleDropdownService}>
 
