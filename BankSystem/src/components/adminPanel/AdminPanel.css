@@ -17,14 +17,6 @@
   margin-bottom: 16px;
 }
 
-.search-input {
-  width: 100%;
-  max-width: 320px;
-  padding: 8px;
-  border: 1px solid #d1d5db; /* Light mode border */
-  border-radius: 8px;
-}
-
 .icon-container {
   display: flex;
   gap: 16px;
@@ -38,19 +30,19 @@
 
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
+  grid-template-columns: repeat(1, 2fr);
   gap: 16px;
-  margin-bottom: 16px;
+  margin: 0 0 1% 0;
 }
-
 @media (min-width: 768px) {
   .grid-container {
     grid-template-columns: repeat(4, 1fr);
+    
   }
 }
 
 .grid-item {
-  background-color: #ffffff; /* Light mode background */
+  background-color: #ffffff; 
   padding: 16px;
   border-radius: 8px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
@@ -65,23 +57,23 @@
 .grid-icon {
   width: 50px;
   height: 50px;
-  border-radius: 50%;
 }
 
 .stat-number {
+  color: #1a1a1a;
   font-size: 1.5rem;
   font-weight: 600;
 }
 
 .stat-label {
-  color: #6b7280; /* Light mode text color */
+  color: #6b7280; 
 }
 
 .chart-container,
 .table-container,
 .staff-container,
 .activity-container {
-  background-color: #ffffff; /* Light mode background */
+  background-color: #ffffff; 
   padding: 16px;
   border-radius: 8px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
@@ -111,7 +103,7 @@
 .data-table th,
 .data-table td {
   padding: 8px;
-  border-bottom: 1px solid #d1d5db; /* Light mode border */
+  border-bottom: 1px solid #d1d5db; 
 }
 
 .data-table th {
@@ -152,7 +144,7 @@
 }
 
 .staff-role {
-  color: #6b7280; /* Light mode text color */
+  color: #6b7280; 
 }
 
 .activity-list {
@@ -179,7 +171,7 @@
 .exchange-rate {
   font-size: 24px;
   font-weight: bold;
-  color: #4caf50; /* Color verde para resaltar el tipo de cambio */
+  color: #4caf50; 
   margin: 0;
 }
 

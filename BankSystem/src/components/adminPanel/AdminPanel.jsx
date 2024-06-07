@@ -8,6 +8,13 @@ import Divider from '@mui/material/Divider';
 import './AdminPanel.css';
 import dolar from '../../assets/img/dolar.png'
 import euro from '../../assets/img/euro.png'
+import imgDefault from '../../assets/img/imgPerfil.png'
+import register from '../../assets/img/register.png'
+import delet from '../../assets/img/delete.png'
+import edit from '../../assets/img/editar.png'
+
+
+
 
 
 export const AdminPanel = () => {
@@ -21,36 +28,27 @@ export const AdminPanel = () => {
                 <div className="grid-container">
                     <div className="grid-item">
                         <div className="flex-container">
-                            <img src="https://placehold.co/50x50" alt="icon" className="grid-icon" />
+                            <img src={register} alt="icon" className="grid-icon" />
                             <div>
-                                <p className="stat-number">520</p>
+                                <p className="stat-number">Registra un usuario</p>
                                 <p className="stat-label"></p>
                             </div>
                         </div>
                     </div>
                     <div className="grid-item">
                         <div className="flex-container">
-                            <img src="https://placehold.co/50x50" alt="icon" className="grid-icon" />
+                            <img src={delet} alt="icon" className="grid-icon" />
                             <div>
-                                <p className="stat-number">6969</p>
+                                <p className="stat-number">Eliminar a un Usuario</p>
                                 <p className="stat-label"></p>
                             </div>
                         </div>
                     </div>
                     <div className="grid-item">
                         <div className="flex-container">
-                            <img src="https://placehold.co/50x50" alt="icon" className="grid-icon" />
+                            <img src={edit} alt="icon" className="grid-icon" />
                             <div>
-                                <p className="stat-number">7509</p>
-                                <p className="stat-label"></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="grid-item">
-                        <div className="flex-container">
-                            <img src="https://placehold.co/50x50" alt="icon" className="grid-icon" />
-                            <div>
-                                <p className="stat-number">2110</p>
+                                <p className="stat-number">Editar a un usuario</p>
                                 <p className="stat-label"></p>
                             </div>
                         </div>
@@ -106,7 +104,7 @@ export const AdminPanel = () => {
                             <tbody>
                                 {Array.isArray(users) && users.map(user => (
                                     <tr key={user._id}>
-                                        <td><img src="https://placehold.co/50x50" alt="icon" className="grid-icon" /></td>
+                                        <td><img src={users.imgProfile||imgDefault} alt="icon" className="grid-icon" /></td>
                                         <td>{user.name}</td>
                                         <td>{user.username}</td>
                                         <td>{user.email}</td>
@@ -125,7 +123,7 @@ export const AdminPanel = () => {
                     <div className="staff-grid">
                         {Array.isArray(admins) && admins.map(admin => (
                             <div className="staff-member" key={admin._id}>
-                                <img src="https://placehold.co/100x100" alt="staff" className="staff-icon" />
+                                <img src={admins.imgProfile||imgDefault} alt="staff" className="staff-icon" />
                                 <p className="staff-name">{admin.name}</p>
                                 <p className="staff-role">{admin.role}</p>
                             </div>
@@ -134,7 +132,7 @@ export const AdminPanel = () => {
                 </div>
 
                 <div className="activity-container">
-                    <h2 className="section-title">Recent Activity</h2>
+                    <h2 className="section-title">Cuentas con mas movimiento</h2>
                     <ul className="activity-list">
                         <li>5 mins ago - John Doe checked in</li>
                         <li>10 mins ago - Jane Doe checked out</li>
