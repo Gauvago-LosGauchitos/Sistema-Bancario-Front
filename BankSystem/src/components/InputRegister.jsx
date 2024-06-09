@@ -23,7 +23,6 @@ export const Input = ({
         <div >
             {textarea ? (
                 <textarea
-                    className="form__field"
                     type={type}
                     value={value}
                     onChange={handleValueChange}
@@ -33,7 +32,7 @@ export const Input = ({
                 />
             ) : (
                 <input
-                    className="form__field"
+                    className="input-box"
                     type={type}
                     value={value}
                     onChange={handleValueChange}
@@ -41,7 +40,6 @@ export const Input = ({
                     placeholder={label}
                 />
             )}
-            <label className="form__label">{label}</label>
             {showErrorMessage && (
                 <span className="error-message">{validationMessage}</span>
             )}

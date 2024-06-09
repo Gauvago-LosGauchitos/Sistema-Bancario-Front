@@ -1,5 +1,3 @@
-
-
 :root {
   line-height: 1.5;
   font-weight: 400;
@@ -12,6 +10,11 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: "Poetsen One", sans-serif;
-font-weight: 400;
-font-style: normal;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.swal2-modal {
+  z-index: 1500 !important;
+  /* higher than the Material-UI modal's z-index */
 }

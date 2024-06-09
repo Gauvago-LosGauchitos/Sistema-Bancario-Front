@@ -12,13 +12,55 @@ import imgDefault from '../../assets/img/imgPerfil.png'
 import register from '../../assets/img/register.png'
 import delet from '../../assets/img/delete.png'
 import edit from '../../assets/img/editar.png'
-
-
-
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import { EditUserModal } from '../../assets/Modal/EditUserModal.jsx';
 
 
 export const AdminPanel = () => {
-    const { users, admins, loading, exchangeRate, exchangeRateEUR } = useUser();
+    const { users, admins, loading,  deleteUserHandler } = useUser();
+    const navigate = useNavigate();
+
+    const handleRegister = ()=>{
+        navigate('/register')
+    }
+
+    const handleDelete = () => {
+        Swal.fire({
+            title: 'Eliminar Usuario',
+            html: `<input id="swal-input1" class="swal2-input" placeholder="Ingrese el nombre de usuario">`,
+            showCancelButton: true,
+            confirmButtonText: 'Eliminar',
+            cancelButtonText: 'Cancelar',
+            focusConfirm: false,
+            preConfirm: () => {
+                const userName = Swal.getPopup().querySelector('#swal-input1').value;
+                if (!userName) {
+                    Swal.showValidationMessage('El campo Nombre de usuario es obligatorio');
+                }
+                return { userName: userName };
+            }
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    await deleteUserHandler(result.value.userName); // Pasar el campo de confirmación
+                    Swal.fire(
+                        'Eliminado!',
+                        `El usuario ${result.value.userName} ha sido eliminado.`,
+                        'success'
+                    );
+                } catch (error) {
+                    console.error('Error al eliminar el usuario:', error);
+                    Swal.fire(
+                        'Error!',
+                        'Ocurrió un error al intentar eliminar el usuario.',
+                        'error'
+                    );
+                }
+            }
+        });
+    };
+
 
 
     return (
@@ -27,15 +69,15 @@ export const AdminPanel = () => {
             <div className="widget-container">
                 <div className="grid-container">
                     <div className="grid-item">
-                        <div className="flex-container">
+                        <div onClick={handleRegister} className="flex-container">
                             <img src={register} alt="icon" className="grid-icon" />
                             <div>
-                                <p className="stat-number">Registra un usuario</p>
+                                <p className="stat-number">Registrar a un usuario</p>
                                 <p className="stat-label"></p>
                             </div>
                         </div>
                     </div>
-                    <div className="grid-item">
+                    <div onClick={handleDelete}  className="grid-item">
                         <div className="flex-container">
                             <img src={delet} alt="icon" className="grid-icon" />
                             <div>
@@ -46,10 +88,11 @@ export const AdminPanel = () => {
                     </div>
                     <div className="grid-item">
                         <div className="flex-container">
+                        <EditUserModal />
                             <img src={edit} alt="icon" className="grid-icon" />
                             <div>
                                 <p className="stat-number">Editar a un usuario</p>
-                                <p className="stat-label"></p>
+                                
                             </div>
                         </div>
                     </div>
@@ -58,32 +101,16 @@ export const AdminPanel = () => {
                 <Box className="chart-container" sx={{ mb: 3 }}>
                     <Typography variant="h5" className="section-title">Tipo de Cambio (USD/GTQ/EUR)</Typography>
                     <Divider sx={{ mb: 2 }} />
-                    {exchangeRate ? (
+                    { (
                         <Paper elevation={3} className="exchange-rate-container" sx={{ p: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #ddd', borderRadius: '8px', backgroundColor: '#f5f5f5', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
                             <img src={dolar} alt="exchange icon" className="exchange-rate-icon" />
                             <Typography variant="h6" className="exchange-rate-title">1 USD =</Typography>
-                            <Typography variant="h6" className="exchange-rate">{exchangeRate}</Typography>
+                            <Typography variant="h6" className="exchange-rate">{}</Typography>
                             <Typography variant="h6" className="exchange-rate-symbol">GTQ</Typography>
                         </Paper>
 
-                    ) : (
-                        <Paper elevation={3} className="exchange-rate-container" sx={{ p: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #ddd', borderRadius: '8px', backgroundColor: '#f5f5f5', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
-                            No se pudo obtener el tipo de cambio
-                        </Paper>
-                    )}
-                    {exchangeRate ? (
-                        <Paper elevation={3} className="exchange-rate-container" sx={{ p: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #ddd', borderRadius: '8px', backgroundColor: '#f5f5f5', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
-                            <img src={euro} alt="exchange icon" className="exchange-rate-icon" />
-                            <Typography variant="h6" className="exchange-rate-title">1 EUR =</Typography>
-                            <Typography variant="h6" className="exchange-rate">{exchangeRateEUR}</Typography>
-                            <Typography variant="h6" className="exchange-rate-symbol">GTQ</Typography>
-                        </Paper>
-
-                    ) : (
-                        <Paper elevation={3} className="exchange-rate-container" sx={{ p: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #ddd', borderRadius: '8px', backgroundColor: '#f5f5f5', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
-                            No se pudo obtener el tipo de cambio
-                        </Paper>
-                    )}
+                    ) }
+                    
                 </Box>
 
                 <div className="table-container">
