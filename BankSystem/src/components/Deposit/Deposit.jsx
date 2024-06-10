@@ -1,6 +1,7 @@
 import { NavBar } from "../Navbar/Navbar"
 import { Footer } from "../Footer/Footer"
 import { Spinner } from "../../assets/spinner/Spinner"
+import { useDeposit } from "../../shared/hooks/useDeposit"
 import { useState, useEffect } from "react"
 import "./Deposit.css"
 
@@ -12,6 +13,7 @@ export const Deposit = () => {
         }, 600)
         return () => clearTimeout(timer)
     }, [])
+    
     return (
         <div>
             {loading ? (
