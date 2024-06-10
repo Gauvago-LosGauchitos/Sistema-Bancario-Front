@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react";
-import { getLoguedUser, getAdmins, getUsers, getExchangeRate, getExchangeRateEUR } from "../../services/api";
+import { getLoguedUser, getAdmins, getUsers,  deleteUser, findUserByUsername, editUser } from "../../services/api"; // Import editUser
+import toast from "react-hot-toast";
 
 export const useUser = () => {
     const [user, setUser] = useState(null);
+    const [userFound, setUserFound] = useState(null);
     const [admins, setAdmins] = useState([]);
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [exchangeRate, setExchangeRate] = useState(null);
     const [exchangeRateEUR, setExchangeRateEUR] = useState(null);
-
 
     const fetchUser = async () => {
         setLoading(true);
@@ -68,7 +69,7 @@ export const useUser = () => {
             setLoading(false);
         }
     };
-
+/*
     const fetchExchangeRate = async () => {
         try {
             const response = await getExchangeRate();
@@ -79,11 +80,11 @@ export const useUser = () => {
                 setExchangeRate(response.data);
             }
         } catch (error) {
-            setError("Error al obtener el tipo de cambio");
-            console.error("Error al obtener el tipo de cambio:", error);
+            
         }
     };
-
+    */
+/*
     const fetchExchangeRateEUR = async () => {
         try {
             const response = await getExchangeRateEUR();
@@ -94,8 +95,74 @@ export const useUser = () => {
                 setExchangeRateEUR(response.data);
             }
         } catch (error) {
-            setError("Error al obtener el tipo de cambio");
-            console.error("Error al obtener el tipo de cambio:", error);
+            
+        }
+    };
+    */
+
+    //Eliminar un usuario
+    const deleteUserHandler = async (username) => {
+        try {
+            const response = await deleteUser({username});
+            if (response.error) {
+                console.error('Error al eliminar el usuario:', response.error);
+                setError('Error al eliminar el usuario');
+            } else {
+                // Actualizar la lista de usuarios y admins después de eliminar
+                await fetchUsers();
+                await fetchAdmins();
+            }
+        } catch (error) {
+            setError("Error al eliminar el usuario");
+            console.error("Error al eliminar el usuario:", error);
+        }
+    };
+
+    // buscar un usuario por su nombre de usuario
+    const searchUser = async (username) => {
+        setLoading(true);
+        setError(null);
+        try {
+            const response = await findUserByUsername(username);
+            if (response.error) {
+                setUserFound(null)
+                const errorData =  response.errorObject.response.data.message
+                toast.error(errorData)
+                console.error('Error al buscar el usuario:', response.errorObject.response.data);
+                setError('Error al buscar el usuario');
+            } else {
+                setUserFound(response);
+            }
+        } catch (error) {
+            setError("Error al buscar el usuario");
+            console.error("Error al buscar el usuario:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Editar un usuario
+    const editUserHandler = async (username, userData) => {
+        setLoading(true);
+        setError(null);
+        if(userData.role === 'ADMIN'){
+            toast.error('No puedes actualizar a un admin')
+        }
+
+        try {
+            const response = await editUser(username, userData);
+            if (response.error) {
+                console.error('Error al actualizar el usuario:', response.error);
+                setError('Error al actualizar el usuario');
+            } else {
+                await fetchUsers(); 
+                await fetchAdmins(); 
+            }
+        } catch (error) {
+            setError("Error al actualizar el usuario");
+            console.error("Error al actualizar el usuario:", error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -103,10 +170,7 @@ export const useUser = () => {
         fetchUser();
         fetchAdmins();
         fetchUsers();
-        fetchExchangeRate();
-        fetchExchangeRateEUR();
     }, []);
-
 
     return {
         fetchUser,
@@ -116,7 +180,11 @@ export const useUser = () => {
         fetchUsers,
         admins,
         users,
-        exchangeRate,
-        exchangeRateEUR
+
+        deleteUserHandler,
+        searchUser,
+        userFound,
+        setUserFound,
+        editUserHandler 
     };
 };
