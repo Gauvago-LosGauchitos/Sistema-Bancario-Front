@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getLoguedUser, getAdmins, getUsers,  deleteUser, findUserByUsername, editUser } from "../../services/api"; // Import editUser
+import { getLoguedUser, getAdmins, getUsers,  deleteUser, findUserByUsername, editUser, getExchangeRate, getExchangeRateEUR } from "../../services/api"; // Import editUser
 import toast from "react-hot-toast";
 
 export const useUser = () => {
@@ -69,7 +69,7 @@ export const useUser = () => {
             setLoading(false);
         }
     };
-/*
+
     const fetchExchangeRate = async () => {
         try {
             const response = await getExchangeRate();
@@ -83,8 +83,8 @@ export const useUser = () => {
             
         }
     };
-    */
-/*
+    
+
     const fetchExchangeRateEUR = async () => {
         try {
             const response = await getExchangeRateEUR();
@@ -98,7 +98,7 @@ export const useUser = () => {
             
         }
     };
-    */
+    
 
     //Eliminar un usuario
     const deleteUserHandler = async (username) => {
@@ -180,7 +180,8 @@ export const useUser = () => {
         fetchUsers,
         admins,
         users,
-
+        exchangeRate,
+        exchangeRateEUR,
         deleteUserHandler,
         searchUser,
         userFound,

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { identifierValidationMessage, passwordValidationMessage, validateIdentifier, validatePassword } from "../shared/validators/validator"
 import fotoOn from '../assets/img/fotoON.png'
 
-export const Auth = () => {
+export const Auth = ({ isVisible, onClose }) => {
   const { login, isLoading } = useAuth()
   const navigate = useNavigate()
 
@@ -61,53 +61,43 @@ export const Auth = () => {
     const success = await login(formData.identifier.value, formData.password.value)
     if (success) {
       navigate('/Home')
-  }
+      onClose()
+      window.location.reload(); 
+    }
   }
 
+  if (!isVisible) return null;
 
   return (
-    <div className="body-login">
-      <div className='container'>
-        <div className="signin-signup">
-          <form onSubmit={handleLogin} className="sign-in-form">
-            <h2 className="title">Sign in</h2>
-            <div className="input-field">
-              <Input
-                field="identifier"
-                label="Email or Username"
-                value={formData.identifier.value}
-                onChangeHandler={handleValueChange}
-                type="text"
-                onBlurHandler={handleValidationOnBlur}
-                showErrorMessage={formData.identifier.showError}
-                validationMessage={identifierValidationMessage}
-              />
+    <div className={`body-login ${isVisible ? 'popup-animation' : ''}`}>
+      <div className="blur-bg-overlay" onClick={onClose}></div>
+      <div className="form-popup">
+        <span className="close-btn material-symbols-rounded" onClick={onClose}>close</span>
+        <div className="form-box login">
+          <div className="form-details">
+            <h2>Welcome Back</h2>
+            <p className="parraf">Please log in using your personal information to stay connected with us.</p>
+          </div>
+          <div className="form-content">
+            <h2>LOGIN</h2>
+            <form onSubmit={handleLogin}>
+              <div className="input-field">
+                <input type="text" onBlur={(e) => handleValidationOnBlur(e.target.value, "identifier")} onChange={(e) => handleValueChange(e.target.value, "identifier")} />
+                <label>Email</label>
+              </div>
+              <div className="input-field">
+                <input type="password" onBlur={(e) => handleValidationOnBlur(e.target.value, "password")} onChange={(e) => handleValueChange(e.target.value, "password")} />
+                <label>Password</label>
+              </div>
+              <button type="submit" disabled={isSubmitButtonDisabled}>Log In</button>
+            </form>
+            <div className="bottom-link">
+              Don't have an account?
+              <a id="signup-link">Signup</a>
             </div>
-            <div className="input-field">
-              <Input
-                field="password"
-                label="Password"
-                value={formData.password.value}
-                onChangeHandler={handleValueChange}
-                type="password"
-                onBlurHandler={handleValidationOnBlur}
-                showErrorMessage={formData.password.showError}
-                validationMessage={passwordValidationMessage}
-              />
-            </div>
-            <button disabled={isSubmitButtonDisabled} type="submit" className="btn">
-              Login
-            </button>
-          </form>
+          </div>
         </div>
-        <div className="panels-container">
-          <img className="imgPanel" src={fotoOn} />
-
-        </div>
-
-
       </div>
     </div>
   );
 };
-

@@ -25,6 +25,7 @@ export const useAuth = () => {
                 toast.success('¡Has iniciado sesión!');
                 // Guardar el token en localStorage
                 localStorage.setItem('authToken', response.data.token);
+                localStorage.setItem('user', response.data.loggedUser.username);
 
                 return true;
             }

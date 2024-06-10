@@ -17,9 +17,8 @@ export const AppRoutes = () => {
   return (
     <Router>
         <Routes>
-        <Route path="/login" element={<AuthPage />} />
         <Route path="/Home" element={<HomePage />} />
-        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/" element={<Navigate to="/Home" />} />
         <Route path='/Transfer' element={<Transfer />} />
         <Route path='/Deposit' element={<Deposit />} />
         <Route path='/Buyed' element={<Buyed />} />

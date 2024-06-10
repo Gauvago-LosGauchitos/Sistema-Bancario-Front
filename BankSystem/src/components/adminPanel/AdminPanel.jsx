@@ -18,7 +18,7 @@ import { EditUserModal } from '../../assets/Modal/EditUserModal.jsx';
 
 
 export const AdminPanel = () => {
-    const { users, admins, loading,  deleteUserHandler } = useUser();
+    const { users, admins, loading,  deleteUserHandler, exchangeRateEUR, exchangeRate } = useUser();
     const navigate = useNavigate();
 
     const handleRegister = ()=>{
@@ -108,7 +108,14 @@ export const AdminPanel = () => {
                             <Typography variant="h6" className="exchange-rate">{}</Typography>
                             <Typography variant="h6" className="exchange-rate-symbol">GTQ</Typography>
                         </Paper>
-
+                    ) }
+                    { (
+                        <Paper elevation={3} className="exchange-rate-container" sx={{ p: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #ddd', borderRadius: '8px', backgroundColor: '#f5f5f5', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+                            <img src={euro} alt="exchange icon" className="exchange-rate-icon" />
+                            <Typography variant="h6" className="exchange-rate-title">1 EUR =</Typography>
+                            <Typography variant="h6" className="exchange-rate">{}</Typography>
+                            <Typography variant="h6" className="exchange-rate-symbol">GTQ</Typography>
+                        </Paper>
                     ) }
                     
                 </Box>

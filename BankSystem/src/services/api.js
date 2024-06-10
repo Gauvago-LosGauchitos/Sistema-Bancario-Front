@@ -73,7 +73,7 @@ export const getUsers = async () => {
     }
 }
 
-/*Para obtener la divisa de dolar
+//Para obtener la divisa de dolar
 export const getExchangeRate = async (baseCurrency = 'USD', targetCurrency = 'GTQ') => { //aqui se setea el objetivo de cambio y la base
     try {
         const response = await exchangeRateApiClient.get(`${baseCurrency}`);
@@ -84,9 +84,9 @@ export const getExchangeRate = async (baseCurrency = 'USD', targetCurrency = 'GT
 
     }
 };
-*/
 
-/*Para obtener la divisa de euro
+
+//Para obtener la divisa de euro
 export const getExchangeRateEUR = async (baseCurrency = 'EUR', targetCurrency = 'GTQ') => { //aqui se setea el objetivo de cambio y la base
     try {
         const response = await exchangeRateApiClient.get(`${baseCurrency}`);
@@ -97,7 +97,7 @@ export const getExchangeRateEUR = async (baseCurrency = 'EUR', targetCurrency = 
 
     }
 };
-*/
+
 
 //Deposito
 export const deposit = async () => {
