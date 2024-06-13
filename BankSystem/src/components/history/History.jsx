@@ -17,15 +17,22 @@ export const History = () => {
       {loading ? (
         <Spinner />
       ) : (
-        <div>
+        <div >
           <NavBar />
-          <br />
-          <div class="notification">
-            <div class="notiglow"></div>
-            <div class="notiborderglow"></div>
-            <div class="notititle">Welcome To Uiverse</div>
-            <div class="notibody">Contribute to Open Source UI Elements</div>
-          </div>
+          <div >
+          <div class="cardHistory">
+            <div class="card-img"></div>
+            <div class="card-info">
+              <p class="text-title">Product title </p>
+              <p class="text-body">Product description and details</p>
+            </div>
+            <div class="card-footer">
+              <span class="text-title">$499.49</span>
+              <div class="card-button">
+
+              </div>
+            </div></div>
+            </div>
           <Footer />
         </div>
       )}

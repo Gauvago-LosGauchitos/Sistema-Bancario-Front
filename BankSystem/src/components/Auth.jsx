@@ -72,7 +72,7 @@ export const Auth = ({ isVisible, onClose }) => {
     <div className={`body-login ${isVisible ? 'popup-animation' : ''}`}>
       <div className="blur-bg-overlay" onClick={onClose}></div>
       <div className="form-popup">
-        <span className="close-btn material-symbols-rounded" onClick={onClose}>close</span>
+        <span className="close-btn material-symbols-rounded" onClick={onClose}>X</span>
         <div className="form-box login">
           <div className="form-details">
             <h2>Welcome Back</h2>
