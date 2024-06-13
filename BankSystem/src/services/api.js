@@ -110,7 +110,19 @@ export const deposit = async () => {
             error: true,
             error
         }
+    }
+}
 
+//Compra
+export const buyed = async () =>{
+    try {
+        const response = await apiClient.post('/transfer/buyed')
+        return response
+    } catch (error) {
+        return {
+            error: true,
+            error
+        }
     }
 }
 
