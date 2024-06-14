@@ -11,7 +11,6 @@ export const History = () => {
   const [filterType, setFilterType] = useState('');
   const { history } = useUser();
 
-  console.log(history)
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -54,6 +53,7 @@ export const History = () => {
         return [
           transfer._id,
           transfer.services ? transfer.services.name : 'Tipo no definido',
+          transfer.rootAccount.availableBalance,
           transfer.rootAccount.accountNumber,
           transfer.motion,
           transfer.date
@@ -106,7 +106,7 @@ export const History = () => {
 
             <div className="balance-section">
               <h2>Total Balance</h2>
-              <p className="total-balance">Q {history.transfers.rootAccount?.availableBalance}</p>
+              <p className="total-balance">Q {history.transfers[0]?.rootAccount?.availableBalance}</p>
             </div>
 
             <div className="transaction-history">
