@@ -114,7 +114,7 @@ export const deposit = async () => {
 }
 
 //Compra
-export const buyed = async () =>{
+export const buyed = async () => {
     try {
         const response = await apiClient.post('/transfer/buyed')
         return response
@@ -215,3 +215,22 @@ export const editUser = async (username, userData) => {
         };
     }
 };
+
+//Historial del usuario
+export const getUserHistory = async (username) => {
+    try {
+        const response = await apiClient.get('/transfer/getTransferHistory', {
+            headers: {
+                'Authorization': localStorage.getItem('authToken')
+            }
+        });
+        return response
+    } catch (error) {
+        console.error(error);
+        return {
+            error: true,
+            errorObject: error
+        };
+
+    }
+}

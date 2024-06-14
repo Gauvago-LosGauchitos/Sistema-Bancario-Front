@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getLoguedUser, getAdmins, getUsers,  deleteUser, findUserByUsername, editUser, getExchangeRate, getExchangeRateEUR } from "../../services/api"; // Import editUser
+import { getLoguedUser, getAdmins, getUsers, deleteUser, findUserByUsername, editUser, getExchangeRate, getExchangeRateEUR, getUserHistory } from "../../services/api"; // Import editUser
 import toast from "react-hot-toast";
 
 export const useUser = () => {
@@ -11,6 +11,7 @@ export const useUser = () => {
     const [error, setError] = useState(null);
     const [exchangeRate, setExchangeRate] = useState(null);
     const [exchangeRateEUR, setExchangeRateEUR] = useState(null);
+    const [history, setHistory] = useState()
 
     const fetchUser = async () => {
         setLoading(true);
@@ -80,10 +81,10 @@ export const useUser = () => {
                 setExchangeRate(response.data);
             }
         } catch (error) {
-            
+
         }
     };
-    
+
 
     const fetchExchangeRateEUR = async () => {
         try {
@@ -95,15 +96,15 @@ export const useUser = () => {
                 setExchangeRateEUR(response.data);
             }
         } catch (error) {
-            
+
         }
     };
-    
+
 
     //Eliminar un usuario
     const deleteUserHandler = async (username) => {
         try {
-            const response = await deleteUser({username});
+            const response = await deleteUser({ username });
             if (response.error) {
                 console.error('Error al eliminar el usuario:', response.error);
                 setError('Error al eliminar el usuario');
@@ -126,7 +127,7 @@ export const useUser = () => {
             const response = await findUserByUsername(username);
             if (response.error) {
                 setUserFound(null)
-                const errorData =  response.errorObject.response.data.message
+                const errorData = response.errorObject.response.data.message
                 toast.error(errorData)
                 console.error('Error al buscar el usuario:', response.errorObject.response.data);
                 setError('Error al buscar el usuario');
@@ -145,7 +146,7 @@ export const useUser = () => {
     const editUserHandler = async (username, userData) => {
         setLoading(true);
         setError(null);
-        if(userData.role === 'ADMIN'){
+        if (userData.role === 'ADMIN') {
             toast.error('No puedes actualizar a un admin')
         }
 
@@ -155,8 +156,8 @@ export const useUser = () => {
                 console.error('Error al actualizar el usuario:', response.error);
                 setError('Error al actualizar el usuario');
             } else {
-                await fetchUsers(); 
-                await fetchAdmins(); 
+                await fetchUsers();
+                await fetchAdmins();
             }
         } catch (error) {
             setError("Error al actualizar el usuario");
@@ -166,10 +167,34 @@ export const useUser = () => {
         }
     };
 
+    //Historial del usuario
+    const fetchUserHistory = async () => {
+        setLoading(true);
+        setError(null);
+        try {
+            const response = await getUserHistory()
+            if (response.error) {
+                console.error('Error al obtener el tipo de cambio:', response.error);
+                setError('Error al obtener el tipo de cambio');
+            } else {
+                setHistory(response.data);
+            }
+
+        } catch (error) {
+            setError("Error al actualizar el usuario");
+            console.error("Error al actualizar el usuario:", error);
+
+        } finally {
+            setLoading(false);
+        }
+
+    }
+
     useEffect(() => {
         fetchUser();
         fetchAdmins();
         fetchUsers();
+        fetchUserHistory()
     }, []);
 
     return {
@@ -186,6 +211,7 @@ export const useUser = () => {
         searchUser,
         userFound,
         setUserFound,
-        editUserHandler 
+        editUserHandler,
+        history
     };
 };
