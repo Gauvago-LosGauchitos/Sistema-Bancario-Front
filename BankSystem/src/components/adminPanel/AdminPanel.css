@@ -195,3 +195,16 @@
   font-weight: normal;
   color: #777;
 }
+
+.lastFive img{
+  width: 20%;
+  height: 10%;
+
+}
+
+.lastFive{
+  background-color: transparent;
+  cursor: pointer;
+  width: 5%;
+
+}

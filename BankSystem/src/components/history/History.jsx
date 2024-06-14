@@ -53,7 +53,6 @@ export const History = () => {
         return [
           transfer._id,
           transfer.services ? transfer.services.name : 'Tipo no definido',
-          transfer.rootAccount.availableBalance,
           transfer.rootAccount.accountNumber,
           transfer.motion,
           transfer.date

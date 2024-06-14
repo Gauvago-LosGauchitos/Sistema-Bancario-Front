@@ -7,6 +7,7 @@ import Paper from '@mui/material/Paper';
 import Divider from '@mui/material/Divider';
 import './AdminPanel.css';
 import dolar from '../../assets/img/dolar.png'
+import history from '../../assets/img/history.png'
 import euro from '../../assets/img/euro.png'
 import imgDefault from '../../assets/img/imgPerfil.png'
 import register from '../../assets/img/register.png'
@@ -18,7 +19,7 @@ import { EditUserModal } from '../../assets/Modal/EditUserModal.jsx';
 
 
 export const AdminPanel = () => {
-    const { users, admins, loading,  deleteUserHandler, exchangeRateEUR, exchangeRate } = useUser();
+    const { users, admins, loading,  deleteUserHandler, exchangeRateEUR, exchangeRate, userFive, fetchLastMovements } = useUser();
     const navigate = useNavigate();
 
     const handleRegister = ()=>{
@@ -60,6 +61,10 @@ export const AdminPanel = () => {
             }
         });
     };
+
+     const handleGetLastFive = async(userId) =>{
+
+     }
 
 
 
@@ -133,6 +138,7 @@ export const AdminPanel = () => {
                                     <th>DPI</th>
                                     <th>Amount</th>
                                     <th>Phone</th>
+                                    <th>Last Five</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -145,6 +151,7 @@ export const AdminPanel = () => {
                                         <td>{user.DPI}</td>
                                         <td>Q{user.monthlyIncome}</td>
                                         <td>{user.phone}</td>
+                                        <td><button className='lastFive'><img src={history}/></button></td>
                                     </tr>
                                 ))}
                             </tbody>

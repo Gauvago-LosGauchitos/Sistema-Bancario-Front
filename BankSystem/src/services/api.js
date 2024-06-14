@@ -234,3 +234,23 @@ export const getUserHistory = async (username) => {
 
     }
 }
+
+//Ultimos 5 movimientos de un usuario
+export const getLastMovements = async (userId) => {
+    try {
+        const response = await apiClient.post('/transfer/getLastFiveTransfers', {
+            headers:{
+                'Authorization': localStorage.getItem('authToken')
+            }
+        }
+        )
+        return response;
+        
+    } catch (error) {
+        console.error(error);
+        return {
+            error: true,
+            errorObject: error
+        };
+    }
+}

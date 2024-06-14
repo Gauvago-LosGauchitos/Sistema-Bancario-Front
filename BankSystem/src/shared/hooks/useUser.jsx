@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { getLoguedUser, getAdmins, getUsers, deleteUser, findUserByUsername, editUser, getExchangeRate, getExchangeRateEUR, getUserHistory } from "../../services/api"; // Import editUser
+import { getLoguedUser, getAdmins, getUsers, deleteUser, findUserByUsername, editUser, getExchangeRate, getExchangeRateEUR, getUserHistory, getLastMovements } from "../../services/api"; // Import editUser
 import toast from "react-hot-toast";
 
 export const useUser = () => {
     const [user, setUser] = useState(null);
     const [userFound, setUserFound] = useState(null);
+    const [userFive, setUserFive] = useState(null)
     const [admins, setAdmins] = useState([]);
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -181,14 +182,36 @@ export const useUser = () => {
             }
 
         } catch (error) {
-            setError("Error al actualizar el usuario");
-            console.error("Error al actualizar el usuario:", error);
+            setError("Error al obtener el historial del usuario");
+            console.error("Error al obtener el historial del usuario:", error);
 
         } finally {
             setLoading(false);
         }
 
     }
+
+    //Obtener ultimos 5 movimientos de un usuario
+    const fetchLastMovements = async (userId) => {
+        try {
+            const response = await getLastMovements(userId)
+            if (response.error) {
+                console.error('Error al obtener el tipo de cambio:', response.error);
+                setError('Error al obtener el tipo de cambio');
+            } else {
+                setUserFive(response.data);
+            }
+
+        } catch (error) {
+
+            setError("Error al Encontrar los ultimos 5 movimientos del usuario");
+            console.error("Error encontrar los ultimos 5 movimientos del usuario:", error);
+
+        } finally {
+            setLoading(false);
+        }
+    }
+
 
     useEffect(() => {
         fetchUser();
@@ -212,6 +235,8 @@ export const useUser = () => {
         userFound,
         setUserFound,
         editUserHandler,
-        history
+        history,
+        fetchLastMovements,
+        userFive
     };
 };
