@@ -13,16 +13,24 @@ import imgDefault from '../../assets/img/imgPerfil.png'
 import register from '../../assets/img/register.png'
 import delet from '../../assets/img/delete.png'
 import edit from '../../assets/img/editar.png'
+import compra from '../../assets/img/compra.png'
+import transferencia from '../../assets/img/transferencia.png'
+import deposito from '../../assets/img/deposito.png'
+import iconAlert from '../../assets/img/gifAlertTransfer.gif'
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { EditUserModal } from '../../assets/Modal/EditUserModal.jsx';
+import { useState, useEffect, useCallback } from 'react';
 
 
 export const AdminPanel = () => {
-    const { users, admins, loading,  deleteUserHandler, exchangeRateEUR, exchangeRate, userFive, fetchLastMovements } = useUser();
+    const { users, admins, loading, deleteUserHandler, exchangeRateEUR, exchangeRate, userFive, fetchLastMovements, setUserFive, topAccounts } = useUser();
+    const [userData, setUseData] = useState()
+    const [currentUser, setCurrentUser] = useState(null);
     const navigate = useNavigate();
 
-    const handleRegister = ()=>{
+
+    const handleRegister = () => {
         navigate('/register')
     }
 
@@ -62,9 +70,89 @@ export const AdminPanel = () => {
         });
     };
 
-     const handleGetLastFive = async(userId) =>{
+    const handleGetLastFive = async (user) => {
+        setCurrentUser(user); // Establecer el usuario actual
+        setUseData(user._id);
+        await fetchLastMovements(user._id);
+    };
 
-     }
+    const displayMovements = useCallback(async () => {
+        if (userFive && userFive.transfers && Array.isArray(userFive.transfers) && userFive.transfers.length > 0) {
+            const movementsList = userFive.transfers.map((movement, index) => {
+                let details = '';
+                switch (movement.motion) {
+                    case 'BUYED':
+                        // Verificar si hay servicios y mostrar el nombre en lugar del ID
+                        const serviceName = movement.services ? movement.services.name : 'Nombre no disponible';
+                        details = `
+                            <ul>
+                             <img src=${compra} alt="Compra Icon" class="movement-icon" />
+                                <li>Fecha: ${new Date(movement.date).toLocaleString()}</li>
+                                <li>Servicio: ${serviceName}</li>
+                                <li>Movimiento: ${movement.motion}</li>
+                            </ul>`;
+                        break;
+                    case 'DEPOSIT':
+                        details = `
+                            <ul>
+                            <img src=${deposito} alt="Compra Icon" class="movement-icon" />
+                                <li>Fecha: ${new Date(movement.date).toLocaleString()}</li>
+                                <li>Monto: ${movement.amount}</li>
+                                <li>Cuenta depositada: ${movement.recipientAccount}</li>
+                                <li>Movimiento: ${movement.motion}</li>
+                            </ul>`;
+                        break;
+                    case 'TRANSFER':
+                        details = `
+                            <ul>
+                            <img src=${transferencia} alt="Compra Icon" class="movement-icon" />
+                                <li>Fecha: ${new Date(movement.date).toLocaleString()}</li>
+                                <li>Monto: ${movement.amount}</li>
+                                <li>Destinatario: ${movement.recipientAccount}</li>
+                                <li>Cuenta: ${movement.rootAccount}</li>
+                            </ul>`;
+                        break;
+                    default:
+                        details = `<ul>Movimiento desconocido</ul>`;
+                }
+                return `<li key=${index}>${details}</li>`;
+            }).join('');
+
+            Swal.fire({
+                title: `Últimos 5 movimientos del usuario ${currentUser.name}`,
+                html: `
+        <div class="swal2-html-container-custom">
+            <img src=${iconAlert} alt="Loading GIF" class="custom-icon">
+            <ul>${movementsList}</ul>
+        </div>`,
+                showCloseButton: true,
+                showConfirmButton: false,
+                customClass: {
+                    popup: 'swal2-popup-custom',
+                    title: 'swal2-title-custom',
+                    htmlContainer: 'swal2-html-container-custom',
+                },
+                didClose: () => {
+                    setUserFive(null);  // Limpiar los datos al cerrar la alerta
+                }
+            });
+        } else {
+            Swal.fire({
+                title: `No se encontraron movimientos para el usuario ${currentUser.name}`,
+                icon: 'info'
+            });
+        }
+    }, [currentUser, userFive]);
+
+    useEffect(() => {
+        if (currentUser && userFive) {
+            displayMovements();
+        }
+    }, [userFive, currentUser, displayMovements]);
+
+
+
+
 
 
 
@@ -82,7 +170,7 @@ export const AdminPanel = () => {
                             </div>
                         </div>
                     </div>
-                    <div onClick={handleDelete}  className="grid-item">
+                    <div onClick={handleDelete} className="grid-item">
                         <div className="flex-container">
                             <img src={delet} alt="icon" className="grid-icon" />
                             <div>
@@ -93,11 +181,11 @@ export const AdminPanel = () => {
                     </div>
                     <div className="grid-item">
                         <div className="flex-container">
-                        <EditUserModal />
+                            <EditUserModal />
                             <img src={edit} alt="icon" className="grid-icon" />
                             <div>
                                 <p className="stat-number">Editar a un usuario</p>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -106,23 +194,23 @@ export const AdminPanel = () => {
                 <Box className="chart-container" sx={{ mb: 3 }}>
                     <Typography variant="h5" className="section-title">Tipo de Cambio (USD/GTQ/EUR)</Typography>
                     <Divider sx={{ mb: 2 }} />
-                    { (
+                    {(
                         <Paper elevation={3} className="exchange-rate-container" sx={{ p: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #ddd', borderRadius: '8px', backgroundColor: '#f5f5f5', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
                             <img src={dolar} alt="exchange icon" className="exchange-rate-icon" />
                             <Typography variant="h6" className="exchange-rate-title">1 USD =</Typography>
-                            <Typography variant="h6" className="exchange-rate">{}</Typography>
+                            <Typography variant="h6" className="exchange-rate">{ }</Typography>
                             <Typography variant="h6" className="exchange-rate-symbol">GTQ</Typography>
                         </Paper>
-                    ) }
-                    { (
+                    )}
+                    {(
                         <Paper elevation={3} className="exchange-rate-container" sx={{ p: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #ddd', borderRadius: '8px', backgroundColor: '#f5f5f5', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
                             <img src={euro} alt="exchange icon" className="exchange-rate-icon" />
                             <Typography variant="h6" className="exchange-rate-title">1 EUR =</Typography>
-                            <Typography variant="h6" className="exchange-rate">{}</Typography>
+                            <Typography variant="h6" className="exchange-rate">{ }</Typography>
                             <Typography variant="h6" className="exchange-rate-symbol">GTQ</Typography>
                         </Paper>
-                    ) }
-                    
+                    )}
+
                 </Box>
 
                 <div className="table-container">
@@ -144,14 +232,14 @@ export const AdminPanel = () => {
                             <tbody>
                                 {Array.isArray(users) && users.map(user => (
                                     <tr key={user._id}>
-                                        <td><img src={users.imgProfile||imgDefault} alt="icon" className="grid-icon" /></td>
+                                        <td><img src={users.imgProfile || imgDefault} alt="icon" className="grid-icon" /></td>
                                         <td>{user.name}</td>
                                         <td>{user.username}</td>
                                         <td>{user.email}</td>
                                         <td>{user.DPI}</td>
                                         <td>Q{user.monthlyIncome}</td>
                                         <td>{user.phone}</td>
-                                        <td><button className='lastFive'><img src={history}/></button></td>
+                                        <td><button onClick={() => handleGetLastFive(user)} className='lastFive'><img src={history} /></button></td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -164,7 +252,7 @@ export const AdminPanel = () => {
                     <div className="staff-grid">
                         {Array.isArray(admins) && admins.map(admin => (
                             <div className="staff-member" key={admin._id}>
-                                <img src={admins.imgProfile||imgDefault} alt="staff" className="staff-icon" />
+                                <img src={admins.imgProfile || imgDefault} alt="staff" className="staff-icon" />
                                 <p className="staff-name">{admin.name}</p>
                                 <p className="staff-role">{admin.role}</p>
                             </div>
@@ -174,10 +262,41 @@ export const AdminPanel = () => {
 
                 <div className="activity-container">
                     <h2 className="section-title">Cuentas con mas movimiento</h2>
-                    <ul className="activity-list">
-                        <li>5 mins ago - John Doe checked in</li>
-                        <li>10 mins ago - Jane Doe checked out</li>
-                    </ul>
+                    {Array.isArray(topAccounts) && topAccounts.map(topAccount => (
+                        <div class="c p5">
+                        <div class="r">
+                            <div class="clg7 mx">
+                                <div class="cd rd0 bd0 sh">
+                                    <div class="cb pd5">
+                                        
+                                        <div class="tr">
+                                            <table class="tb">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="c">#</th>
+                                                        <th scope="c">No. Account</th>
+                                                        <th scope="c">Owner</th>
+                                                        <th scope="c">Movements</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <th scope="r">1</th>
+                                                        <td>{topAccount.accountNumber}</td>
+                                                        <td>{topAccount.accountOwner}</td>
+                                                        <td>{topAccount.movements}</td>
+                                                        <td></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    ))}
+
                 </div>
             </div>
             <Footer />

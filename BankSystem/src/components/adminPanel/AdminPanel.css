@@ -149,14 +149,7 @@
   color: #6b7280; 
 }
 
-.activity-list {
-  list-style-type: none;
-  padding: 0;
-}
 
-.activity-list li {
-  margin-bottom: 8px;
-}
 
 .exchange-rate-container {
   display: flex;
@@ -198,13 +191,56 @@
 
 .lastFive img{
   width: 20%;
-  height: 10%;
-
 }
 
 .lastFive{
   background-color: transparent;
   cursor: pointer;
-  width: 5%;
-
+  width: 20vh;
+  height: 10vh;
+  border: none;
 }
+
+.cd {
+  border-radius: 2px;
+  border: none;
+  box-shadow: none;
+}
+
+.cb {
+  padding: 1.25rem;
+}
+
+.tr {
+  overflow-x: auto;
+}
+
+.tb {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tb thead tr th {
+  padding: 0.75rem;
+  text-align: left;
+  background-color: #f8f9fa;
+  border-bottom: 2px solid #dee2e6; 
+}
+
+.tb tbody tr {
+  border-top: 2px solid #dee2e6; 
+}
+
+.tb tbody tr td {
+  padding: 0.75rem;
+  vertical-align: top;
+}
+
+.tb tbody tr td:first-child {
+  border-left: none;
+}
+
+.tb tbody tr td:last-child {
+  border-right: none;
+}
+

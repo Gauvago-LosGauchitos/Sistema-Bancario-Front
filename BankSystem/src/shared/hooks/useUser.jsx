@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getLoguedUser, getAdmins, getUsers, deleteUser, findUserByUsername, editUser, getExchangeRate, getExchangeRateEUR, getUserHistory, getLastMovements } from "../../services/api"; // Import editUser
+import { getLoguedUser, getAdmins, getUsers, deleteUser, findUserByUsername, editUser, getExchangeRate, getExchangeRateEUR, getUserHistory, getLastMovements, getAccountsMovements } from "../../services/api"; // Import editUser
 import toast from "react-hot-toast";
 
 export const useUser = () => {
@@ -10,6 +10,7 @@ export const useUser = () => {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [topAccounts, setTopAccounts] = useState(null)
     const [exchangeRate, setExchangeRate] = useState(null);
     const [exchangeRateEUR, setExchangeRateEUR] = useState(null);
     const [history, setHistory] = useState()
@@ -193,6 +194,7 @@ export const useUser = () => {
 
     //Obtener ultimos 5 movimientos de un usuario
     const fetchLastMovements = async (userId) => {
+        setUserFive(null)
         try {
             const response = await getLastMovements(userId)
             if (response.error) {
@@ -212,12 +214,34 @@ export const useUser = () => {
         }
     }
 
+    //Obtener las cuentas con mas movimiento
+    const fetchTopAccounts = async () => {
+        try {
+            const response = await getAccountsMovements()
+            if (response.error) {
+                console.error('Error al obtener las cuentas con mas movimiento', response.error);
+                setError('Error al obtener las cuentas con mas movimiento');
+            } else {
+                setTopAccounts(response.data.accounts);
+            }
+            
+            
+        } catch (error) {
+            setError("Error al Encontrar las cuentas con mas movimientos ");
+            console.error("Error al Encontrar las cuentas con mas movimientos", error);
+
+        } finally {
+            setLoading(false);
+        }
+    }
+
 
     useEffect(() => {
         fetchUser();
         fetchAdmins();
         fetchUsers();
         fetchUserHistory()
+        fetchTopAccounts()
     }, []);
 
     return {
@@ -237,6 +261,8 @@ export const useUser = () => {
         editUserHandler,
         history,
         fetchLastMovements,
-        userFive
+        userFive,
+        setUserFive,
+        topAccounts
     };
 };

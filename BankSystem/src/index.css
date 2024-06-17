@@ -14,7 +14,48 @@
   font-style: normal;
 }
 
+.swal2-popup-custom {
+  width: 700px; 
+  height: 600px;
+  padding: 20px; 
+  border: 9px solid #928d8d; 
+  box-shadow: #0b0a0a;
+}
+
+.swal2-title-custom {
+  color: #333; 
+  font-size: 24px; 
+  margin-bottom: 10px; 
+}
+
+.swal2-html-container-custom {
+  font-size: 16px; 
+}
+
+.swal2-html-container-custom ul {
+  list-style-type: none; 
+  padding: 0; 
+  display: flex;
+  flex-direction: column;
+  text-align: start;
+  justify-self: start;
+}
+
+.swal2-html-container-custom ul  {
+  margin-bottom: 10px; 
+}
+
 .swal2-modal {
   z-index: 1500 !important;
-  /* higher than the Material-UI modal's z-index */
+ 
+}
+.swal2-html-container-custom img.movement-icon {
+  width: 30px; 
+  margin-right: 10px; 
+  vertical-align: middle;
+}
+
+.custom-icon {
+  width: 25vw; 
+  height: auto; 
 }

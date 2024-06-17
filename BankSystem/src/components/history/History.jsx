@@ -11,6 +11,8 @@ export const History = () => {
   const [filterType, setFilterType] = useState('');
   const { history } = useUser();
 
+  console.log(history)
+
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -116,7 +118,6 @@ export const History = () => {
                     <option key={index} value={option.toLowerCase()}>{option}</option>
                   ))}
                 </select>
-                <button className="search-button">This week</button>
               </div>
 
               {noDataToShow() && (

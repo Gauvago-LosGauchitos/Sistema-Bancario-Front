@@ -217,7 +217,7 @@ export const editUser = async (username, userData) => {
 };
 
 //Historial del usuario
-export const getUserHistory = async (username) => {
+export const getUserHistory = async () => {
     try {
         const response = await apiClient.get('/transfer/getTransferHistory', {
             headers: {
@@ -238,7 +238,7 @@ export const getUserHistory = async (username) => {
 //Ultimos 5 movimientos de un usuario
 export const getLastMovements = async (userId) => {
     try {
-        const response = await apiClient.post('/transfer/getLastFiveTransfers', {
+        const response = await apiClient.post('/transfer/getLastFiveTransfers', {userId}, {
             headers:{
                 'Authorization': localStorage.getItem('authToken')
             }
@@ -252,5 +252,26 @@ export const getLastMovements = async (userId) => {
             error: true,
             errorObject: error
         };
+    }
+}
+
+//Cuentas con mas movimiento
+export const getAccountsMovements = async()=>{
+    try {   
+        const response = await apiClient.get('/transfer/getAccountsByMovements', {
+            headers:{
+                'Authorization': localStorage.getItem('authToken')
+            }
+        })
+        return response
+        
+        
+    } catch (error) {
+        console.error(error);
+        return {
+            error: true,
+            errorObject: error
+        };
+        
     }
 }
