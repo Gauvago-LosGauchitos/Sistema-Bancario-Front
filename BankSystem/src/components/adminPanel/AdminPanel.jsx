@@ -1,3 +1,4 @@
+import React, { useState, useEffect, useCallback } from 'react';
 import { NavBar } from '../Navbar/Navbar.jsx';
 import { Footer } from '../Footer/Footer.jsx';
 import { useUser } from '../../shared/hooks/useUser.jsx';
@@ -6,32 +7,37 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import Divider from '@mui/material/Divider';
 import './AdminPanel.css';
-import dolar from '../../assets/img/dolar.png'
-import history from '../../assets/img/history.png'
-import euro from '../../assets/img/euro.png'
-import imgDefault from '../../assets/img/imgPerfil.png'
-import register from '../../assets/img/register.png'
-import delet from '../../assets/img/delete.png'
-import edit from '../../assets/img/editar.png'
-import compra from '../../assets/img/compra.png'
-import transferencia from '../../assets/img/transferencia.png'
-import deposito from '../../assets/img/deposito.png'
-import iconAlert from '../../assets/img/gifAlertTransfer.gif'
+import dolar from '../../assets/img/dolar.png';
+import history from '../../assets/img/history.png';
+import mayor from '../../assets/img/mayor.png';
+import menor from '../../assets/img/menor.png';
+import euro from '../../assets/img/euro.png';
+import imgDefault from '../../assets/img/imgPerfil.png';
+import register from '../../assets/img/register.png';
+import delet from '../../assets/img/delete.png';
+import edit from '../../assets/img/editar.png';
+import compra from '../../assets/img/compra.png';
+import transferencia from '../../assets/img/transferencia.png';
+import deposito from '../../assets/img/deposito.png';
+import iconAlert from '../../assets/img/gifAlertTransfer.gif';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { EditUserModal } from '../../assets/Modal/EditUserModal.jsx';
-import { useState, useEffect, useCallback } from 'react';
-
 
 export const AdminPanel = () => {
     const { users, admins, loading, deleteUserHandler, exchangeRateEUR, exchangeRate, userFive, fetchLastMovements, setUserFive, topAccounts } = useUser();
-    const [userData, setUseData] = useState()
+    const [userData, setUseData] = useState();
     const [currentUser, setCurrentUser] = useState(null);
+    const [filteredAccounts, setFilteredAccounts] = useState([]);
     const navigate = useNavigate();
 
 
+    useEffect(() => {
+        setFilteredAccounts(topAccounts);
+    }, [topAccounts]);
+
     const handleRegister = () => {
-        navigate('/register')
+        navigate('/register');
     }
 
     const handleDelete = () => {
@@ -52,7 +58,7 @@ export const AdminPanel = () => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    await deleteUserHandler(result.value.userName); // Pasar el campo de confirmación
+                    await deleteUserHandler(result.value.userName);
                     Swal.fire(
                         'Eliminado!',
                         `El usuario ${result.value.userName} ha sido eliminado.`,
@@ -71,7 +77,7 @@ export const AdminPanel = () => {
     };
 
     const handleGetLastFive = async (user) => {
-        setCurrentUser(user); // Establecer el usuario actual
+        setCurrentUser(user);
         setUseData(user._id);
         await fetchLastMovements(user._id);
     };
@@ -82,7 +88,6 @@ export const AdminPanel = () => {
                 let details = '';
                 switch (movement.motion) {
                     case 'BUYED':
-                        // Verificar si hay servicios y mostrar el nombre en lugar del ID
                         const serviceName = movement.services ? movement.services.name : 'Nombre no disponible';
                         details = `
                             <ul>
@@ -133,7 +138,7 @@ export const AdminPanel = () => {
                     htmlContainer: 'swal2-html-container-custom',
                 },
                 didClose: () => {
-                    setUserFive(null);  // Limpiar los datos al cerrar la alerta
+                    setUserFive(null);
                 }
             });
         } else {
@@ -150,11 +155,16 @@ export const AdminPanel = () => {
         }
     }, [userFive, currentUser, displayMovements]);
 
-
-
-
-
-
+    const sortAccounts = (order) => {
+        const sortedAccounts = [...topAccounts].sort((a, b) => {
+            if (order === 'asc') {
+                return a.movements - b.movements;
+            } else {
+                return b.movements - a.movements;
+            }
+        });
+        setFilteredAccounts(sortedAccounts);
+    };
 
     return (
         <div>
@@ -185,7 +195,6 @@ export const AdminPanel = () => {
                             <img src={edit} alt="icon" className="grid-icon" />
                             <div>
                                 <p className="stat-number">Editar a un usuario</p>
-
                             </div>
                         </div>
                     </div>
@@ -198,7 +207,7 @@ export const AdminPanel = () => {
                         <Paper elevation={3} className="exchange-rate-container" sx={{ p: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #ddd', borderRadius: '8px', backgroundColor: '#f5f5f5', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
                             <img src={dolar} alt="exchange icon" className="exchange-rate-icon" />
                             <Typography variant="h6" className="exchange-rate-title">1 USD =</Typography>
-                            <Typography variant="h6" className="exchange-rate">{ }</Typography>
+                            <Typography variant="h6" className="exchange-rate">{exchangeRate}</Typography>
                             <Typography variant="h6" className="exchange-rate-symbol">GTQ</Typography>
                         </Paper>
                     )}
@@ -206,11 +215,10 @@ export const AdminPanel = () => {
                         <Paper elevation={3} className="exchange-rate-container" sx={{ p: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #ddd', borderRadius: '8px', backgroundColor: '#f5f5f5', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
                             <img src={euro} alt="exchange icon" className="exchange-rate-icon" />
                             <Typography variant="h6" className="exchange-rate-title">1 EUR =</Typography>
-                            <Typography variant="h6" className="exchange-rate">{ }</Typography>
+                            <Typography variant="h6" className="exchange-rate">{exchangeRateEUR}</Typography>
                             <Typography variant="h6" className="exchange-rate-symbol">GTQ</Typography>
                         </Paper>
                     )}
-
                 </Box>
 
                 <div className="table-container">
@@ -232,14 +240,14 @@ export const AdminPanel = () => {
                             <tbody>
                                 {Array.isArray(users) && users.map(user => (
                                     <tr key={user._id}>
-                                        <td><img src={users.imgProfile || imgDefault} alt="icon" className="grid-icon" /></td>
+                                        <td><img src={user.imgProfile || imgDefault} alt="icon" className="grid-icon" /></td>
                                         <td>{user.name}</td>
                                         <td>{user.username}</td>
                                         <td>{user.email}</td>
                                         <td>{user.DPI}</td>
                                         <td>Q{user.monthlyIncome}</td>
                                         <td>{user.phone}</td>
-                                        <td><button onClick={() => handleGetLastFive(user)} className='lastFive'><img src={history} /></button></td>
+                                        <td><button onClick={() => handleGetLastFive(user)} className='lastFive'><img src={history} alt="history icon" /></button></td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -252,54 +260,63 @@ export const AdminPanel = () => {
                     <div className="staff-grid">
                         {Array.isArray(admins) && admins.map(admin => (
                             <div className="staff-member" key={admin._id}>
-                                <img src={admins.imgProfile || imgDefault} alt="staff" className="staff-icon" />
+                                <img src={admin.imgProfile || imgDefault} alt="staff" className="staff-icon" />
                                 <p className="staff-name">{admin.name}</p>
                                 <p className="staff-role">{admin.role}</p>
+                                <button onClick={() => handleGetLastFive(admin)} className='lastFive'><img src={history} alt="history icon" /></button>
                             </div>
                         ))}
                     </div>
                 </div>
 
                 <div className="activity-container">
-                    <h2 className="section-title">Cuentas con mas movimiento</h2>
-                    {Array.isArray(topAccounts) && topAccounts.map(topAccount => (
-                        <div class="c p5">
-                        <div class="r">
-                            <div class="clg7 mx">
-                                <div class="cd rd0 bd0 sh">
-                                    <div class="cb pd5">
-                                        
-                                        <div class="tr">
-                                            <table class="tb">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="c">#</th>
-                                                        <th scope="c">No. Account</th>
-                                                        <th scope="c">Owner</th>
-                                                        <th scope="c">Movements</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <th scope="r">1</th>
-                                                        <td>{topAccount.accountNumber}</td>
-                                                        <td>{topAccount.accountOwner}</td>
-                                                        <td>{topAccount.movements}</td>
-                                                        <td></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                    <h2 className="section-title">Cuentas con más movimiento</h2>
+                    <div className="filter-buttons">
+                        <button className="filter-button" onClick={() => sortAccounts('asc')}>
+                            <img src={mayor} alt="Ascendente" />
+                            Ordenar de Menor a Mayor
+                        </button>
+                        <button className="filter-button" onClick={() => sortAccounts('desc')}>
+                            <img src={menor} alt="Descendente" />
+                            Ordenar de Mayor a Menor
+                        </button>
+                    </div>
+                    {Array.isArray(filteredAccounts) && filteredAccounts.map((topAccount, index) => (
+                        <div className="c p5" key={topAccount.accountNumber}>
+                            <div className="r">
+                                <div className="clg7 mx">
+                                    <div className="cd rd0 bd0 sh">
+                                        <div className="cb pd5">
+                                            <div className="tr">
+                                                <table className="tb">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="c">#</th>
+                                                            <th scope="c">No. Account</th>
+                                                            <th scope="c">Owner</th>
+                                                            <th scope="c">Movements</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th scope="r">{index + 1}</th>
+                                                            <td>{topAccount.accountNumber}</td>
+                                                            <td>{topAccount.accountOwner}</td>
+                                                            <td>{topAccount.movements}</td>
+                                                            <td></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     ))}
-
                 </div>
             </div>
             <Footer />
         </div>
     );
-}
+};

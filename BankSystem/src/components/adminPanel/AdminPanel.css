@@ -243,4 +243,45 @@
 .tb tbody tr td:last-child {
   border-right: none;
 }
+.filter-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  justify-content: center; 
+}
+
+.filter-button {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #02ae3e; 
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 16px;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.filter-button img {
+  margin-right: 10px;
+  width: 40px;
+  height: 40px;
+}
+
+.filter-button:hover {
+  background-color: #038932; 
+}
+
+.filter-button:active {
+  background-color: #003f7f; 
+}
+
+.filter-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
+}
+
 
