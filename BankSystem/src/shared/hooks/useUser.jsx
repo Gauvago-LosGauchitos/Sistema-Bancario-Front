@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getLoguedUser, getAdmins, getUsers, deleteUser, findUserByUsername, editUser, getExchangeRate, getExchangeRateEUR, getUserHistory, getLastMovements, getAccountsMovements } from "../../services/api"; // Import editUser
+import { getLoguedUser, getAdmins, getUsers, deleteUser, findUserByUsername, editUser, getExchangeRate, getExchangeRateEUR, getUserHistory, getLastMovements, getAccountsMovements, uploadImageRequest } from "../../services/api"; // Import editUser
 import toast from "react-hot-toast";
 
 export const useUser = () => {
@@ -7,6 +7,7 @@ export const useUser = () => {
     const [userFound, setUserFound] = useState(null);
     const [userFive, setUserFive] = useState(null)
     const [admins, setAdmins] = useState([]);
+    const [imageUrl, setImageUrl] = useState(null);
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -235,6 +236,21 @@ export const useUser = () => {
         }
     }
 
+    //Carga de imagenes
+    const handleUploadImage = async (imageFile) => {
+        setLoading(true);
+        setError(null);
+        
+        try {
+            const response = await uploadImageRequest(imageFile); 
+            setImageUrl(response.data.imageUrl); 
+            setLoading(false);
+        } catch (error) {
+            setLoading(false);
+            setError(error.response?.data?.message || 'Error uploading image'); 
+        }
+    };
+
 
     useEffect(() => {
         fetchUser();
@@ -263,6 +279,8 @@ export const useUser = () => {
         fetchLastMovements,
         userFive,
         setUserFive,
-        topAccounts
+        topAccounts,
+        imageUrl,
+        handleUploadImage
     };
 };

@@ -4,7 +4,7 @@ import { Footer } from '../Footer/Footer.jsx'
 import { useEffect, useState } from 'react';
 import { useUser } from '../../shared/hooks/useUser.jsx';
 import toast from 'react-hot-toast';
-//import Swal from 'sweetalert2';
+import Swal from 'sweetalert2';
 import profileDefault from '../../assets/img/defaultUser.png';
 import { useNavigate } from 'react-router-dom';
 
@@ -48,7 +48,7 @@ export const Perfil = () => {
   const handleEdit = () => {
     setEditMode(true);
     if (user && user.userLogged) {
-      console.log(editMode)                                           
+      console.log(editMode)
       setUserData({
         ...userData,
         oldPassword: '',
@@ -70,7 +70,7 @@ export const Perfil = () => {
       });
     }
   };
-  
+
 
   const handleDelete = async () => {
     Swal.fire({
@@ -104,7 +104,7 @@ export const Perfil = () => {
     const imageFile = event.target.files[0];
     const formData = new FormData();
     formData.append('image', imageFile);
-  
+
     const { value: confirmUpload } = await Swal.fire({
       title: 'Confirm upload',
       text: 'Are you sure you want to upload this image?',
@@ -114,13 +114,13 @@ export const Perfil = () => {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, upload it!'
     });
-  
+
     if (confirmUpload) {
       try {
-        
+
         await handleUploadImage(formData);
         toast.success('Your profile picture has been uploaded successfully!');
-      
+
       } catch (error) {
         console.error('Error uploading profile picture:', error);
         toast.error('An error occurred while uploading your profile picture. Please try again later.');
@@ -131,124 +131,123 @@ export const Perfil = () => {
   return (
     <div>
       <NavBar />
-    <div className='page-container'>
-      
-    <div className='image-background'>
-      <div className='container-general'>
-        <div className="gradiant"></div>
-        {!loading && user && user.userLogged && (
-          <div className='container-profile'>
-            <div className='card'>
-              <div className='card__img'>
-                <div className='card__avatar'>
-                  <img src={user.userLogged.profileImageUrl || profileDefault} alt='avatar' />
-                </div>
-              </div>
-              <div className='card__title'>{user.userLogged.username}</div>
-              <div className='card__subtitle'>{user.userLogged.email}</div>
-              <div className="card__wrapper">
-                <button className="card__btn" onClick={handleEdit}>Edit</button>
-                <button className="card__btn card__btn-solid" onClick={handleDelete}>Delete</button> 
-                <div>
-                  <br/> 
-                {editMode && (
-                <>
-                  <label>
-                    <span>Old Password</span>
-                    <input
-                      className="input"
-                      type="password"
-                      name="oldPassword"
-                      value={userData.oldPassword}
-                      onChange={handleInputChange}
-                    />
-                    
-                  </label>
-                  <span>New Password</span>
-                  <label>
-                    <input
-                      className="input"
-                      type="password"
-                      name="newPassword"
-                      value={userData.newPassword}
-                      onChange={handleInputChange}
-                    />
-                    
-                  </label>
-                  <div className="form__actions">
-                    <button type="submit" className="btn" onClick={handleSubmit}>Save</button>
-                    <button type="button" className="btn" onClick={handleCancelEdit}>Cancel</button>
+      <div className='page-container'>
+
+        <div className='image-background'>
+          <div className='container-general'>
+            <div className="gradiant"></div>
+            {!loading && user && user.userLogged && (
+              <div className='container-profile'>
+                <div className='card'>
+                  <div className='card__img'>
+                    <div className='card__avatar'>
+                      <img src={user.userLogged.imgProfile || profileDefault} alt='avatar' />
+                    </div>
                   </div>
-                  
-                </>
-              )}
+                  <div className='card__title'>{user.userLogged.username}</div>
+                  <div className='card__subtitle'>{user.userLogged.email}</div>
+                  <div className="card__wrapper">
+                    <button className="card__btn" onClick={handleEdit}>Edit</button>
+                    <button className="card__btn card__btn-solid" onClick={handleDelete}>Delete</button>
+                    <div>
+                      <br />
+                      {editMode && (
+                        <>
+                          <label>
+                            <span>Old Password</span>
+                            <input
+                              className="input"
+                              type="password"
+                              name="oldPassword"
+                              value={userData.oldPassword}
+                              onChange={handleInputChange}
+                            />
+
+                          </label>
+                          <span>New Password</span>
+                          <label>
+                            <input
+                              className="input"
+                              type="password"
+                              name="newPassword"
+                              value={userData.newPassword}
+                              onChange={handleInputChange}
+                            />
+
+                          </label>
+                          <div className="form__actions">
+                            <button type="submit" className="btn" onClick={handleSubmit}>Save</button>
+                            <button type="button" className="btn" onClick={handleCancelEdit}>Cancel</button>
+                          </div>
+
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <form className='form' onSubmit={handleSubmit}>
+                  <p className='title'>Informacion</p>
+                  <label>
+                    <span>Name</span>
+                    <input
+                      className="input"
+                      type="text"
+                      name="name"
+                      value={userData.name}
+                      onChange={handleInputChange}
+                      required
+                      disabled="true"
+                    />
+                  </label>
+                  <span>DPI</span>
+                  <label>
+                    <input
+                      className="input"
+                      type="text"
+                      name="surname"
+                      value={userData.DPI}
+                      onChange={handleInputChange}
+                      required
+                      disabled="true"
+                    />
+                  </label>
+                  <span>Username</span>
+                  <label>
+                    <input
+                      className="input"
+                      type="text"
+                      name="username"
+                      value={userData.username}
+                      onChange={handleInputChange}
+                      required
+                      disabled={!editMode}
+                    />
+                  </label>
+                  <span>Email</span>
+                  <label>
+                    <input
+                      className="input"
+                      type="email"
+                      name="email"
+                      value={userData.email}
+                      onChange={handleInputChange}
+                      required
+                      disabled={!editMode}
+                    />
+                  </label>
+                  {/* Botón de Guardar para el formulario */}
+                  <form>
+                    <label>
+                      <input className="input" type="file" accept="image/*" name="image" onChange={handleImageChange} />
+                    </label>
+                  </form>
+                </form>
               </div>
-              </div>
-            </div>
-            <form className='form' onSubmit={handleSubmit}>
-              <p className='title'>Informacion</p>
-              <label>
-                <span>Name</span>
-                <input
-                  className="input"
-                  type="text"
-                  name="name"
-                  value={userData.name}
-                  onChange={handleInputChange}
-                  required
-                  disabled="true"
-                />
-              </label>
-              <span>DPI</span>
-              <label>
-                <input
-                  className="input"
-                  type="text"
-                  name="surname"
-                  value={userData.DPI}
-                  onChange={handleInputChange}
-                  required
-                  disabled="true"
-                />  
-              </label>
-              <span>Username</span>
-              <label>
-                <input
-                  className="input"
-                  type="text"
-                  name="username"
-                  value={userData.username}
-                  onChange={handleInputChange}
-                  required
-                  disabled={!editMode}
-                />
-              </label>
-              <span>Email</span>
-              <label>
-                <input
-                  className="input"
-                  type="email"
-                  name="email"
-                  value={userData.email}
-                  onChange={handleInputChange}
-                  required
-                  disabled={!editMode}
-                />
-              </label>
-               {/* Botón de Guardar para el formulario */}
-            <form>
-            <label>
-              <input className="input" type="file" accept="image/*" name="image" onChange={handleImageChange} />
-            </label>
-            <button type="submit" className="btn" onClick={handleImageChange}>Guardar</button>
-            </form>
-            </form>
+            )}
           </div>
-        )}
+        </div>
       </div>
-      </div>
-    </div>
-     <Footer />
+      <Footer />
     </div>
   );
 };

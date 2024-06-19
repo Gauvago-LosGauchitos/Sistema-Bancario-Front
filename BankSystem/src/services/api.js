@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 
 
 const apiClient = axios.create({
-    baseURL: 'https://sistema-bancario-backend-alpha.vercel.app/' || 'http://localhost:2670',
+    baseURL: /*'https://sistema-bancario-backend-alpha.vercel.app/' ||*/ 'http://localhost:2670',
     timeout: 30000
 })
 
@@ -275,3 +275,21 @@ export const getAccountsMovements = async () => {
 
     }
 }
+
+//Carga de imagenes
+export const uploadImageRequest = async (formData) => {
+    try {
+        const response = await apiClient.post('/user/upload-image', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'Authorization': localStorage.getItem('authToken') // Obtener el token del localStorage
+            }
+        });
+
+        // Devuelve la URL de la imagen desde la respuesta del backend
+        return response.data.imageUrl;
+    } catch (error) {
+        console.error('Error uploading image:', error);
+        throw error; 
+    }
+};
