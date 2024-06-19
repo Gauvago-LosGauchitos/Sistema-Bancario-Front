@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 
 
 const apiClient = axios.create({
-    baseURL: 'http://localhost:2670',
+    baseURL: /*'https://sistema-bancario-backend-alpha.vercel.app/' ||*/ 'http://localhost:2670',
     timeout: 30000
 })
 
@@ -114,9 +114,9 @@ export const getExchangeRateEUR = async (baseCurrency = 'EUR', targetCurrency = 
 
 
 //Deposito
-export const deposit = async () => {
+export const deposit = async (dep) => {
     try {
-        const response = await apiClient.post('/transfer/deposit')
+        const response = await apiClient.post('/transfer/deposit', dep)
         return response
 
     } catch (error) {
@@ -131,6 +131,23 @@ export const deposit = async () => {
 export const buyed = async () => {
     try {
         const response = await apiClient.post('/transfer/buyed')
+        return response
+    } catch (error) {
+        return {
+            error: true,
+            error
+        }
+    }
+}
+
+//Transferencia 
+export const transfer = async (data) => {
+    try {
+        const response = await apiClient.post('/transfer/transfer', data,{
+            headers: {
+                'Authorization': localStorage.getItem('authToken') 
+            }
+        })
         return response
     } catch (error) {
         return {
@@ -212,8 +229,8 @@ export const findUserByUsername = async (username) => {
     }
 };
 
-// Editar usuario
-export const editUser = async (username, userData) => {
+// Editar usuario con admin
+export const editUserAD = async (username, userData) => {
     try {
         const response = await apiClient.put('/user/updateUAd', { username, ...userData }, {
             headers: {
@@ -230,8 +247,26 @@ export const editUser = async (username, userData) => {
     }
 };
 
+// Editar usuario sin admin
+export const editUser = async (username, userData) => {
+    try {
+        const response = await apiClient.put('/user/updateU', { username, ...userData }, {
+            headers: {
+                'Authorization': getToken()
+            }
+        });
+        return response;
+    } catch (error) {
+        console.error(error);
+        return {
+            error: true,
+            errorObject: error
+        };
+    }
+};
+
 //Historial del usuario
-export const getUserHistory = async (username) => {
+export const getUserHistory = async () => {
     try {
         const response = await apiClient.get('/transfer/getTransferHistory', {
             headers: {
@@ -252,14 +287,14 @@ export const getUserHistory = async (username) => {
 //Ultimos 5 movimientos de un usuario
 export const getLastMovements = async (userId) => {
     try {
-        const response = await apiClient.post('/transfer/getLastFiveTransfers', {
-            headers:{
+        const response = await apiClient.post('/transfer/getLastFiveTransfers', { userId }, {
+            headers: {
                 'Authorization': localStorage.getItem('authToken')
             }
         }
         )
         return response;
-        
+
     } catch (error) {
         console.error(error);
         return {
@@ -268,3 +303,42 @@ export const getLastMovements = async (userId) => {
         };
     }
 }
+
+//Cuentas con mas movimiento
+export const getAccountsMovements = async () => {
+    try {
+        const response = await apiClient.get('/transfer/getAccountsByMovements', {
+            headers: {
+                'Authorization': localStorage.getItem('authToken')
+            }
+        })
+        return response
+
+
+    } catch (error) {
+        console.error(error);
+        return {
+            error: true,
+            errorObject: error
+        };
+
+    }
+}
+
+//Carga de imagenes
+export const uploadImageRequest = async (formData) => {
+    try {
+        const response = await apiClient.post('/user/upload-image', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'Authorization': localStorage.getItem('authToken') // Obtener el token del localStorage
+            }
+        });
+
+        // Devuelve la URL de la imagen desde la respuesta del backend
+        return response.data.imageUrl;
+    } catch (error) {
+        console.error('Error uploading image:', error);
+        throw error; 
+    }
+};

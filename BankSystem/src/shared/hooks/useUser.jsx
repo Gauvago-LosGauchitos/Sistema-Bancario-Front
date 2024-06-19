@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getLoguedUser, getAdmins, getUsers, deleteUser, findUserByUsername, editUser, getExchangeRate, getExchangeRateEUR, getUserHistory, getLastMovements } from "../../services/api"; // Import editUser
+import { getLoguedUser, getAdmins, getUsers, deleteUser, findUserByUsername, editUser, getExchangeRate, getExchangeRateEUR, getUserHistory, getLastMovements, getAccountsMovements, uploadImageRequest } from "../../services/api"; // Import editUser
 import toast from "react-hot-toast";
 
 export const useUser = () => {
@@ -7,9 +7,11 @@ export const useUser = () => {
     const [userFound, setUserFound] = useState(null);
     const [userFive, setUserFive] = useState(null)
     const [admins, setAdmins] = useState([]);
+    const [imageUrl, setImageUrl] = useState(null);
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [topAccounts, setTopAccounts] = useState(null)
     const [exchangeRate, setExchangeRate] = useState(null);
     const [exchangeRateEUR, setExchangeRateEUR] = useState(null);
     const [history, setHistory] = useState()
@@ -144,15 +146,27 @@ export const useUser = () => {
     };
 
     // Editar un usuario
-    const editUserHandler = async (username, userData) => {
+    const handleUpdateUser = async (userData) => {
         setLoading(true);
         setError(null);
+        
         if (userData.role === 'ADMIN') {
-            toast.error('No puedes actualizar a un admin')
+            toast.error('No puedes actualizar a un admin');
+            setLoading(false);
+            return;
         }
-
+    
         try {
-            const response = await editUser(username, userData);
+            const authToken = getToken();
+            const decodedToken = jwtDecode(authToken);
+            const loggedUsername = decodedToken.username;
+    
+            if (loggedUsername !== userData.username) {
+                throw new Error('No tienes permiso para actualizar este perfil');
+            }
+    
+            const response = await editUser(loggedUsername, userData);
+    
             if (response.error) {
                 console.error('Error al actualizar el usuario:', response.error);
                 setError('Error al actualizar el usuario');
@@ -193,6 +207,7 @@ export const useUser = () => {
 
     //Obtener ultimos 5 movimientos de un usuario
     const fetchLastMovements = async (userId) => {
+        setUserFive(null)
         try {
             const response = await getLastMovements(userId)
             if (response.error) {
@@ -212,12 +227,49 @@ export const useUser = () => {
         }
     }
 
+    //Obtener las cuentas con mas movimiento
+    const fetchTopAccounts = async () => {
+        try {
+            const response = await getAccountsMovements()
+            if (response.error) {
+                console.error('Error al obtener las cuentas con mas movimiento', response.error);
+                setError('Error al obtener las cuentas con mas movimiento');
+            } else {
+                setTopAccounts(response.data.accounts);
+            }
+            
+            
+        } catch (error) {
+            setError("Error al Encontrar las cuentas con mas movimientos ");
+            console.error("Error al Encontrar las cuentas con mas movimientos", error);
+
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    //Carga de imagenes
+    const handleUploadImage = async (imageFile) => {
+        setLoading(true);
+        setError(null);
+        
+        try {
+            const response = await uploadImageRequest(imageFile); 
+            setImageUrl(response.data.imageUrl); 
+            setLoading(false);
+        } catch (error) {
+            setLoading(false);
+            setError(error.response?.data?.message || 'Error uploading image'); 
+        }
+    };
+
 
     useEffect(() => {
         fetchUser();
         fetchAdmins();
         fetchUsers();
         fetchUserHistory()
+        fetchTopAccounts()
     }, []);
 
     return {
@@ -234,9 +286,13 @@ export const useUser = () => {
         searchUser,
         userFound,
         setUserFound,
-        editUserHandler,
+        handleUpdateUser,
         history,
         fetchLastMovements,
-        userFive
+        userFive,
+        setUserFive,
+        topAccounts,
+        imageUrl,
+        handleUploadImage
     };
 };

@@ -2,10 +2,94 @@ import { NavBar } from "../Navbar/Navbar"
 import { Footer } from "../Footer/Footer"
 import { Spinner } from "../../assets/spinner/Spinner"
 import { useState, useEffect } from "react"
+import { useTransfer } from "../../shared/hooks/useTransfer"
+import { Input } from "../input"
+import toast from "react-hot-toast"
+import { validateAmount, 
+        validateAccountNumber,
+        amountValidationMessage,
+        accountNumberValidationMessage } from "../../shared/validators/validator"
 import "./Transfer.css"
 
 export const Transfer = () => {
     const [loading, setLoading] = useState(true)
+    const { transferencia, isLoading } = useTransfer()
+    
+    const [formData, setFormData] = useState({
+        recipientAccount: {value: "", isValid: false, showError: false},
+        amount: {value: "", isValid: false, showError: false}
+    })
+
+    const isSubmitButtonDisabled = !Object.values(formData).every(field => field.isValid);
+
+    const handleValueChange = (value, field) => {
+        setFormData((prevData) => ({
+            ...prevData,
+            [field]: {
+                ...prevData[field],
+                value
+            }
+        }))
+    }
+
+    const handleValidationOnBlur = (value, field) => {
+        let isValid = false;
+        let validationMessage = '';
+
+        switch (field) {
+            case "recipientAccount":
+                isValid = validateAccountNumber(value)
+                validationMessage = accountNumberValidationMessage
+                break
+            case "amount":
+                isValid = validateAmount(value)
+                validationMessage = amountValidationMessage
+                break
+            default:
+                isValid = true
+                break
+        }
+
+        setFormData((prevData) => ({
+            ...prevData,
+            [field]: {
+                ...prevData[field],
+                isValid,
+                showError: !isValid
+            }
+        }))
+    }
+
+    const resetForm = () => {
+        setFormData({
+            recipientAccount: {
+                value: "",
+                isValid: false,
+                showError: false
+            },
+            amount: {
+                value: "",
+                isValid: false,
+                showError: false
+            }
+        })
+    }
+
+    const handleTranfer = async (e) =>{
+        e.preventDefault()
+        try {
+         await transferencia(
+            formData.recipientAccount.value,
+            formData.amount.value
+            )
+            toast.success('Transfer completed successfully')
+            resetForm()
+        } catch (error) {
+            console.error('Error Transfer:', error);
+            toast.error('Error Transfer');
+        }
+    }
+
     useEffect(() => {
         const timer = setTimeout(() => {
             setLoading(false)
@@ -21,32 +105,49 @@ export const Transfer = () => {
                     <NavBar />
                     
                     <br />
-                    <center><div class="modal">
-                        <form class="form">
+                    <center><div className="modal">
+                        <form className="form"  onSubmit={handleTranfer}>
                             <div class="separator">
-                                <hr class="line" />
+                                <hr className="line" />
                                 <h1>Transacción</h1>
-                                <hr class="line" />
+                                <hr className="line" />
                             </div>
-                            <div class="credit-card-info--form">
-                                <div class="input_container">
-                                    <label for="password_field" class="input_label">Card holder full name</label>
-                                    <input id="password_field" class="input_field" type="text" name="input-name" title="Inpit title" placeholder="Enter your full name" />
+                            <div className="credit-card-info--form">
+                                <div className="input_container">
+                                    <label className="input_label">Receiving account</label>
+                                    <Input 
+                                        field="recipientAccount" 
+                                        name="RecipientAccount" 
+                                        className="input_field" 
+                                        type="number" 
+                                        value={formData.recipientAccount.value}
+                                        onChangeHandler={handleValueChange}
+                                        onBlurHandler={handleValidationOnBlur}
+                                        showErrorMessage={formData.recipientAccount.showError}
+                                        validationMessage={accountNumberValidationMessage}
+                                        placeholder="0000 0000 0000 0000" 
+                                        />
                                 </div>
-                                <div class="input_container">
-                                    <label for="password_field" class="input_label">Account Number</label>
-                                    <input id="password_field" class="input_field" type="number" name="input-name" title="Inpit title" placeholder="0000 0000 0000 0000" />
-                                </div>
-                                <div class="input_container">
-                                    <label for="password_field" class="input_label">Receiving account</label>
-                                    <input id="password_field" class="input_field" type="number" name="input-name" title="Inpit title" placeholder="0000 0000 0000 0000" />
-                                </div>
-                                <div class="input_container">
-                                    <label for="password_field" class="input_label">Amount</label>
-                                    <input id="password_field" class="input_field" type="text" name="input-name" title="Expiry Date" placeholder="Q 00.00" />
+                                <div className="input_container">
+                                    <label className="input_label">Amount</label>
+                                    <Input 
+                                        field="amount" 
+                                        name="Amount"
+                                        className="input_field" 
+                                        type="number" 
+                                        value={formData.amount.value}                 
+                                        onChangeHandler={handleValueChange}
+                                        onBlurHandler={handleValidationOnBlur}
+                                        showErrorMessage={formData.amount.showError}
+                                        validationMessage={amountValidationMessage}
+                                        placeholder="Q 00.00"
+                                        />
                                 </div>
                             </div>
-                            <button class="purchase--btn">Checkout</button>
+                            <button className="purchase--btn"
+                                disabled={isSubmitButtonDisabled || isLoading}>
+                                    Checkout
+                            </button>
                         </form>
                     </div></center>
                     <Footer />

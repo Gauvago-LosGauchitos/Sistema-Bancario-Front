@@ -96,11 +96,6 @@ export const History = () => {
               <div className="currency-buttons">
                 <button>
                   <img src="https://placehold.co/20x20" alt="flag" />
-                  <span>USD</span>
-                </button>
-                <button>
-                  <span>Add Funds</span>
-                  <img src="https://placehold.co/20x20" alt="add funds" />
                 </button>
               </div>
             </div>
@@ -118,7 +113,6 @@ export const History = () => {
                     <option key={index} value={option.toLowerCase()}>{option}</option>
                   ))}
                 </select>
-                <button className="search-button">This week</button>
               </div>
 
               {noDataToShow() && (
