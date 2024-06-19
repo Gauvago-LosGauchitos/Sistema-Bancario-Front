@@ -100,9 +100,9 @@ export const getExchangeRateEUR = async (baseCurrency = 'EUR', targetCurrency = 
 
 
 //Deposito
-export const deposit = async () => {
+export const deposit = async (dep) => {
     try {
-        const response = await apiClient.post('/transfer/deposit')
+        const response = await apiClient.post('/transfer/deposit', dep)
         return response
 
     } catch (error) {
