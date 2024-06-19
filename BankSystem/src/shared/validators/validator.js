@@ -84,6 +84,21 @@ export const validateMonthlyIncome = (monthlyIncome) => {
 };
 /*--------------------- VALIDACIÓN DE INGRESO MENSUAL ---------------------------- */
 
+/*--------------------- VALIDACIÓN DE AMOUNT ---------------------------- */
+export const validateAmount = (amount) => {
+    const regex = /^\d+(\.\d{1,2})?$/
+    return regex.test(amount)
+}
+/*--------------------- VALIDACIÓN DE AMOUNT ---------------------------- */
+
+/*--------------------- VALIDACIÓN DE ACCOUNT NUMBER ---------------------------- */
+export const validateAccountNumber = (accountNumber) => {
+    const regex = /^\d{10}$/
+    return regex.test(accountNumber)
+}
+/*--------------------- VALIDACIÓN DE ACCOUNT NUMBER ---------------------------- */
+
+
 /* --------------------- MENSAJES DE VALIDACIÓN DE CAMPOS ------------------------------ */
 export const usernameValidationMessage = 'El nombre de usuario debe ser de entre 3 y 8 caracteres, sin espacios.'
 export const passwordValidationMessage = 'La contraseña debe tener entre 6 y 12 caracteres, sin espacios.'
@@ -97,4 +112,6 @@ export const addressValidationMessage = 'La dirección no puede estar vacía.'
 export const phoneValidationMessage = 'El teléfono debe ser un número de 8 dígitos.'
 export const nameOfWorkValidationMessage = 'El nombre del trabajo no puede estar vacío.'
 export const monthlyIncomeValidationMessage = 'El ingreso mensual debe ser un número válido, con hasta dos decimales.'
+export const amountValidationMessage = 'El ingreso del monto tiene que ser un número válido'
+export const accountNumberValidationMessage= 'El número de cuenta debe ser de 10 dígitos'
 /* --------------------- MENSAJES DE VALIDACIÓN DE CAMPOS ------------------------------ */
