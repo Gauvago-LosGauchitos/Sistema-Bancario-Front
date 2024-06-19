@@ -126,6 +126,23 @@ export const buyed = async () => {
     }
 }
 
+//Transferencia 
+export const transfer = async (data) => {
+    try {
+        const response = await apiClient.post('/transfer/transfer', data,{
+            headers: {
+                'Authorization': localStorage.getItem('authToken') 
+            }
+        })
+        return response
+    } catch (error) {
+        return {
+            error: true,
+            error
+        }
+    }
+}
+
 // Register admin
 export const registerAdmin = async (userData) => {
     try {
