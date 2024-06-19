@@ -11,6 +11,8 @@ export const History = () => {
   const [filterType, setFilterType] = useState('');
   const { history } = useUser();
 
+  console.log(history)
+
 
   useEffect(() => {
     const timer = setTimeout(() => {

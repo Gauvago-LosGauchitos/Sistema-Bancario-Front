@@ -73,6 +73,20 @@ export const getUsers = async () => {
     }
 }
 
+
+//Mostros services
+export const listarService = async ()=>{
+    try {
+        const response = await apiClient.get('/services/listarServices')
+        return response
+    } catch (error) {
+        return {
+            error: true,
+            error
+        }
+    }
+}
+
 //Para obtener la divisa de dolar
 export const getExchangeRate = async (baseCurrency = 'USD', targetCurrency = 'GTQ') => { //aqui se setea el objetivo de cambio y la base
     try {

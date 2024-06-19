@@ -10,6 +10,7 @@ import { About } from './src/components/About/About.jsx';
 import { History } from './src/components/history/History.jsx';
 import { Perfil } from './src/components/Perfil/Perfil.jsx';
 import {Register} from './src/components/register/Register.jsx'
+import { Services } from './src/components/Service/Service.jsx';
 
 
 
@@ -27,6 +28,7 @@ export const AppRoutes = () => {
         <Route path='/History' element={<History />} />
         <Route path='/Perfil' element={<Perfil/>} />
         <Route path='/register' element={<Register />} />
+        <Route path='/Services' element={<Services />} />
 
         </Routes>
     </Router>
