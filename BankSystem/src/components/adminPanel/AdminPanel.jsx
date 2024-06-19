@@ -31,6 +31,8 @@ export const AdminPanel = () => {
     const [filteredAccounts, setFilteredAccounts] = useState([]);
     const navigate = useNavigate();
 
+    console.log(userFive)
+
 
     useEffect(() => {
         setFilteredAccounts(topAccounts);
@@ -92,29 +94,30 @@ export const AdminPanel = () => {
                         details = `
                             <ul>
                              <img src=${compra} alt="Compra Icon" class="movement-icon" />
-                                <li>Fecha: ${new Date(movement.date).toLocaleString()}</li>
-                                <li>Servicio: ${serviceName}</li>
-                                <li>Movimiento: ${movement.motion}</li>
+                                <li><strong>Fecha</strong>: ${new Date(movement.date).toLocaleString()}</li>
+                                <li><strong>Servicio</strong>: ${serviceName}</li>
+                                <li><strong>Movimiento</strong>: ${movement.motion}</li>
                             </ul>`;
                         break;
                     case 'DEPOSIT':
                         details = `
                             <ul>
                             <img src=${deposito} alt="Compra Icon" class="movement-icon" />
-                                <li>Fecha: ${new Date(movement.date).toLocaleString()}</li>
-                                <li>Monto: ${movement.amount}</li>
-                                <li>Cuenta depositada: ${movement.recipientAccount}</li>
-                                <li>Movimiento: ${movement.motion}</li>
+                                <li><strong>Fecha</strong>: ${new Date(movement.date).toLocaleString()}</li>
+                                <li><strong>Monto</strong>: ${movement.amount}</li>
+                                <li><strong>Cuenta depositada</strong>: ${movement.recipientAccount.accountNumber} || Dueño: ${movement.recipientAccount.client.username} </li>
+                                <li><strong>Movimiento</strong>: ${movement.motion}</li>
                             </ul>`;
                         break;
                     case 'TRANSFER':
                         details = `
                             <ul>
                             <img src=${transferencia} alt="Compra Icon" class="movement-icon" />
-                                <li>Fecha: ${new Date(movement.date).toLocaleString()}</li>
-                                <li>Monto: ${movement.amount}</li>
-                                <li>Destinatario: ${movement.recipientAccount}</li>
-                                <li>Cuenta: ${movement.rootAccount}</li>
+                                <li><strong>Fecha</strong>: ${new Date(movement.date).toLocaleString()}</li>
+                                <li><strong>Monto</strong>: ${movement.amount}</li>
+                                <li><strong>Destinatario</strong>: ${movement.recipientAccount.client.username} || No. Cuenta: ${movement.recipientAccount.accountNumber}</li>
+                                <li><strong>Proveniente de</strong>: ${movement.rootAccount.client.username} || No. Cuenta: ${movement.rootAccount.accountNumber}</li>
+                                <li><strong>Movimiento</strong>: ${movement.motion}</li>
                             </ul>`;
                         break;
                     default:
