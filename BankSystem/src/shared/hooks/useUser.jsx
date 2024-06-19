@@ -146,15 +146,27 @@ export const useUser = () => {
     };
 
     // Editar un usuario
-    const editUserHandler = async (username, userData) => {
+    const handleUpdateUser = async (userData) => {
         setLoading(true);
         setError(null);
+        
         if (userData.role === 'ADMIN') {
-            toast.error('No puedes actualizar a un admin')
+            toast.error('No puedes actualizar a un admin');
+            setLoading(false);
+            return;
         }
-
+    
         try {
-            const response = await editUser(username, userData);
+            const authToken = getToken();
+            const decodedToken = jwtDecode(authToken);
+            const loggedUsername = decodedToken.username;
+    
+            if (loggedUsername !== userData.username) {
+                throw new Error('No tienes permiso para actualizar este perfil');
+            }
+    
+            const response = await editUser(loggedUsername, userData);
+    
             if (response.error) {
                 console.error('Error al actualizar el usuario:', response.error);
                 setError('Error al actualizar el usuario');
@@ -274,7 +286,7 @@ export const useUser = () => {
         searchUser,
         userFound,
         setUserFound,
-        editUserHandler,
+        handleUpdateUser,
         history,
         fetchLastMovements,
         userFive,

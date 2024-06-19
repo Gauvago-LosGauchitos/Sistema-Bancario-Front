@@ -215,12 +215,30 @@ export const findUserByUsername = async (username) => {
     }
 };
 
-// Editar usuario
-export const editUser = async (username, userData) => {
+// Editar usuario con admin
+export const editUserAD = async (username, userData) => {
     try {
         const response = await apiClient.put('/user/updateUAd', { username, ...userData }, {
             headers: {
                 'Authorization': localStorage.getItem('authToken')
+            }
+        });
+        return response;
+    } catch (error) {
+        console.error(error);
+        return {
+            error: true,
+            errorObject: error
+        };
+    }
+};
+
+// Editar usuario sin admin
+export const editUser = async (username, userData) => {
+    try {
+        const response = await apiClient.put('/user/updateU', { username, ...userData }, {
+            headers: {
+                'Authorization': getToken()
             }
         });
         return response;
