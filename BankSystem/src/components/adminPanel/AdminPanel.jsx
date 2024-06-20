@@ -31,8 +31,6 @@ export const AdminPanel = () => {
     const [filteredAccounts, setFilteredAccounts] = useState([]);
     const navigate = useNavigate();
 
-    console.log(userFive)
-
 
     useEffect(() => {
         setFilteredAccounts(topAccounts);
