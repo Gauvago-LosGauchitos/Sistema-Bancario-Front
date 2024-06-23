@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { listarService } from '../../services/api.js';
+import { listarService, buyed } from '../../services/api.js';
 
 export const useService = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -23,6 +23,19 @@ export const useService = () => {
         }
     };
 
+    const bougth = async (service) =>{
+        setIsLoading(true)
+        try {
+            const response =  await buyed(service)
+            console.log(response)
+        } catch (err) {
+            console.error("Error en realizar la compra:", err);
+            setError(err.message);
+        } finally {
+            setIsLoading(false)
+        }
+    }
+
     useEffect(() => {
         listarS();
     }, []);
@@ -31,6 +44,7 @@ export const useService = () => {
         service,
         error,
         isLoading,
-        listarS
+        listarS,
+        bougth
     };
 };

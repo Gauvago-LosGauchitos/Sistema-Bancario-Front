@@ -78,7 +78,7 @@ export const getUsers = async () => {
 export const listarService = async ()=>{
     try {
         const response = await apiClient.get('/services/listarServices')
-        return response
+        return response.data
     } catch (error) {
         return {
             error: true,
@@ -128,17 +128,19 @@ export const deposit = async (dep) => {
 }
 
 //Compra
-export const buyed = async () => {
+export const buyed = async (service) => {
     try {
-        const response = await apiClient.post('/transfer/buyed')
+        const response = await apiClient.post('/transfer/buyed',{service},{
+            headers: {
+                'Authorization': localStorage.getItem('authToken') 
+            }
+        })
         return response
     } catch (error) {
-        return {
-            error: true,
-            error
-        }
+        toast.error(error.response.data.message)
     }
 }
+    
 
 //Transferencia 
 export const transfer = async (data) => {
