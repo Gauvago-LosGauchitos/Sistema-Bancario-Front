@@ -52,6 +52,10 @@ export const NavBar = () => {
     navigate('/Perfil')
   }
 
+  const handleServices = () => {
+    navigate('/Services')
+  }
+
   const handleLogout = () => {
     console.log('Estoy cerrando la sesión');
     localStorage.removeItem('user');
@@ -99,8 +103,11 @@ export const NavBar = () => {
             <div className="btn-navbar" >
               <button onClick={handleAbout} ><li>About</li></button>
             </div>
+            <div className="btn-navbar" >
+              <button onClick={handleServices} ><li>Services</li></button>
+            </div>
             <div className="btn-navbar" onClick={toggleDropdownService}>
-              <button ><li>Service</li></button>
+              <button ><li>Motion</li></button>
               <div className={`dropdown ${dropdownActiveService ? 'active' : ''}`}>
                 <ul className=".dropdown-content">
                   <li><span onClick={handleTransfer} className='btn-perfil'>Transacción</span></li>

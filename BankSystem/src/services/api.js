@@ -73,6 +73,20 @@ export const getUsers = async () => {
     }
 }
 
+
+//Mostros services
+export const listarService = async ()=>{
+    try {
+        const response = await apiClient.get('/services/listarServices')
+        return response.data
+    } catch (error) {
+        return {
+            error: true,
+            error
+        }
+    }
+}
+
 //Para obtener la divisa de dolar
 export const getExchangeRate = async (baseCurrency = 'USD', targetCurrency = 'GTQ') => { //aqui se setea el objetivo de cambio y la base
     try {
@@ -114,17 +128,19 @@ export const deposit = async (dep) => {
 }
 
 //Compra
-export const buyed = async () => {
+export const buyed = async (service) => {
     try {
-        const response = await apiClient.post('/transfer/buyed')
+        const response = await apiClient.post('/transfer/buyed',{service},{
+            headers: {
+                'Authorization': localStorage.getItem('authToken') 
+            }
+        })
         return response
     } catch (error) {
-        return {
-            error: true,
-            error
-        }
+        toast.error(error.response.data.message)
     }
 }
+    
 
 //Transferencia 
 export const transfer = async (data) => {
