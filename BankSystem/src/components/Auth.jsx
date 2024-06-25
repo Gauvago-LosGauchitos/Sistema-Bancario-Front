@@ -91,10 +91,6 @@ export const Auth = ({ isVisible, onClose }) => {
               </div>
               <button type="submit" disabled={isSubmitButtonDisabled}>Log In</button>
             </form>
-            <div className="bottom-link">
-              Don't have an account?
-              <a id="signup-link">Signup</a>
-            </div>
           </div>
         </div>
       </div>

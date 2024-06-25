@@ -16,6 +16,7 @@ import imgDefault from '../../assets/img/imgPerfil.png';
 import register from '../../assets/img/register.png';
 import delet from '../../assets/img/delete.png';
 import edit from '../../assets/img/editar.png';
+import service from '../../assets/img/registrarServicio.png';
 import compra from '../../assets/img/compra.png';
 import transferencia from '../../assets/img/transferencia.png';
 import deposito from '../../assets/img/deposito.png';
@@ -196,6 +197,14 @@ export const AdminPanel = () => {
                             <img src={edit} alt="icon" className="grid-icon" />
                             <div>
                                 <p className="stat-number">Editar a un usuario</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="grid-item">
+                        <div className="flex-container">
+                            <img src={service} alt="icon" className="grid-icon2" />
+                            <div>
+                                <p className="stat-number">Registrar un servicio</p>
                             </div>
                         </div>
                     </div>

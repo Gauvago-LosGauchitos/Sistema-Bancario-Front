@@ -129,9 +129,9 @@ export const buyed = async () => {
 //Transferencia 
 export const transfer = async (data) => {
     try {
-        const response = await apiClient.post('/transfer/transfer', data,{
+        const response = await apiClient.post('/transfer/transfer', data, {
             headers: {
-                'Authorization': localStorage.getItem('authToken') 
+                'Authorization': localStorage.getItem('authToken')
             }
         })
         return response
@@ -199,6 +199,7 @@ export const deleteUser = async (userData) => {
 
 // buscar un usuario por nombre de usuario
 export const findUserByUsername = async (username) => {
+    console.log(username)
     try {
         const response = await apiClient.post('/user/findUserByUsername', { username }, {
             headers: {
@@ -325,6 +326,109 @@ export const uploadImageRequest = async (formData) => {
         return response.data.imageUrl;
     } catch (error) {
         console.error('Error uploading image:', error);
-        throw error; 
+        throw error;
     }
 };
+
+// Función para buscar un usuario por nombre de usuario y obtener su cuenta asociada
+export const findUserAndAccountByUsername = async (username) => {
+    try {
+        const response = await apiClient.post(
+            '/user/findUserAndAccountByUsername',
+            { username },
+            {
+                headers: {
+                    Authorization: localStorage.getItem('authToken'),
+                },
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.error('Error finding user by username:', error);
+        toast.error(error.response.data.message);
+        throw error;
+    }
+};
+
+// Función para buscar usuarios por coincidencia de nombre de usuario
+export const searchUsersByUsername = async (username) => {
+    try {
+        const response = await apiClient.post('/user/search', { username });
+        return response.data.users;
+    } catch (error) {
+        console.error('Error searching users by username:', error);
+        toast.error(error.response.data.message);
+        throw error;
+    }
+};
+
+//Funcion para agregar favoritos
+export const addFavorite = async (data) => {
+    try {
+        const response = await apiClient.post('/favorite/register', data, {
+            headers: {
+                Authorization: localStorage.getItem('authToken'),
+            },
+        })
+
+        return response.data
+
+
+    } catch (error) {
+        error: true
+        errorObject: error
+        console.error('Error searching users by username:', error);
+        toast.error(error.response.data.message);
+        throw error;
+    }
+}
+
+//Listar favoritos de un usuario
+export const listFavorites = async () => {
+    try {
+        const response = await apiClient.get('/favorite/obtener', {
+            headers: {
+                Authorization: localStorage.getItem('authToken'),
+            },
+        })
+        return response.data
+    } catch (error) {
+        error: true
+        errorObject: error
+        console.error('Error searching favorites:', error);
+        toast.error(error.response.data.message);
+        throw error;
+    }
+}
+//Eliminar favorito
+export const deleteFavorite = async (id) => {
+    try {
+        const response = await apiClient.delete(`/favorite/deleteF/${id}`, {
+            headers: {
+                'Authorization': localStorage.getItem('authToken')
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error deleting favorite:', error);
+        toast.error(error.response.data.message);
+        throw error;
+    }
+}
+
+//Agragar un servicio
+export const addService = async (service) => {
+    try {
+        const response = await apiClient.post('/serviceregister', service, {
+            headers: {
+                'Authorization': localStorage.getItem('authToken')
+            }
+        });
+        return response.data;
+
+    } catch (error) {
+        console.error('Error deleting favorite:', error);
+        toast.error(error.response.data.message);
+        throw error;
+    }
+}
