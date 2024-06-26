@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { listarService, buyed } from '../../services/api.js';
+import { listarService, buyed, addService } from '../../services/api.js';
 
 export const useService = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -36,6 +36,20 @@ export const useService = () => {
         }
     }
 
+    //Agregar un servicio
+    const addNewService = async (service) => {
+        setIsLoading(true);
+        try {
+            const response = await addService(service);
+            console.log(response);
+        } catch (err) {
+            console.error("Error al agregar el servicio:", err);
+            setError(err.message);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     useEffect(() => {
         listarS();
     }, []);
@@ -45,6 +59,7 @@ export const useService = () => {
         error,
         isLoading,
         listarS,
-        bougth
+        bougth,
+        addNewService
     };
 };

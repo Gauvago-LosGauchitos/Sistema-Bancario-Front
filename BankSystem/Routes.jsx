@@ -16,7 +16,6 @@ import { Services } from './src/components/Service/Service.jsx';
 
 export const AppRoutes = () => {
   return (
-    <Router>
         <Routes>
         <Route path="/Home" element={<HomePage />} />
         <Route path="/" element={<Navigate to="/Home" />} />
@@ -28,8 +27,8 @@ export const AppRoutes = () => {
         <Route path='/History' element={<History />} />
         <Route path='/Perfil' element={<Perfil/>} />
         <Route path='/register' element={<Register />} />
+        <Route path='/Services' element={<Services />} />
 
         </Routes>
-    </Router>
   )
 }

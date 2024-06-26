@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { createRoot } from 'react-dom';
 import { NavBar } from '../Navbar/Navbar.jsx';
 import { Footer } from '../Footer/Footer.jsx';
 import { useUser } from '../../shared/hooks/useUser.jsx';
@@ -24,6 +25,7 @@ import iconAlert from '../../assets/img/gifAlertTransfer.gif';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { EditUserModal } from '../../assets/Modal/EditUserModal.jsx';
+import { ServiceForm } from '../services/ServiceForm.jsx';
 
 export const AdminPanel = () => {
     const { users, admins, loading, deleteUserHandler, exchangeRateEUR, exchangeRate, userFive, fetchLastMovements, setUserFive, topAccounts } = useUser();
@@ -168,6 +170,29 @@ export const AdminPanel = () => {
         setFilteredAccounts(sortedAccounts);
     };
 
+    const handleRegisterService = () => {
+        Swal.fire({
+            title: 'Registrar servicio',
+            html: '<div id="form-container"></div>', 
+            showCancelButton: false,
+            showConfirmButton: false,
+            showCloseButton: true,
+            cancelButtonText: 'Cancelar',
+            preConfirm: () => {
+                // Lógica para manejar la confirmación del formulario
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Lógica después de confirmar
+            }
+        });
+    
+        const root = document.getElementById('form-container');
+        if (root) {
+            createRoot(root).render(<ServiceForm />);
+        }
+    };
+
     return (
         <div>
             <NavBar />
@@ -201,7 +226,7 @@ export const AdminPanel = () => {
                         </div>
                     </div>
                     <div className="grid-item">
-                        <div className="flex-container">
+                        <div className="flex-container" onClick={handleRegisterService}>
                             <img src={service} alt="icon" className="grid-icon2" />
                             <div>
                                 <p className="stat-number">Registrar un servicio</p>

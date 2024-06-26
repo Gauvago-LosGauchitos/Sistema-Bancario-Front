@@ -5,12 +5,12 @@ import toast from "react-hot-toast";
 
 const apiClient = axios.create({
     baseURL: /*'https://sistema-bancario-backend-alpha.vercel.app/' ||*/ 'http://localhost:2670',
-    timeout: 30000
+    timeout: 90000
 })
 
 const exchangeRateApiClient = axios.create({
     baseURL: 'https://v6.exchangerate-api.com/v6/a298a62dc2043d8adf8db469/latest/',
-    timeout: 30000
+    timeout: 90000
 });
 
 export const loginRequest = async (user) => {
@@ -330,6 +330,7 @@ export const getAccountsMovements = async () => {
 
 //Carga de imagenes
 export const uploadImageRequest = async (formData) => {
+    console.log(formData)
     try {
         const response = await apiClient.post('/user/upload-image', formData, {
             headers: {
@@ -433,18 +434,18 @@ export const deleteFavorite = async (id) => {
 }
 
 //Agragar un servicio
-export const addService = async (service) => {
+export const addService = async (data) => {
+    console.log(data);
     try {
-        const response = await apiClient.post('/serviceregister', service, {
+        const response = await apiClient.post('/services/register', data, {
             headers: {
+                'Content-Type': 'multipart/form-data',
                 'Authorization': localStorage.getItem('authToken')
             }
         });
         return response.data;
-
     } catch (error) {
-        console.error('Error deleting favorite:', error);
-        toast.error(error.response.data.message);
+        console.error('Error al agregar el servicio:', error);
         throw error;
     }
-}
+};
