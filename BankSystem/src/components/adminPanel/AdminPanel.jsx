@@ -25,11 +25,16 @@ import iconAlert from '../../assets/img/gifAlertTransfer.gif';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { EditUserModal } from '../../assets/Modal/EditUserModal.jsx';
+import { EditServiceModal } from '../../assets/Modal/EditServiceModal.jsx';
 import { ServiceForm } from '../services/ServiceForm.jsx';
+import { useService } from '../../shared/hooks/useService.jsx';
+import editService from '../../assets/img/EditarServicio.png';
+import deleteService from '../../assets/img/EliminarServicio.png';
 
 export const AdminPanel = () => {
     const { users, admins, loading, deleteUserHandler, exchangeRateEUR, exchangeRate, userFive, fetchLastMovements, setUserFive, topAccounts } = useUser();
     const [userData, setUseData] = useState();
+    const {deleteAService} = useService()
     const [currentUser, setCurrentUser] = useState(null);
     const [filteredAccounts, setFilteredAccounts] = useState([]);
     const navigate = useNavigate();
@@ -72,6 +77,42 @@ export const AdminPanel = () => {
                     Swal.fire(
                         'Error!',
                         'Ocurrió un error al intentar eliminar el usuario.',
+                        'error'
+                    );
+                }
+            }
+        });
+    };
+
+    const handleDeleteService = () => {
+        Swal.fire({
+            title: 'Eliminar Servicio',
+            html: `<input id="swal-input1" class="swal2-input" placeholder="Ingrese el nombre de usuario">`,
+            showCancelButton: true,
+            confirmButtonText: 'Eliminar',
+            cancelButtonText: 'Cancelar',
+            focusConfirm: false,
+            preConfirm: () => {
+                const nameService = Swal.getPopup().querySelector('#swal-input1').value;
+                if (!nameService) {
+                    Swal.showValidationMessage('El campo Nombre del nombre del servicio es obligatorio');
+                }
+                return { nameService: nameService };
+            }
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    await deleteAService(result.value.nameService);
+                    Swal.fire(
+                        'Eliminado!',
+                        `El servicio ${result.value.nameService} ha sido eliminado.`,
+                        'success'
+                    );
+                } catch (error) {
+                    console.error('Error al eliminar el servicio:', error);
+                    Swal.fire(
+                        'Error!',
+                        'Ocurrió un error al intentar eliminar el servicio.',
                         'error'
                     );
                 }
@@ -179,11 +220,10 @@ export const AdminPanel = () => {
             showCloseButton: true,
             cancelButtonText: 'Cancelar',
             preConfirm: () => {
-                // Lógica para manejar la confirmación del formulario
             }
         }).then((result) => {
             if (result.isConfirmed) {
-                // Lógica después de confirmar
+                
             }
         });
     
@@ -233,6 +273,25 @@ export const AdminPanel = () => {
                             </div>
                         </div>
                     </div>
+                    <div onClick={handleDeleteService} className="grid-item">
+                        <div className="flex-container">
+                            <img src={deleteService} alt="icon" className="grid-icon2" />
+                            <div>
+                                <p className="stat-number">Eliminar a un Servicio</p>
+                                <p className="stat-label"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="grid-item">
+                        <div className="flex-container">
+                            <EditServiceModal />
+                            <img src={editService} alt="icon" className="grid-icon2" />
+                            <div>
+                                <p className="stat-number">Editar a un servicio</p>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
 
                 <Box className="chart-container" sx={{ mb: 3 }}>

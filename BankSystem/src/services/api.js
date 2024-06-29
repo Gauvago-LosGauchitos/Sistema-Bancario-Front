@@ -413,10 +413,10 @@ export const listFavorites = async () => {
         error: true
         errorObject: error
         console.error('Error searching favorites:', error);
-        toast.error(error.response.data.message);
         throw error;
     }
 }
+
 //Eliminar favorito
 export const deleteFavorite = async (id) => {
     try {
@@ -443,9 +443,69 @@ export const addService = async (data) => {
                 'Authorization': localStorage.getItem('authToken')
             }
         });
+        toast.success('Servicio registrado!')
         return response.data;
     } catch (error) {
         console.error('Error al agregar el servicio:', error);
+        toast.error(error.response.data.message);
         throw error;
     }
 };
+
+//Eliminar un servicio
+export const deleteService = async (name) => {
+    try {
+        const response = await apiClient.delete('/services/deleteS', {name}, {
+            headers: {
+                'Authorization': localStorage.getItem('authToken') // Obtener el token del localStorage
+            },
+            data: {name}
+        });
+        return response;
+    } catch (error) {
+        console.error('Error al eliminar el servicio:', error)
+        toast.error(error.response.data.message);
+        throw error;
+    }
+};
+
+//Editar un servicio
+export const editService = async (name, data) => {
+    console.log(name)
+    console.log(data)
+    try {
+        const response = await apiClient.put(`/services/updateS/${name}`, data, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'Authorization': localStorage.getItem('authToken') // Obtener el token del localStorage
+            },
+        });
+        toast.success('Servicio Editado')
+        return response;
+    } catch (error) {
+        console.error('Error al editar el servicio:', error)
+        toast.error(error.response.data.message);
+        throw error;
+    }
+};
+
+//Buscar un servicio
+export const searchService = async (name) => {
+
+    try {
+        const response = apiClient.post('/services/searchByName', {name}, {
+            headers: {
+                'Authorization': localStorage.getItem('authToken') // Obtener el token del localStorage
+            }
+        })
+        return response
+        
+        
+    } catch (error) {
+        console.error('Error buscando el servicio', error)
+        toast.error(error.response.data.message)
+        throw error;
+        
+    }
+}
+
