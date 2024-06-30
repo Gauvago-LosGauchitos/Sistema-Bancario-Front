@@ -161,14 +161,16 @@ export const transfer = async (data) => {
 
 //Revertir tranferencia
 export const reverTransfer = async (idTransfer) => {
+    console.log(idTransfer)
     try {
-        const response = await apiClient.post('/transfer/revertTransfer', idTransfer, {
+        const response = await apiClient.post('/transfer/revertTransfer', {id: idTransfer}, {
             headers: {
                 'Authorization': localStorage.getItem('authToken')
             }
         })
         return response
     } catch (error) {
+        console.error(error)
         return {
             error: true,
             error

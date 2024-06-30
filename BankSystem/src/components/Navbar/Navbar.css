@@ -196,13 +196,11 @@
   }
   
   #header .btn-navbar button:hover {
-    background-color: #353c3f;
     color: #ffbc0e;
     transform: scale(1.1);
   }
 
   #header .btn-navbar2 button:hover {
-    background-color: #353c3f;
     color: #ffbc0e;
     transform: scale(1.1);
   }
@@ -259,10 +257,6 @@
   .img-logito{
     width: 100x;
     height: 50px;
-  }
-
-  #header{
-
   }
 
  

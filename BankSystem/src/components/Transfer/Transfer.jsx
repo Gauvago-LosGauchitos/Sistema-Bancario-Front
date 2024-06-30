@@ -85,6 +85,7 @@ export const Transfer = () => {
                 formData.recipientAccount.value,
                 formData.amount.value
             )
+            console.log(idTransfer.data.newTransfer._id)
             resetForm()
             Swal.fire({
                 title: 'Transfer Completed',
@@ -100,7 +101,7 @@ export const Transfer = () => {
             }).then(async (result) => {
                 if (result.isConfirmed) {
                     try {
-                        await revert(idTransfer)
+                        await revert(idTransfer.data.newTransfer._id)
                     } catch (error) {
                         console.error('Error Revert Transfer:', error)
                     }

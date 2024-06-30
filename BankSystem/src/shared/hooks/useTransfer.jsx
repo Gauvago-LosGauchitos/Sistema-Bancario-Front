@@ -17,8 +17,9 @@ export const useTransfer = ()=>{
                 throw new Error(response.error)
             }
             toast.success('Transfer completed successfully')
-            return response.idTransfer // Return del id de la transaccion
             console.log(response)
+            return response
+           
         } catch (error) {
             toast.error('Transfer error')
         } finally {
@@ -27,6 +28,7 @@ export const useTransfer = ()=>{
     }
 
     const revert = async(idTransfer)=>{
+        console.log(idTransfer)
         setIsLoading(true)
         try {
             const response =  await reverTransfer(idTransfer)
