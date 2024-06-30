@@ -159,6 +159,23 @@ export const transfer = async (data) => {
     }
 }
 
+//Revertir tranferencia
+export const reverTransfer = async (idTransfer) => {
+    try {
+        const response = await apiClient.post('/transfer/revertTransfer', idTransfer, {
+            headers: {
+                'Authorization': localStorage.getItem('authToken')
+            }
+        })
+        return response
+    } catch (error) {
+        return {
+            error: true,
+            error
+        }
+    }
+}
+
 // Register admin
 export const registerAdmin = async (userData) => {
     try {
