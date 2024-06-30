@@ -22,6 +22,7 @@ import { useUserDetails } from '../../shared/hooks/useUserDetails.jsx';
 import profileDefault from '../../assets/img/defaultUser.png';
 import Swal from 'sweetalert2';
 import cajaFuerte from '../../assets/img/cajaFuerte.png';
+import deleteFavorite from '../../assets/img/eliminarFavorito.png';
 import { Auth } from '../Auth';
 
 
@@ -45,7 +46,7 @@ export const HomePage = () => {
 
   const closeLoginPopup = () => {
     setIsLoginVisible(false);
-    document.body.style.overflow = ''; 
+    document.body.style.overflow = '';
   }
 
 
@@ -62,7 +63,7 @@ export const HomePage = () => {
   };
 
   const handleBuyed = () => {
-    navigate('/Buyed')
+    navigate('/Services')
   };
 
 
@@ -119,10 +120,9 @@ export const HomePage = () => {
   }
 
 
-  const favoriteAccounts = favorites
-
+  const favoriteAccounts = favorites;
   const itemsPerPage = 3;
-  const totalSlides = Math.ceil(favoriteAccounts?.length / 3);
+  const totalSlides = Math.ceil(favoriteAccounts?.length / itemsPerPage);
 
   const prevSlide = () => {
     setCurrentSlide(currentSlide === 0 ? totalSlides - 1 : currentSlide - 1);
@@ -269,38 +269,29 @@ export const HomePage = () => {
                   <div className="slider">
                     <button className="slider-btn prev" onClick={prevSlide}>‹</button>
                     <div className="slider-viewport">
-                      <div className="slider-content" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
-                        {favoriteAccounts?.map(account => (
-                          <div key={account.id} >
-                            <div >
-                              <div class="cardFavorite">
-                                <div class="image_container">
-                                  <img src={account.accountFavorite.client.imgProfile || profileDefault} className='image' alt='fotoDeperfil' />
-                                </div>
-
-                                <div >
-                                  <div class="titleCardFavorite" >
-                                    <span>No. account: </span>
-                                  </div>
-
-                                </div>
-                                <div class="titleCardFavorite">
-                                  <span>{account?.accountFavorite?.accountNumber}</span>
-                                </div>
-                                <div class="action">
-                                  <div class="priceCardFavorite">
-                                    <span>{account.alias} </span>
-                                  </div>
-                                  <button class="animated-button">
-                                    <span onClick={() => handleDeleteFavorite(account._id)}>Eliminar</span>
-                                    <span></span>
-                                  </button>
-                                </div>
+                      <div className="slider-content" style={{ transform: `translateX(-${currentSlide * (100 / totalSlides)}%)` }}>
+                        {favoriteAccounts?.map((account, index) => (
+                          <div key={account.id} className="slider-item">
+                            <div className="cardFavorite">
+                              <div className="image_container">
+                                <img src={account.accountFavorite.client.imgProfile || profileDefault} className='image' alt='fotoDeperfil' />
                               </div>
-
+                              <div className="titleCardFavorite">
+                                <span>No. account: </span>
+                              </div>
+                              <div className="titleCardFavorite">
+                                <span>{account?.accountFavorite?.accountNumber}</span>
+                              </div>
+                              <div className="action">
+                                <div className="titleCardFavorite">
+                                  <span>{account.alias} </span>
+                                </div>
+                                <button class="animated-button">
+                                  <span onClick={() => handleDeleteFavorite(account._id)}><img className='iconFav' src={deleteFavorite} /></span>
+                                  <span></span>
+                                </button>
+                              </div>
                             </div>
-
-
                           </div>
                         ))}
                       </div>
@@ -320,3 +311,5 @@ export const HomePage = () => {
     </div>
   );
 };
+
+

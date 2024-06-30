@@ -211,7 +211,11 @@
 .slider-content {
   display: flex;
   transition: transform 0.5s ease-in-out;
-  width: calc(300% / 3);
+  width: 100%;
+}
+
+.slider-item {
+  min-width: calc(100% / 3); /* Ajustar basado en itemsPerPage */
 }
 
 .cardFavorite:hover {
@@ -256,6 +260,11 @@
   transition: transform 0.3s, box-shadow 0.3s;
   min-width: calc(100% / 3);
   flex-shrink: 0;
+}
+
+.cardFavorite:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .image_container {
@@ -337,6 +346,12 @@
   border-radius: 50%;
   opacity: 0;
   transition: all 0.8s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.iconFav{
+  width: 30px;
+  height: 30px;
+  margin-right: 20px;
 }
 
 .animated-button span:first-child {

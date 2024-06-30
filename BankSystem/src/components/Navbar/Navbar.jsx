@@ -61,7 +61,7 @@ export const NavBar = () => {
     localStorage.removeItem('user');
     localStorage.removeItem('authToken');
     navigate('/home')
-    window.location.reload(); 
+    window.location.reload();
   };
 
   const toggleDropdown = () => {
@@ -83,7 +83,7 @@ export const NavBar = () => {
 
   const closeLoginPopup = () => {
     setIsLoginVisible(false);
-    document.body.style.overflow = ''; 
+    document.body.style.overflow = '';
   }
 
   useEffect(() => {
@@ -111,19 +111,31 @@ export const NavBar = () => {
               <div className={`dropdown ${dropdownActiveService ? 'active' : ''}`}>
                 <ul className=".dropdown-content">
                   <li><span onClick={handleTransfer} className='btn-perfil'>Transacción</span></li>
-                  <li><span onClick={handleDeposit} className='btn-perfil'>Déposito</span></li>
-                  <li><span onClick={handleBuyed} className='btn-perfil'>Compra </span></li>
+                  {!loading && user && user.userLogged && (
+                    <div>
+                    {user.userLogged.role === 'ADMIN' && (
+                      <li><span onClick={handleDeposit} className='btn-perfil'>Déposito</span></li>
+                    )}
+                    </div>
+                  )}
+                  
+                  
                 </ul>
               </div>
             </div>
           </ul>
         </nav>
         <div>
-          <div className="btn-navbar" onClick={toggleDropdown}>
+          <div className="btn-navbar2" onClick={toggleDropdown}>
             <div>
-              <div className="btn-navbar" onClick={toggleDropdown}>
+              <div className="btn-navbar2" onClick={toggleDropdown}>
                 {isLogged === false ? (
-                  <div onClick={openLoginPopup}>Inicia sesion</div>
+                  <button onClick={openLoginPopup} class="buttonLog">
+                  <span class="button_lg">
+                    <span class="button_sl"></span>
+                    <span class="button_text">Logueate!</span>
+                  </span>
+                </button>
                 ) : (
                   <div>
                     {!loading && user && user.userLogged && (
@@ -133,10 +145,11 @@ export const NavBar = () => {
                           <ul className="dropdown-content">
                             <li><span onClick={handlePerfil} className='btn-perfil'>Profile</span></li>
                             <li><span onClick={handleHistory} className='btn-perfil'>History</span></li>
-                            <li><span className='btn-perfil' onClick={handleLogout}>LogOut</span></li>
                             {user.userLogged.role === 'ADMIN' && (
                               <li><span className='btn-perfil' onClick={handleAdminPanel}>Admin Panel</span></li>
                             )}
+                            <li><span className='btn-perfil' onClick={handleLogout}>LogOut</span></li>
+
                           </ul>
                         </div>
                       </div>
