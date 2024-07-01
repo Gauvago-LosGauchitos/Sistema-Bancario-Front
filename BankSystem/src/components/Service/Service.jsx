@@ -10,21 +10,16 @@ import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { Spinner } from "../../assets/spinner/Spinner"
 import Swal from "sweetalert2";
 
-
-
-
 export const Services = () => {
     const [loading, setLoading] = useState(true)
-    const { service, isLoading, bougth } = useService()
+    const { service, isLoading, bougth, balance } = useService()
 
     let services = [];
     if (service && service.services) {
-        services = Array.isArray(service.
-            services) ? service.services : [service.services];
+        services = Array.isArray(service.services) ? service.services : [service.services];
     }
 
-
-    const handleBuyed = (service)=>{
+    const handleBuyed = (service) => {
         Swal.fire({
             title: 'Realizar Compra',
             showCancelButton: true,
@@ -82,13 +77,16 @@ export const Services = () => {
                                 </ul>
                                 <button className="comprar-1" onClick={()=> handleBuyed(service)}>Comprar</button>
                             </div>
-
                         ))}
                     </div>
                     <Footer />
+                    {balance !== null && (
+                        <div className="balance">
+                            <h3>Balance actual: Q{balance}</h3>
+                        </div>
+                    )}
                 </div>
             )}
         </div>
-        //serviceItem
     )
 }

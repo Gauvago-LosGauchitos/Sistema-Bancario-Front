@@ -130,17 +130,18 @@ export const deposit = async (dep) => {
 //Compra
 export const buyed = async (service) => {
     try {
-        const response = await apiClient.post('/transfer/buyed',{service},{
+        const response = await apiClient.post('/transfer/buyed', { service }, {
             headers: {
-                'Authorization': localStorage.getItem('authToken') 
+                'Authorization': localStorage.getItem('authToken')
             }
-        })
-        return response
+        });
+        return response.data;  //nuevo balance viene en la respuesta
     } catch (error) {
-        toast.error(error.response.data.message)
+        console.error('API error response:', error.response);
+        toast.error(error.response?.data?.message || 'Error en la compra');
+        throw error;  // Lanza el error para que pueda ser manejado por la llamada de función
     }
-}
-    
+};
 
 //Transferencia 
 export const transfer = async (data) => {
