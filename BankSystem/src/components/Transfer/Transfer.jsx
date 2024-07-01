@@ -85,6 +85,15 @@ export const Transfer = () => {
                 formData.recipientAccount.value,
                 formData.amount.value
             )
+            if (idTransfer.data.newTransfer.rootAccount === idTransfer.data.newTransfer.recipientAccount) {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'The origin and recipient accounts cannot be the same.',
+                    icon: 'error',
+                });
+                return;
+            }
+            console.log(idTransfer.data.newTransfer.rootAccount)
             console.log(idTransfer.data.newTransfer._id)
             resetForm()
             Swal.fire({
