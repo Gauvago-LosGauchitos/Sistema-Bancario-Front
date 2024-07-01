@@ -8,7 +8,6 @@ import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
 import { useUser } from '../../shared/hooks/useUser';
-import Swal from 'sweetalert2';
 
 const style = {
     position: 'absolute',
@@ -23,7 +22,7 @@ const style = {
 };
 
 export const EditUserModal = () => {
-    const { searchUser, userFound, editUserHandler, loading, error, fetchUsers } = useUser(); // Usar el hook useUser
+    const { searchUser, userFound, editUserHandler, loading, error, fetchUsers } = useUser(); 
     const [open, setOpen] = useState(false);
     const [searchUsername, setSearchUsername] = useState('');
     const [userData, setUserData] = useState({

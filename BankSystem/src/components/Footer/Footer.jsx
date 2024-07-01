@@ -62,8 +62,6 @@ export const Footer = () => {
                         <h6>Services</h6>
                         <ul className='links'>
                             <li><a onClick={handleTransfer}>Transaccion</a></li>
-                            <li><a onClick={handleDeposit}>Deposito</a></li>
-                            <li><a onClick={handleBuyed}>Compra</a></li>
                         </ul>
                     </div>
                     <div className='footer-widget'>

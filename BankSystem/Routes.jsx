@@ -1,8 +1,8 @@
-import React from 'react'
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import React from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { AuthPage } from './src/Pages/Auth/AuthPage';
 import { HomePage } from './src/components/HomePage/HomePage';
-import {Transfer} from './src/components/Transfer/Transfer.jsx'
+import { Transfer } from './src/components/Transfer/Transfer.jsx';
 import { Deposit } from './src/components/Deposit/Deposit.jsx';
 import { Buyed } from './src/components/Buyed/Buyed.jsx';
 import { AdminPanel } from './src/components/adminPanel/AdminPanel.jsx';
@@ -16,7 +16,6 @@ import { Services } from './src/components/Service/Service.jsx';
 
 export const AppRoutes = () => {
   return (
-    <Router>
         <Routes>
         <Route path="/Home" element={<HomePage />} />
         <Route path="/" element={<Navigate to="/Home" />} />
@@ -31,8 +30,5 @@ export const AppRoutes = () => {
         <Route path='/Services' element={<Services />} />
 
         </Routes>
-    </Router>
   )
 }
-
-

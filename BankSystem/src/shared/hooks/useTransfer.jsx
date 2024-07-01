@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import toast from "react-hot-toast"
-import { transfer } from "../../services/api"
+import { transfer, reverTransfer } from "../../services/api"
 
 export const useTransfer = ()=>{
     const [isLoading, setIsLoading] = useState(false)
@@ -13,15 +13,40 @@ export const useTransfer = ()=>{
                 amount
             }
             const response =  await transfer(tran)
+            if (response.error) {
+                throw new Error(response.error)
+            }
+            toast.success('Transfer completed successfully')
             console.log(response)
+            return response
+           
         } catch (error) {
-            toast.error('transfer error')
+            toast.error('Transfer error')
         } finally {
             setIsLoading(false)
         }
     }
+
+    const revert = async(idTransfer)=>{
+        console.log(idTransfer)
+        setIsLoading(true)
+        try {
+            const response =  await reverTransfer(idTransfer)
+            if(response.error) {
+                throw new Error(response.error)
+            }
+            toast.success('Transfer successfully reversed')
+            console.log(response)
+        }catch(error) {
+            toast.error('Failed to reverse transfer')
+        } finally {
+            setIsLoading(false)
+        }    
+    }
+    
     return {
         transferencia,
+        revert,
         isLoading
       }
 }

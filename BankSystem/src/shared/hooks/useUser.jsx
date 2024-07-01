@@ -1,6 +1,8 @@
-import { useState, useEffect } from "react";
-import { getLoguedUser, getAdmins, getUsers, deleteUser, findUserByUsername, editUser, getExchangeRate, getExchangeRateEUR, getUserHistory, getLastMovements, getAccountsMovements, uploadImageRequest } from "../../services/api"; // Import editUser
+import { useState, useEffect, useCallback } from "react";
+import { getLoguedUser, getAdmins, getUsers, deleteUser, findUserByUsername, editUser, getExchangeRate, getExchangeRateEUR, getUserHistory, getLastMovements, getAccountsMovements, uploadImageRequest, findUserAndAccountByUsername, searchUsersByUsername } from "../../services/api"; // Import editUser
 import toast from "react-hot-toast";
+import { getToken } from "../../utils/auth";
+import { jwtDecode } from "jwt-decode";
 
 export const useUser = () => {
     const [user, setUser] = useState(null);
@@ -15,6 +17,9 @@ export const useUser = () => {
     const [exchangeRate, setExchangeRate] = useState(null);
     const [exchangeRateEUR, setExchangeRateEUR] = useState(null);
     const [history, setHistory] = useState()
+    const [params, setParams] = useState()
+    const [userResult, setUserResult] = useState(null)
+
 
     const fetchUser = async () => {
         setLoading(true);
@@ -149,24 +154,48 @@ export const useUser = () => {
     const handleUpdateUser = async (userData) => {
         setLoading(true);
         setError(null);
-        
+
         if (userData.role === 'ADMIN') {
             toast.error('No puedes actualizar a un admin');
             setLoading(false);
             return;
         }
-    
+
         try {
             const authToken = getToken();
             const decodedToken = jwtDecode(authToken);
             const loggedUsername = decodedToken.username;
-    
+
             if (loggedUsername !== userData.username) {
                 throw new Error('No tienes permiso para actualizar este perfil');
             }
-    
+
             const response = await editUser(loggedUsername, userData);
-    
+
+            if (response.error) {
+                console.error('Error al actualizar el usuario:', response.error);
+                setError('Error al actualizar el usuario');
+            } else {
+                await fetchUsers();
+                await fetchAdmins();
+            }
+        } catch (error) {
+            setError("Error al actualizar el usuario");
+            console.error("Error al actualizar el usuario:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const editUserHandler = async (username, userData) => {
+        setLoading(true);
+        setError(null);
+        if (userData.role === 'ADMIN') {
+            toast.error('No puedes actualizar a un admin')
+        }
+
+        try {
+            const response = await editUser(username, userData);
             if (response.error) {
                 console.error('Error al actualizar el usuario:', response.error);
                 setError('Error al actualizar el usuario');
@@ -237,8 +266,8 @@ export const useUser = () => {
             } else {
                 setTopAccounts(response.data.accounts);
             }
-            
-            
+
+
         } catch (error) {
             setError("Error al Encontrar las cuentas con mas movimientos ");
             console.error("Error al Encontrar las cuentas con mas movimientos", error);
@@ -252,16 +281,64 @@ export const useUser = () => {
     const handleUploadImage = async (imageFile) => {
         setLoading(true);
         setError(null);
-        
+
         try {
-            const response = await uploadImageRequest(imageFile); 
-            setImageUrl(response.data.imageUrl); 
+            const response = await uploadImageRequest(imageFile);
+            setImageUrl(response.data.imageUrl);
             setLoading(false);
         } catch (error) {
             setLoading(false);
-            setError(error.response?.data?.message || 'Error uploading image'); 
+            setError(error.response?.data?.message || 'Error uploading image');
         }
     };
+
+    const searchUserByUsername = async (username) => {
+        setLoading(true);
+        setError(null);
+        try {
+            const response = await findUserAndAccountByUsername(username);
+            if (response.error) {
+                setUserFound(null);
+                toast.error(response.errorObject.response.data.message);
+                console.error('Error al buscar el usuario:', response.errorObject.response.data);
+                setError('Error al buscar el usuario');
+            } else {
+                setUserResult(response);
+                console.log('UserResult:', response); // Asegúrate de que los datos están correctos
+            }
+        } catch (error) {
+            setError("Error al buscar el usuario");
+            console.error("Error al buscar el usuario:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    //Para mostrar coincidencias
+    const handleSearchByUsername = async (username) => {
+        try {
+            const response = await searchUsersByUsername(username);
+            if (response.error) {
+                setUserFound(null);
+                toast.error(response.errorObject.response.data.message);
+                console.error('Error al buscar el usuario:', response.errorObject.response.data);
+                setError('Error al buscar el usuario');
+            } else {
+                setParams(response);
+            }
+            
+        } catch (error) {
+            setError("Error al buscar el usuario");
+            console.error("Error al buscar el usuario:", error);
+        } finally {
+            setLoading(false);
+        }
+            
+        }
+        
+
+        const isUserLoaded = !!userResult;
+
 
 
     useEffect(() => {
@@ -284,7 +361,6 @@ export const useUser = () => {
         exchangeRateEUR,
         deleteUserHandler,
         searchUser,
-        userFound,
         setUserFound,
         handleUpdateUser,
         history,
@@ -293,6 +369,14 @@ export const useUser = () => {
         setUserFive,
         topAccounts,
         imageUrl,
-        handleUploadImage
+        handleUploadImage,
+        searchUserByUsername,
+        params,
+        setParams,
+        handleSearchByUsername,
+        userFound,
+        userResult,
+        isUserLoaded,
+        editUserHandler
     };
 };

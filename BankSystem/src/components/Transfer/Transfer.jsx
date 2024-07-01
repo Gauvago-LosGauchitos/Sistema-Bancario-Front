@@ -4,20 +4,22 @@ import { Spinner } from "../../assets/spinner/Spinner"
 import { useState, useEffect } from "react"
 import { useTransfer } from "../../shared/hooks/useTransfer"
 import { Input } from "../input"
-import toast from "react-hot-toast"
-import { validateAmount, 
-        validateAccountNumber,
-        amountValidationMessage,
-        accountNumberValidationMessage } from "../../shared/validators/validator"
+import Swal from "sweetalert2"
+import {
+    validateAmount,
+    validateAccountNumber,
+    amountValidationMessage,
+    accountNumberValidationMessage
+} from "../../shared/validators/validator"
 import "./Transfer.css"
 
 export const Transfer = () => {
     const [loading, setLoading] = useState(true)
-    const { transferencia, isLoading } = useTransfer()
-    
+    const { transferencia, revert, isLoading } = useTransfer()
+
     const [formData, setFormData] = useState({
-        recipientAccount: {value: "", isValid: false, showError: false},
-        amount: {value: "", isValid: false, showError: false}
+        recipientAccount: { value: "", isValid: false, showError: false },
+        amount: { value: "", isValid: false, showError: false }
     })
 
     const isSubmitButtonDisabled = !Object.values(formData).every(field => field.isValid);
@@ -75,18 +77,41 @@ export const Transfer = () => {
         })
     }
 
-    const handleTranfer = async (e) =>{
+
+    const handleTranfer = async (e) => {
         e.preventDefault()
         try {
-         await transferencia(
-            formData.recipientAccount.value,
-            formData.amount.value
+            const idTransfer = await transferencia(
+                formData.recipientAccount.value,
+                formData.amount.value
             )
-            toast.success('Transfer completed successfully')
+            console.log(idTransfer.data.newTransfer._id)
             resetForm()
+            Swal.fire({
+                title: 'Transfer Completed',
+                text: 'You have one minute to revert the transfer.',
+                icon: 'success',
+                timer: 60000, // 60 segs
+                showCancelButton: true,
+                confirmButtonText: 'Revert Transfer',
+                cancelButtonText: 'Cancel',
+                willClose: () => {
+                    clearTimeout(timer)
+                }
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    try {
+                        await revert(idTransfer.data.newTransfer._id)
+                    } catch (error) {
+                        console.error('Error Revert Transfer:', error)
+                    }
+                }
+            })
+            const timer = setTimeout(() => {
+                Swal.close()
+            }, 60000)
         } catch (error) {
-            console.error('Error Transfer:', error);
-            toast.error('Error Transfer');
+            console.error('Error Transfer:', error)
         }
     }
 
@@ -103,10 +128,10 @@ export const Transfer = () => {
             ) : (
                 <div>
                     <NavBar />
-                    
+
                     <br />
                     <center><div className="modal">
-                        <form className="form"  onSubmit={handleTranfer}>
+                        <form className="form" onSubmit={handleTranfer}>
                             <div class="separator">
                                 <hr className="line" />
                                 <h1>Transacción</h1>
@@ -115,38 +140,38 @@ export const Transfer = () => {
                             <div className="credit-card-info--form">
                                 <div className="input_container">
                                     <label className="input_label">Receiving account</label>
-                                    <Input 
-                                        field="recipientAccount" 
-                                        name="RecipientAccount" 
-                                        className="input_field" 
-                                        type="number" 
+                                    <Input
+                                        field="recipientAccount"
+                                        name="RecipientAccount"
+                                        className="input_field"
+                                        type="number"
                                         value={formData.recipientAccount.value}
                                         onChangeHandler={handleValueChange}
                                         onBlurHandler={handleValidationOnBlur}
                                         showErrorMessage={formData.recipientAccount.showError}
                                         validationMessage={accountNumberValidationMessage}
-                                        placeholder="0000 0000 0000 0000" 
-                                        />
+                                        placeholder="0000 0000 0000 0000"
+                                    />
                                 </div>
                                 <div className="input_container">
                                     <label className="input_label">Amount</label>
-                                    <Input 
-                                        field="amount" 
+                                    <Input
+                                        field="amount"
                                         name="Amount"
-                                        className="input_field" 
-                                        type="number" 
-                                        value={formData.amount.value}                 
+                                        className="input_field"
+                                        type="number"
+                                        value={formData.amount.value}
                                         onChangeHandler={handleValueChange}
                                         onBlurHandler={handleValidationOnBlur}
                                         showErrorMessage={formData.amount.showError}
                                         validationMessage={amountValidationMessage}
                                         placeholder="Q 00.00"
-                                        />
+                                    />
                                 </div>
                             </div>
                             <button className="purchase--btn"
                                 disabled={isSubmitButtonDisabled || isLoading}>
-                                    Checkout
+                                Checkout
                             </button>
                         </form>
                     </div></center>
