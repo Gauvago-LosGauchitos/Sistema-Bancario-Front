@@ -128,7 +128,7 @@ export const deposit = async (dep) => {
 }
 
 //Compra
-export const buyed = async (service) => {
+export const buyed = async (service) => { 
     try {
         const response = await apiClient.post('/transfer/buyed', { service }, {
             headers: {
