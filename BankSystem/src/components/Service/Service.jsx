@@ -14,7 +14,6 @@ export const Services = () => {
     const [loading, setLoading] = useState(true)
     const { service, isLoading, bougth, balance } = useService()
 
-
     let services = [];
     if (service && service.services) {
         services = Array.isArray(service.services) ? service.services : [service.services];
@@ -65,7 +64,7 @@ export const Services = () => {
                     <div className="galeria">
                         {!isLoading && Array.isArray(service) && service.map(service => (
                             <div className="contenido" key={service._id}>
-                                <img className="mi-imagen" src={service.img || imgCompra} alt="" />
+                                <img className="mi-imagen" src={imgCompra} alt="" />
                                 <h3>{service.name}</h3>
                                 <p className="eeeeDinosaurio">{service.description}</p>
                                 <h6 className="eee">Q{service.price}</h6>
