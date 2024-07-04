@@ -1,4 +1,4 @@
-.noseQ {
+.parte1 {
     margin: 0;
     font-family: sans-serif;
     background: #f2f2f2;
@@ -51,20 +51,20 @@ a {
     display: block;
 }
 
-.eeeeDinosaurio {
+.Descrip {
     text-align: center;
     color: #b2bec3;
     padding-top: 0 8px;
 }
 
-.eee {
+.Price {
     font-size: 26px;
     text-align: center;
     color: #222f3e;
     margin: 0;
 }
 
-.waosxd {
+.parte2 {
     list-style: none;
     display: flex;
     justify-content: center;
@@ -72,7 +72,7 @@ a {
     padding-top: 0;
 }
 
-.xddd {
+.start1 {
     padding-top: 5px;
 }
 
@@ -151,4 +151,22 @@ a {
     border-bottom-right-radius: 20px;
     border-bottom-left-radius: 20px;
     background: #ff9f43;
+}
+
+@media (max-width: 1200px) {
+    .contenido {
+        width: 30%;
+    }
+}
+
+@media (max-width: 992px) {
+    .contenido {
+        width: 45%;
+    }
+}
+
+@media (max-width: 768px) {
+    .contenido {
+        width: 100%;
+    }
 }

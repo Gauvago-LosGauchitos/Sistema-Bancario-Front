@@ -59,21 +59,21 @@ export const Services = () => {
             {loading ? (
                 <Spinner />
             ) : (
-                <div className="noseQ">
+                <div className="parte1">
                     <NavBar />
                     <div className="galeria">
                         {!isLoading && Array.isArray(service) && service.map(service => (
                             <div className="contenido" key={service._id}>
                                 <img className="mi-imagen" src={imgCompra} alt="" />
                                 <h3>{service.name}</h3>
-                                <p className="eeeeDinosaurio">{service.description}</p>
-                                <h6 className="eee">Q{service.price}</h6>
-                                <ul className="waosxd">
-                                    <li className="xddd"><i className="fa fa-star checked"><FontAwesomeIcon icon={faStar} /></i></li>
-                                    <li className="xddd"><i className="fa fa-star checked"><FontAwesomeIcon icon={faStar} /></i></li>
-                                    <li className="xddd"><i className="fa fa-star checked"><FontAwesomeIcon icon={faStar} /></i></li>
-                                    <li className="xddd"><i className="fa fa-star checked"><FontAwesomeIcon icon={faStar} /></i></li>
-                                    <li className="xddd"><i className="fa fa-star checked"><FontAwesomeIcon icon={faStar} /></i></li>
+                                <p className="Descrip">{service.description}</p>
+                                <h6 className="Price">Q{service.price}</h6>
+                                <ul className="parte2">
+                                    <li className="start1"><i className="fa fa-star checked"><FontAwesomeIcon icon={faStar} /></i></li>
+                                    <li className="start1"><i className="fa fa-star checked"><FontAwesomeIcon icon={faStar} /></i></li>
+                                    <li className="start1"><i className="fa fa-star checked"><FontAwesomeIcon icon={faStar} /></i></li>
+                                    <li className="start1"><i className="fa fa-star checked"><FontAwesomeIcon icon={faStar} /></i></li>
+                                    <li className="start1"><i className="fa fa-star checked"><FontAwesomeIcon icon={faStar} /></i></li>
                                 </ul>
                                 <button className="comprar-1" onClick={()=> handleBuyed(service)}>Comprar</button>
                             </div>
