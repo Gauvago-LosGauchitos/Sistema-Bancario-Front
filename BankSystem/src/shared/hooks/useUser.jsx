@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { getLoguedUser, getAdmins, getUsers, deleteUser, findUserByUsername, editUser, getExchangeRate, getExchangeRateEUR, getUserHistory, getLastMovements, getAccountsMovements, uploadImageRequest, findUserAndAccountByUsername, searchUsersByUsername } from "../../services/api"; // Import editUser
+import { getLoguedUser, getAdmins, getUsers, deleteUser, findUserByUsername, editUser, getExchangeRate, getExchangeRateEUR, getUserHistory, getLastMovements, getAccountsMovements, uploadImageRequest, findUserAndAccountByUsername, searchUsersByUsername, editUserAD } from "../../services/api"; // Import editUser
 import toast from "react-hot-toast";
 import { getToken } from "../../utils/auth";
 import { jwtDecode } from "jwt-decode";
@@ -195,7 +195,7 @@ export const useUser = () => {
         }
 
         try {
-            const response = await editUser(username, userData);
+            const response = await editUserAD(username, userData);
             if (response.error) {
                 console.error('Error al actualizar el usuario:', response.error);
                 setError('Error al actualizar el usuario');

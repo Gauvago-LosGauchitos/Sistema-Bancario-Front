@@ -22,7 +22,7 @@ const style = {
 };
 
 export const EditUserModal = () => {
-    const { searchUser, userFound, editUserHandler, loading, error, fetchUsers } = useUser(); 
+    const { searchUser, userFound, editUserHandler, loading, error, fetchUsers, handleUpdateUser } = useUser(); 
     const [open, setOpen] = useState(false);
     const [searchUsername, setSearchUsername] = useState('');
     const [userData, setUserData] = useState({

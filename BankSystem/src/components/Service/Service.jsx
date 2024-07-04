@@ -5,6 +5,7 @@ import { NavBar } from '../Navbar/Navbar.jsx'
 import { useParams } from "react-router-dom";
 import { Footer } from '../Footer/Footer.jsx';
 import imgCompra from '../../assets/img/img-compra.png';
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { Spinner } from "../../assets/spinner/Spinner"
@@ -80,11 +81,6 @@ export const Services = () => {
                         ))}
                     </div>
                     <Footer />
-                    {balance !== null && (
-                        <div className="balance">
-                            <h3>Balance actual: Q{balance}</h3>
-                        </div>
-                    )}
                 </div>
             )}
         </div>

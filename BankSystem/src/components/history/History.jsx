@@ -4,6 +4,7 @@ import { Spinner } from "../../assets/spinner/Spinner";
 import { useState, useEffect } from "react";
 import { useUser } from "../../shared/hooks/useUser";
 import noDataGif from '../../assets/img/noData.gif';
+import coin from '../../assets/img/coins.png'
 import './History.css';
 
 export const History = () => {
@@ -95,7 +96,7 @@ export const History = () => {
               <h1>Historial de tus transacciones || {history.user.name}</h1>
               <div className="currency-buttons">
                 <button>
-                  <img src="https://placehold.co/20x20" alt="flag" />
+                  <img className="coinImage" src={coin} alt="flag" />
                 </button>
               </div>
             </div>
