@@ -1,13 +1,13 @@
 .widget-container {
   min-height: 100vh;
-  background-color: #f4f4f5; /* Light mode background */
-  color: #1a1a1a; /* Light mode text color */
+  background-color: #f4f4f5;
+  color: #1a1a1a; 
   padding: 16px;
 }
 
 .widget-container.dark {
-  background-color: #1a1a1a; /* Dark mode background */
-  color: #f4f4f5; /* Dark mode text color */
+  background-color: #1a1a1a; 
+  color: #f4f4f5; 
 }
 
 .header {
@@ -35,14 +35,19 @@
   justify-content: center;
 }
 
-@media (min-width: 768px) {
+@media (min-width > 768px) {
   .grid-container {
     grid-template-columns: repeat(3, 1fr);
+  }
+
+  .grid-item{
+    width: 30%;
   }
 }
 
 .grid-item {
   background-color: #ffffff; 
+  width: 100%;
   padding: 16px;
   border-radius: 8px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);

@@ -34,7 +34,9 @@ import deleteService from '../../assets/img/EliminarServicio.png';
 export const AdminPanel = () => {
     const { users, admins, loading, deleteUserHandler, exchangeRateEUR, exchangeRate, userFive, fetchLastMovements, setUserFive, topAccounts } = useUser();
     const [userData, setUseData] = useState();
-    const {deleteAService} = useService()
+    const [userOptions, setUserOptions] = useState(false)
+    const [serviceOptions, setServiceOptions] = useState(false)
+    const { deleteAService } = useService()
     const [currentUser, setCurrentUser] = useState(null);
     const [filteredAccounts, setFilteredAccounts] = useState([]);
     const navigate = useNavigate();
@@ -46,6 +48,21 @@ export const AdminPanel = () => {
 
     const handleRegister = () => {
         navigate('/register');
+    }
+
+    const optionsUser = () => {
+        setUserOptions(true)
+        setServiceOptions(false)
+    }
+
+    const optionsServices = () => {
+        setServiceOptions(true)
+        setUserOptions(false)
+    }
+
+    const handleBack= () =>{
+        setServiceOptions(false)
+        setUserOptions(false)
     }
 
     const handleDelete = () => {
@@ -214,7 +231,7 @@ export const AdminPanel = () => {
     const handleRegisterService = () => {
         Swal.fire({
             title: 'Registrar servicio',
-            html: '<div id="form-container"></div>', 
+            html: '<div id="form-container"></div>',
             showCancelButton: false,
             showConfirmButton: false,
             showCloseButton: true,
@@ -223,10 +240,10 @@ export const AdminPanel = () => {
             }
         }).then((result) => {
             if (result.isConfirmed) {
-                
+
             }
         });
-    
+
         const root = document.getElementById('form-container');
         if (root) {
             createRoot(root).render(<ServiceForm />);
@@ -238,60 +255,105 @@ export const AdminPanel = () => {
             <NavBar />
             <div className="widget-container">
                 <div className="grid-container">
-                    <div className="grid-item">
-                        <div onClick={handleRegister} className="flex-container">
-                            <img src={register} alt="icon" className="grid-icon" />
-                            <div>
-                                <p className="stat-number">Registrar a un usuario</p>
-                                <p className="stat-label"></p>
+
+                    {!userOptions && !serviceOptions && (
+                        <div className="grid-container">
+                            <div className="grid-item">
+                                <div className="flex-container" onClick={optionsServices}>
+                                    <img src={service} alt="icon" className="grid-icon2" />
+                                    <div>
+                                        <p className="stat-number">Opciones de un servicio</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="grid-item">
+                                <div onClick={optionsUser} className="flex-container">
+                                    <img src={register} alt="icon" className="grid-icon2" />
+                                    <div>
+                                        <p className="stat-number">Opciones de usuario</p>
+                                        <p className="stat-label"></p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div onClick={handleDelete} className="grid-item">
-                        <div className="flex-container">
-                            <img src={delet} alt="icon" className="grid-icon" />
-                            <div>
-                                <p className="stat-number">Eliminar a un Usuario</p>
-                                <p className="stat-label"></p>
+
+
+                    )}
+
+                    {userOptions && (
+                        <div className="grid-container">
+                            <div className="grid-item">
+                                <div onClick={handleRegister} className="flex-container">
+                                    <img src={register} alt="icon" className="grid-icon" />
+                                    <div>
+                                        <p className="stat-number">Registrar a un usuario</p>
+                                        <p className="stat-label"></p>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div className="grid-item">
-                        <div className="flex-container">
-                            <EditUserModal />
-                            <img src={edit} alt="icon" className="grid-icon" />
-                            <div>
-                                <p className="stat-number">Editar a un usuario</p>
+                            <div onClick={handleDelete} className="grid-item">
+                                <div className="flex-container">
+                                    <img src={delet} alt="icon" className="grid-icon" />
+                                    <div>
+                                        <p className="stat-number">Eliminar a un Usuario</p>
+                                        <p className="stat-label"></p>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div className="grid-item">
-                        <div className="flex-container" onClick={handleRegisterService}>
-                            <img src={service} alt="icon" className="grid-icon2" />
-                            <div>
-                                <p className="stat-number">Registrar un servicio</p>
+                            <div className="grid-item">
+                                <div className="flex-container">
+                                    <EditUserModal />
+                                    <img src={edit} alt="icon" className="grid-icon" />
+                                    <div>
+                                        <p className="stat-number">Editar a un usuario</p>
+                                    </div>
+                                </div>
                             </div>
+
                         </div>
-                    </div>
-                    <div onClick={handleDeleteService} className="grid-item">
-                        <div className="flex-container">
-                            <img src={deleteService} alt="icon" className="grid-icon2" />
-                            <div>
-                                <p className="stat-number">Eliminar a un Servicio</p>
-                                <p className="stat-label"></p>
+                    )}
+
+                    {serviceOptions && (
+                        <div className="grid-container">
+                            <div className="grid-item">
+                                <div className="flex-container" onClick={handleRegisterService}>
+                                    <img src={service} alt="icon" className="grid-icon2" />
+                                    <div>
+                                        <p className="stat-number">Registrar un servicio</p>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div className="grid-item">
-                        <div className="flex-container">
-                            <EditServiceModal />
-                            <img src={editService} alt="icon" className="grid-icon2" />
-                            <div>
-                                <p className="stat-number">Editar a un servicio</p>
+
+                            <div onClick={handleDeleteService} className="grid-item">
+                                <div className="flex-container">
+                                    <img src={deleteService} alt="icon" className="grid-icon2" />
+                                    <div>
+                                        <p className="stat-number">Eliminar a un Servicio</p>
+                                        <p className="stat-label"></p>
+                                    </div>
+                                </div>
                             </div>
+
+                            <div className="grid-item">
+                                <div className="flex-container">
+                                    <EditServiceModal />
+                                    <img src={editService} alt="icon" className="grid-icon2" />
+                                    <div>
+                                        <p className="stat-number">Editar a un servicio</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button onClick={handleBack}>
+                                regresar
+                            </button>
+
                         </div>
-                    </div>
-                    
+                    )}
+
+
+
                 </div>
 
                 <Box className="chart-container" sx={{ mb: 3 }}>

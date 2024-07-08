@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+
 import { getLoguedUser, getAdmins, getUsers, deleteUser, findUserByUsername, editUser, getExchangeRate, getExchangeRateEUR, getUserHistory, getLastMovements, getAccountsMovements, uploadImageRequest, findUserAndAccountByUsername, searchUsersByUsername, editUserAD } from "../../services/api"; // Import editUser
 import toast from "react-hot-toast";
 import { getToken } from "../../utils/auth";
@@ -347,8 +348,6 @@ export const useUser = () => {
         fetchUsers();
         fetchUserHistory()
         fetchTopAccounts()
-        fetchExchangeRate()
-        fetchExchangeRateEUR()
     }, []);
 
     return {

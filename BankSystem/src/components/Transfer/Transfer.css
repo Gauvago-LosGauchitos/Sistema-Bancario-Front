@@ -1,7 +1,7 @@
 .modal {
     width: fit-content;
     height: fit-content;
-    background: #FFFFFF;
+    background: #212121;
     box-shadow: 0px 187px 75px rgba(0, 0, 0, 0.01), 0px 105px 63px rgba(0, 0, 0, 0.05), 0px 47px 47px rgba(0, 0, 0, 0.09), 0px 12px 26px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);
     border-radius: 26px;
     max-width: 450px;
@@ -72,7 +72,7 @@
     padding: 0 0 0 16px;
     border-radius: 9px;
     outline: none;
-    background-color: #F2F2F2;
+    background-color: rgb(251, 243, 228);
     border: 1px solid #e5e5e500;
     transition: all 0.3s cubic-bezier(0.15, 0.83, 0.66, 1);
 }
@@ -83,23 +83,6 @@
     background-color: transparent;
 }
 
-.purchase--btn {
-    height: 55px;
-    background: #F2F2F2;
-    border-radius: 11px;
-    border: 0;
-    outline: none;
-    color: #ffffff;
-    font-size: 13px;
-    font-weight: 700;
-    background: linear-gradient(180deg, #363636 0%, #1B1B1B 50%, #000000 100%);
-    box-shadow: 0px 0px 0px 0px #FFFFFF, 0px 0px 0px 0px #000000;
-    transition: all 0.3s cubic-bezier(0.15, 0.83, 0.66, 1);
-}
-
-.purchase--btn:hover {
-    box-shadow: 0px 0px 0px 2px #FFFFFF, 0px 0px 0px 4px #0000003a;
-}
 
 /* Reset input number styles */
 .input_field::-webkit-outer-spin-button,
@@ -108,6 +91,38 @@
     margin: 0;
 }
 
-.input_field [type=number] {
+.input_field [type = number] {
     -moz-appearance: textfield;
 }
+
+.svgIcon {
+    width: 16px;
+  }
+  
+  .svgIcon path {
+    fill: white;
+  }
+  
+  .Btn::before {
+    width: 130px;
+    height: 130px;
+    position: absolute;
+    content: "";
+    background-color: white;
+    border-radius: 50%;
+    left: -100%;
+    top: 0;
+    transition-duration: .3s;
+    mix-blend-mode: difference;
+  }
+  
+  .Btn:hover::before {
+    transition-duration: .3s;
+    transform: translate(100%,-50%);
+    border-radius: 0;
+  }
+  
+  .Btn:active {
+    transform: translate(5px,5px);
+    transition-duration: .3s;
+  }
