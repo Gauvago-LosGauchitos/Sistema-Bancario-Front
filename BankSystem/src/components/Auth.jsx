@@ -83,7 +83,7 @@ export const Auth = ({ isVisible, onClose }) => {
             <form onSubmit={handleLogin}>
               <div className="input-field">
                 <input type="text" onBlur={(e) => handleValidationOnBlur(e.target.value, "identifier")} onChange={(e) => handleValueChange(e.target.value, "identifier")} />
-                <label>Email</label>
+                <label>Username</label>
               </div>
               <div className="input-field">
                 <input type="password" onBlur={(e) => handleValidationOnBlur(e.target.value, "password")} onChange={(e) => handleValueChange(e.target.value, "password")} />

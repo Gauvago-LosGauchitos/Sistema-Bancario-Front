@@ -348,6 +348,8 @@ export const useUser = () => {
         fetchUsers();
         fetchUserHistory()
         fetchTopAccounts()
+        fetchExchangeRate()
+        fetchExchangeRateEUR()
     }, []);
 
     return {

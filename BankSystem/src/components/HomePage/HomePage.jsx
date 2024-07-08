@@ -37,6 +37,14 @@ export const HomePage = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const { isLogged, logoutSys } = useUserDetails()
   const [isLoginVisible, setIsLoginVisible] = useState(false);
+  const { history } = useUser();
+
+  const noDataToShow = () => {
+    const selectedTransfers = history.transfers.filter(transfer =>
+      filterType === '' || transfer.motion.toLowerCase() === filterType
+    );
+    return selectedTransfers.length === 0;
+  };
 
 
   const openLoginPopup = () => {
@@ -193,24 +201,9 @@ export const HomePage = () => {
               </div>
             </div>
             <Box className="chart-container" sx={{ mb: 3 }}>
-              <Typography variant="h5" className="section-title">Tipo de Cambio (USD/GTQ/EUR)</Typography>
-              <Divider sx={{ mb: 2 }} />
-              {(
-                <Paper elevation={3} className="exchange-rate-container" sx={{ p: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #ddd', borderRadius: '8px', backgroundColor: '#f5f5f5', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
-                  <img src={dolar} alt="exchange icon" className="exchange-rate-icon" />
-                  <Typography variant="h6" className="exchange-rate-title">1 USD =</Typography>
-                  <Typography variant="h6" className="exchange-rate">{exchangeRate}</Typography>
-                  <Typography variant="h6" className="exchange-rate-symbol">GTQ</Typography>
-                </Paper>
-              )}
-              {(
-                <Paper elevation={3} className="exchange-rate-container" sx={{ p: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #ddd', borderRadius: '8px', backgroundColor: '#f5f5f5', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
-                  <img src={euro} alt="exchange icon" className="exchange-rate-icon" />
-                  <Typography variant="h6" className="exchange-rate-title">1 EUR =</Typography>
-                  <Typography variant="h6" className="exchange-rate">{exchangeRateEUR}</Typography>
-                  <Typography variant="h6" className="exchange-rate-symbol">GTQ</Typography>
-                </Paper>
-              )}
+              
+
+              
             </Box>
             <div>
               {!isLogged ? (

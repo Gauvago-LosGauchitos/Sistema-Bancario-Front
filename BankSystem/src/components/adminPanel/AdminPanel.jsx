@@ -310,6 +310,11 @@ export const AdminPanel = () => {
                                     </div>
                                 </div>
                             </div>
+                            <button onClick={handleBack}>
+                                regresar
+                            </button>
+
+                            
 
                         </div>
                     )}
@@ -333,6 +338,7 @@ export const AdminPanel = () => {
                                         <p className="stat-label"></p>
                                     </div>
                                 </div>
+                                
                             </div>
 
                             <div className="grid-item">
@@ -356,26 +362,7 @@ export const AdminPanel = () => {
 
                 </div>
 
-                <Box className="chart-container" sx={{ mb: 3 }}>
-                    <Typography variant="h5" className="section-title">Tipo de Cambio (USD/GTQ/EUR)</Typography>
-                    <Divider sx={{ mb: 2 }} />
-                    {(
-                        <Paper elevation={3} className="exchange-rate-container" sx={{ p: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #ddd', borderRadius: '8px', backgroundColor: '#f5f5f5', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
-                            <img src={dolar} alt="exchange icon" className="exchange-rate-icon" />
-                            <Typography variant="h6" className="exchange-rate-title">1 USD =</Typography>
-                            <Typography variant="h6" className="exchange-rate">{exchangeRate} </Typography>
-                            <Typography variant="h6" className="exchange-rate-symbol">GTQ</Typography>
-                        </Paper>
-                    )}
-                    {(
-                        <Paper elevation={3} className="exchange-rate-container" sx={{ p: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #ddd', borderRadius: '8px', backgroundColor: '#f5f5f5', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
-                            <img src={euro} alt="exchange icon" className="exchange-rate-icon" />
-                            <Typography variant="h6" className="exchange-rate-title">1 EUR =</Typography>
-                            <Typography variant="h6" className="exchange-rate">{exchangeRateEUR}</Typography>
-                            <Typography variant="h6" className="exchange-rate-symbol">GTQ </Typography>
-                        </Paper>
-                    )}
-                </Box>
+                
 
                 <div className="table-container">
                     <h2 className="section-title">Clients</h2>

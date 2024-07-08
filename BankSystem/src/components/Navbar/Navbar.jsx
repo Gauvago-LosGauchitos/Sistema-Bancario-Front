@@ -6,6 +6,12 @@ import logo from '../../assets/img/logo.png'
 import { useUser } from '../../shared/hooks/useUser.jsx';
 import { useUserDetails } from '../../shared/hooks/useUserDetails.jsx';
 import { Auth } from '../Auth';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper';
+import Divider from '@mui/material/Divider';
+import dolar from '../../assets/img/dolar.png';
+import euro from '../../assets/img/euro.png';
 
 export const NavBar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -14,6 +20,7 @@ export const NavBar = () => {
   const [isLoginVisible, setIsLoginVisible] = useState(false);
   const { isLogged, logoutSys } = useUserDetails()
   const navigate = useNavigate();
+  const { exchangeRateEUR, exchangeRate, searchUser, userResult, params, handleSearchByUsername, searchUserByUsername, setParams, isUserLoaded } = useUser();
   const { user, loading } = useUser()
 
   const handleScroll = () => {
@@ -113,13 +120,13 @@ export const NavBar = () => {
                   <li><span onClick={handleTransfer} className='btn-perfil'>Transacción</span></li>
                   {!loading && user && user.userLogged && (
                     <div>
-                    {user.userLogged.role === 'ADMIN' && (
-                      <li><span onClick={handleDeposit} className='btn-perfil'>Déposito</span></li>
-                    )}
+                      {user.userLogged.role === 'ADMIN' && (
+                        <li><span onClick={handleDeposit} className='btn-perfil'>Déposito</span></li>
+                      )}
                     </div>
                   )}
-                  
-                  
+
+
                 </ul>
               </div>
             </div>
@@ -131,11 +138,11 @@ export const NavBar = () => {
               <div className="btn-navbar2" onClick={toggleDropdown}>
                 {isLogged === false ? (
                   <button onClick={openLoginPopup} class="buttonLog">
-                  <span class="button_lg">
-                    <span class="button_sl"></span>
-                    <span class="button_text">Logueate!</span>
-                  </span>
-                </button>
+                    <span class="button_lg">
+                      <span class="button_sl"></span>
+                      <span class="button_text">Logueate!</span>
+                    </span>
+                  </button>
                 ) : (
                   <div>
                     {!loading && user && user.userLogged && (
@@ -161,6 +168,21 @@ export const NavBar = () => {
           </div>
         </div>
       </header>
+     
+      {(
+        <Paper elevation={3} className="exchange-rate-container" sx={{ p: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', borderRadius: '8px', backgroundColor: 'transparent', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+          
+          <Typography variant="h6" className="exchange-rate-title" sx={{color: 'white'}}>1 USD =</Typography>
+          <Typography variant="h6" className="exchange-rate">{exchangeRate}</Typography>
+          <Typography variant="h6" className="exchange-rate-symbol" sx={{color: 'white'}}>GTQ </Typography>
+          <div className='divisaDiv'>
+            hola
+          </div>
+          <Typography variant="h6" className="exchange-rate-title" sx={{color: 'white'}}>1 EUR =</Typography>
+          <Typography variant="h6" className="exchange-rate">{exchangeRateEUR}</Typography>
+          <Typography variant="h6" className="exchange-rate-symbol" sx={{color: 'white'}}>GTQ</Typography>
+        </Paper>
+      )}
       <Auth isVisible={isLoginVisible} onClose={closeLoginPopup} />
     </div>
   );

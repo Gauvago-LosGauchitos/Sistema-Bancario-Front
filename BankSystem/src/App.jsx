@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { AppRoutes } from '../Routes.jsx';
 import { Toaster, toast } from 'react-hot-toast';
 import { isTokenExpired } from './utils/tokenUtils';
+import { Dashboard } from '@mui/icons-material';
 
 function App() {
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ function App() {
   return (
     <>
       <AppRoutes />
+      <Dashboard/>
       <Toaster position='bottom-right' reverseOrder={false} />
     </>
   );
