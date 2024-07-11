@@ -188,6 +188,37 @@ export const useUser = () => {
         }
     };
 
+    const handleUpdateUserSelf = async (userData) => {
+        setLoading(true);
+        setError(null);
+
+        try {
+            const authToken = getToken();
+            const decodedToken = jwtDecode(authToken);
+            const loggedUsername = decodedToken.username;
+
+            if (loggedUsername !== userData.username) {
+                throw new Error('No tienes permiso para actualizar este perfil');
+            }
+
+            const response = await editUser(loggedUsername, userData);
+
+            if (response.error) {
+                console.error('Error al actualizar el usuario:', response.error);
+                setError('Error al actualizar el usuario');
+            } else {
+                await fetchUsers();
+                await fetchAdmins();
+            }
+        } catch (error) {
+            setError("Error al actualizar el usuario");
+            console.error("Error al actualizar el usuario:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+
     const editUserHandler = async (username, userData) => {
         setLoading(true);
         setError(null);
@@ -366,6 +397,7 @@ export const useUser = () => {
         searchUser,
         setUserFound,
         handleUpdateUser,
+        handleUpdateUserSelf,
         history,
         fetchLastMovements,
         userFive,

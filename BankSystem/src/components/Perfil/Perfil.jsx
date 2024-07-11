@@ -9,12 +9,12 @@ import profileDefault from '../../assets/img/defaultUser.png';
 import { useNavigate } from 'react-router-dom';
 
 export const Perfil = () => {
-  const { loading, handleUploadImage, handleUpdateUser, handleDeleteUser, error, user } = useUser();
+  const { loading, handleUploadImage, handleUpdateUserSelf, handleDeleteUser, error, user } = useUser();
   const [editMode, setEditMode] = useState(false);
   const [userData, setUserData] = useState({
-    name: '',
-    DPI: '',
     username: '',
+    address: '',
+    phone: '',
     email: '',
     oldPassword: '',
     newPassword: '',
@@ -24,9 +24,9 @@ export const Perfil = () => {
   useEffect(() => {
     if (user && user.userLogged) {
       setUserData({
-        name: user.userLogged.name || '',
-        DPI: user.userLogged.DPI || '',
         username: user.userLogged.username || '',
+        address: user.userLogged.address || '',
+        phone: user.userLogged.phone || '',
         email: user.userLogged.email || '',
         oldPassword: '',
         newPassword: '',
@@ -42,7 +42,7 @@ export const Perfil = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await handleUpdateUser(userData);
+      await handleUpdateUserSelf(userData);
       toast.success('Profile updated successfully');
       setEditMode(false);
     } catch (error) {
@@ -59,9 +59,9 @@ export const Perfil = () => {
     setEditMode(false);
     if (user && user.userLogged) {
       setUserData({
-        name: user.userLogged.name || '',
-        DPI: user.userLogged.DPI || '',
         username: user.userLogged.username || '',
+        address: user.userLogged.address || '',
+        phone: user.userLogged.phone || '',
         email: user.userLogged.email || '',
         oldPassword: '',
         newPassword: '',
@@ -155,8 +155,8 @@ export const Perfil = () => {
                             onChange={handleInputChange}
                           />
                         </label>
-                        <span>New Password</span>
                         <label>
+                          <span>New Password</span>
                           <input
                             className="input"
                             type="password"
@@ -174,33 +174,9 @@ export const Perfil = () => {
                   </div>
                 </div>
                 <form className='form' onSubmit={handleSubmit}>
-                  <p className='title'>Informacion</p>
+                  <p className='title'>Information</p>
                   <label>
-                    <span>Name</span>
-                    <input
-                      className="input"
-                      type="text"
-                      name="name"
-                      value={userData.name}
-                      onChange={handleInputChange}
-                      required
-                      disabled={!editMode}
-                    />
-                  </label>
-                  <span>DPI</span>
-                  <label>
-                    <input
-                      className="input"
-                      type="text"
-                      name="DPI"
-                      value={userData.DPI}
-                      onChange={handleInputChange}
-                      required
-                      disabled={!editMode}
-                    />
-                  </label>
-                  <span>Username</span>
-                  <label>
+                    <span>Username</span>
                     <input
                       className="input"
                       type="text"
@@ -211,8 +187,32 @@ export const Perfil = () => {
                       disabled={!editMode}
                     />
                   </label>
-                  <span>Email</span>
                   <label>
+                    <span>Address</span>
+                    <input
+                      className="input"
+                      type="text"
+                      name="address"
+                      value={userData.address}
+                      onChange={handleInputChange}
+                      required
+                      disabled={!editMode}
+                    />
+                  </label>
+                  <label>
+                    <span>Phone</span>
+                    <input
+                      className="input"
+                      type="text"
+                      name="phone"
+                      value={userData.phone}
+                      onChange={handleInputChange}
+                      required
+                      disabled={!editMode}
+                    />
+                  </label>
+                  <label>
+                    <span>Email</span>
                     <input
                       className="input"
                       type="email"
