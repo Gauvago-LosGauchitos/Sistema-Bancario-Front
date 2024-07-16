@@ -116,7 +116,11 @@ export const getExchangeRateEUR = async (baseCurrency = 'EUR', targetCurrency = 
 //Deposito
 export const deposit = async (dep) => {
     try {
-        const response = await apiClient.post('/transfer/deposit', dep)
+        const response = await apiClient.post('/transfer/deposit', dep, {
+            headers: {
+                'Authorization': localStorage.getItem('authToken')
+            }
+        })
         return response
 
     } catch (error) {
@@ -128,9 +132,9 @@ export const deposit = async (dep) => {
 }
 
 //Compra
-export const buyed = async (service) => { 
+export const buyed = async (service, quantity) => { 
     try {
-        const response = await apiClient.post('/transfer/buyed', { service }, {
+        const response = await apiClient.post('/transfer/buyed', { service, quantity }, {
             headers: {
                 'Authorization': localStorage.getItem('authToken')
             }
@@ -475,15 +479,18 @@ export const addService = async (data) => {
 //Eliminar un servicio
 export const deleteService = async (name) => {
     try {
-        const response = await apiClient.delete('/services/deleteS', {name}, {
+        const authToken = localStorage.getItem('authToken'); // Obtener el token del localStorage
+
+        const response = await apiClient.delete('/services/deleteS', {
             headers: {
-                'Authorization': localStorage.getItem('authToken') // Obtener el token del localStorage
+                'Authorization': authToken // Asegúrate de incluir 'Bearer ' antes del token
             },
-            data: {name}
+            data: { name } // Aquí deberías enviar los datos en 'data' como objeto
         });
+        
         return response;
     } catch (error) {
-        console.error('Error al eliminar el servicio:', error)
+        console.error('Error al eliminar el servicio:', error);
         toast.error(error.response.data.message);
         throw error;
     }

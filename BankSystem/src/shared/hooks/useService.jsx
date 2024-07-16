@@ -25,10 +25,10 @@ export const useService = () => {
         }
     };
 
-    const bougth = async (service) => {
+    const bougth = async (service, quantity) => {
         setIsLoading(true)
         try {
-            const response = await buyed(service)
+            const response = await buyed(service, quantity)
             console.log(response)
         } catch (err) {
             console.error("Error en realizar la compra:", err);

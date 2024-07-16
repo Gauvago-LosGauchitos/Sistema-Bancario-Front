@@ -4,7 +4,7 @@ import { Spinner } from "../../assets/spinner/Spinner";
 import { useState, useEffect } from "react";
 import { useUser } from "../../shared/hooks/useUser";
 import noDataGif from '../../assets/img/noData.gif';
-import coin from '../../assets/img/coins.png'
+import coin from '../../assets/img/coins.png';
 import './History.css';
 
 export const History = () => {
@@ -12,8 +12,7 @@ export const History = () => {
   const [filterType, setFilterType] = useState('');
   const { history } = useUser();
 
-  console.log(history)
-
+  console.log(history);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -33,11 +32,11 @@ export const History = () => {
       case 'transfer':
         return ['ID', 'From', 'To', 'Amount', 'Motion', 'Date'];
       case 'buyed':
-        return ['ID', 'Service', 'No. Account', 'Motion', 'Date'];
+        return ['ID', 'Service', 'No. Account', 'Amount', 'Motion', 'Date'];
       case 'deposit':
-        return ['ID', 'To', 'Amount', 'Motion', 'Date'];
+        return ['ID', 'From', 'To', 'Amount', 'Motion', 'Date'];
       default:
-        return [''];
+        return ['ID', 'From/Service', 'To/No. Account', 'Amount', 'Motion', 'Date'];
     }
   };
 
@@ -57,19 +56,28 @@ export const History = () => {
           transfer._id,
           transfer.services ? transfer.services.name : 'Tipo no definido',
           transfer.rootAccount.accountNumber,
+          transfer.amount || 'N/A',
           transfer.motion,
           transfer.date
         ];
       case 'deposit':
         return [
           transfer._id,
+          transfer.rootAccount.client.name,
           transfer.recipientAccount.accountNumber,
           transfer.amount,
           transfer.motion,
           transfer.date
         ];
       default:
-        return [''];
+        return [
+          transfer._id,
+          transfer.services ? transfer.services.name : (transfer.rootAccount?.client?.name || 'Tipo no definido'),
+          transfer.recipientAccount?.accountNumber || transfer.rootAccount?.accountNumber || 'N/A',
+          transfer.amount || 'N/A',
+          transfer.motion,
+          transfer.date
+        ];
     }
   };
 

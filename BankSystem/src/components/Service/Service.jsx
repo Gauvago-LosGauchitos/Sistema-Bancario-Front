@@ -30,7 +30,8 @@ export const Services = () => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    await bougth(service.name);
+                    let quantity = '1'
+                    await bougth(service.name, quantity);
                     Swal.fire(
                         'Compra realizada!',
                         `Servicio ${service.name} ha sido adquirido.`,
