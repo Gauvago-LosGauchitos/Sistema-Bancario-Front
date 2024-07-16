@@ -157,6 +157,10 @@ export const HomePage = () => {
     }
   };
 
+  const handleTransferToFavorite = (accountNumber) => {
+    navigate(`/Transfer?account=${accountNumber}`);
+  };
+
   return (
     <div>
       {loading ? (
@@ -283,6 +287,14 @@ export const HomePage = () => {
                                   <span onClick={() => handleDeleteFavorite(account._id)}><img className='iconFav' src={deleteFavorite} /></span>
                                   <span></span>
                                 </button>
+                                
+                              </div>
+                              <div className="action">
+                                <button class="animated-button-transfer">
+                                  <span onClick={() => handleTransferToFavorite(account?.accountFavorite?.accountNumber)}>Transfer</span>
+                                  <span></span>
+                                </button>
+                                
                               </div>
                             </div>
                           </div>
@@ -304,5 +316,3 @@ export const HomePage = () => {
     </div>
   );
 };
-
-
