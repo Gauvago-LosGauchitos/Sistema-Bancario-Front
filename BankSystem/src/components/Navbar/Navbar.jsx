@@ -13,6 +13,7 @@ import Divider from '@mui/material/Divider';
 import dolar from '../../assets/img/dolar.png';
 import euro from '../../assets/img/euro.png';
 
+
 export const NavBar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [dropdownActive, setDropdownActive] = useState(false);
@@ -22,6 +23,7 @@ export const NavBar = () => {
   const navigate = useNavigate();
   const { exchangeRateEUR, exchangeRate, searchUser, userResult, params, handleSearchByUsername, searchUserByUsername, setParams, isUserLoaded } = useUser();
   const { user, loading } = useUser()
+  const { history } = useUser();
 
   const handleScroll = () => {
     if (window.scrollY > 0) {
@@ -168,21 +170,37 @@ export const NavBar = () => {
           </div>
         </div>
       </header>
-     
+
       {(
-        <Paper elevation={3} className="exchange-rate-container" sx={{ p: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', borderRadius: '8px', backgroundColor: 'transparent', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
-          
-          <Typography variant="h6" className="exchange-rate-title" sx={{color: 'white'}}>1 USD =</Typography>
+        <div className="balance-section">
+        <Paper elevation={3} className="exchange-rate-container" sx={{ p: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', borderRadius: '8px', backgroundColor: '#101313', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+
+          <Typography variant="h6" className="exchange-rate-title" sx={{ color: 'white' }}>1 USD =</Typography>
           <Typography variant="h6" className="exchange-rate">{exchangeRate}</Typography>
-          <Typography variant="h6" className="exchange-rate-symbol" sx={{color: 'white'}}>GTQ </Typography>
+          <Typography variant="h6" className="exchange-rate-symbol" sx={{ color: 'white' }}>GTQ </Typography>
           <div className='divisaDiv'>
             hola
           </div>
-          <Typography variant="h6" className="exchange-rate-title" sx={{color: 'white'}}>1 EUR =</Typography>
+          <Typography variant="h6" className="exchange-rate-title" sx={{ color: 'white' }}>1 EUR =</Typography>
           <Typography variant="h6" className="exchange-rate">{exchangeRateEUR}</Typography>
-          <Typography variant="h6" className="exchange-rate-symbol" sx={{color: 'white'}}>GTQ</Typography>
+          <Typography variant="h6" className="exchange-rate-symbol" sx={{ color: 'white' }}>GTQ</Typography>
         </Paper>
+        </div>
+
+
       )}
+      {isLogged === true ? (
+        <div className="balance-section">
+          <h2>Tú Balance</h2>
+
+          <p className="total-balance">Q {history?.transfers[0]?.rootAccount?.availableBalance}</p>
+        </div>
+
+      ) : (
+        <div></div>
+      )}
+
+
       <Auth isVisible={isLoginVisible} onClose={closeLoginPopup} />
     </div>
   );

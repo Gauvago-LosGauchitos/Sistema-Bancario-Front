@@ -67,7 +67,7 @@ export const Services = () => {
                         {!isLoading && Array.isArray(service) && service.map(service => (
                             <div className="contenido" key={service._id}>
                                 <img className="mi-imagen" src={service.img || imgCompra} alt="" />
-                                <h3>{service.name}</h3>
+                                <h3 >{service.name}</h3>
                                 <p className="Descrip">{service.description}</p>
                                 <h6 className="Price">Q{service.price}</h6>
                                 <ul className="parte2">

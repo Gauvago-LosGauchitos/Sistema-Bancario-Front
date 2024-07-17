@@ -109,11 +109,6 @@ export const History = () => {
               </div>
             </div>
 
-            <div className="balance-section">
-              <h2>Total Balance</h2>
-              <p className="total-balance">Q {history.transfers[0]?.rootAccount?.availableBalance}</p>
-            </div>
-
             <div className="transaction-history">
               <div className="search-container">
                 <select className="filter-select" onChange={handleFilterChange} value={filterType}>

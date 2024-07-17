@@ -37,7 +37,8 @@ export const HomePage = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const { isLogged, logoutSys } = useUserDetails()
   const [isLoginVisible, setIsLoginVisible] = useState(false);
-  const { history } = useUser();
+  const { history, user } = useUser();
+  
 
   const noDataToShow = () => {
     const selectedTransfers = history.transfers.filter(transfer =>
@@ -161,6 +162,20 @@ export const HomePage = () => {
     navigate(`/Transfer?account=${accountNumber}`);
   };
 
+  const goToLogin = () => {
+    toast('Logueate para seguir.', {
+      style: {
+        border: '1px solid #713200',
+        padding: '16px',
+        color: 'black',
+      },
+      iconTheme: {
+        primary: '#713200',
+        secondary: '#FFFAEE',
+      },
+    });
+  }
+
   return (
     <div>
       {loading ? (
@@ -187,28 +202,56 @@ export const HomePage = () => {
               </div>
             </div>
 
+          {!isLogged ? (
             <div className="services-container">
+
+            <div className="service-card" onClick={goToLogin} >
+              <img src={imgTransaccion} alt="Transacción" className="service-img" />
+              <h3>Transacciones</h3>
+              <p>Realice sus transacciones de manera rápida y segura.</p>
+            </div>
+            {user?.userLogged.role === 'ADMIN' && (
+              <div className="service-card" onClick={goToLogin} >
+                <img src={imgDeposito} alt="Servicio" className="service-img" />
+                <h3>Deposito</h3>
+                <p>Realice depositos a cualquier persona u organizacion.</p>
+              </div>
+            )}
+
+            <div className="service-card" onClick={goToLogin} >
+              <img src={imgCompra} alt="Compra" className="service-img" />
+              <h3>Compras</h3>
+              <p>Disfrute de nuestras ofertas y servicios de compra en línea.</p>
+            </div>
+          </div>
+
+          ) : (
+            <div className="services-container">
+
               <div className="service-card" onClick={handleTransfer}>
                 <img src={imgTransaccion} alt="Transacción" className="service-img" />
                 <h3>Transacciones</h3>
                 <p>Realice sus transacciones de manera rápida y segura.</p>
               </div>
-              <div className="service-card" onClick={handleDeposit}>
-                <img src={imgDeposito} alt="Servicio" className="service-img" />
-                <h3>Deposito</h3>
-                <p>Realice depositos a cualquier persona u organizacion.</p>
-              </div>
+              {user?.userLogged.role === 'ADMIN' && (
+                <div className="service-card" onClick={handleDeposit}>
+                  <img src={imgDeposito} alt="Servicio" className="service-img" />
+                  <h3>Deposito</h3>
+                  <p>Realice depositos a cualquier persona u organizacion.</p>
+                </div>
+              )}
+
               <div className="service-card" onClick={handleBuyed}>
                 <img src={imgCompra} alt="Compra" className="service-img" />
                 <h3>Compras</h3>
                 <p>Disfrute de nuestras ofertas y servicios de compra en línea.</p>
               </div>
             </div>
-            <Box className="chart-container" sx={{ mb: 3 }}>
-              
 
-              
-            </Box>
+          )}
+
+            
+
             <div>
               {!isLogged ? (
                 <div class="containerLog">
@@ -287,14 +330,14 @@ export const HomePage = () => {
                                   <span onClick={() => handleDeleteFavorite(account._id)}><img className='iconFav' src={deleteFavorite} /></span>
                                   <span></span>
                                 </button>
-                                
+
                               </div>
                               <div className="action">
                                 <button class="animated-button-transfer">
                                   <span onClick={() => handleTransferToFavorite(account?.accountFavorite?.accountNumber)}>Transfer</span>
                                   <span></span>
                                 </button>
-                                
+
                               </div>
                             </div>
                           </div>
