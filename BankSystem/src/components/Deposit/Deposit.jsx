@@ -42,11 +42,10 @@ export const Deposit = () => {
                 }
             }).then(async (result) => {
                 if (result.isConfirmed) {
-                    const revertDeposit = await revert()
-                    if (revertDeposit && revertDeposit.success) {
-                        toast.success("Deposit reverted successfully")
-                    } else {
-                        toast.error("Failed to revert deposit")
+                    try {
+                        await revert(idDeposit)
+                    } catch (error) {
+                        console.error('Error Revert Deposit:', error)
                     }
                 }
             })
