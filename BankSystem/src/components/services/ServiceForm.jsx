@@ -8,7 +8,7 @@ export const ServiceForm = () => {
         name: '',
         description: '',
         price: '',
-        img: null 
+        img: null   
     });
 
     const handleChange = (e) => {
