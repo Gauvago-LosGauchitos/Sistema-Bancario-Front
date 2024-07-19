@@ -183,6 +183,25 @@ export const reverTransfer = async (idTransfer) => {
     }
 }
 
+//Revertir deposito
+export const reverDeposit = async (idDeposit) => {
+    console.log(idDeposit)
+    try {
+        const response = await apiClient.post('/transfer/revertDeposit', {id: idDeposit}, {
+            headers: {
+                'Authorization': localStorage.getItem('authToken')
+            }
+        })
+        return response
+    } catch (error) {
+        console.error(error)
+        return {
+            error: true,
+            error
+        }
+    }
+}
+
 // Register admin
 export const registerAdmin = async (userData) => {
     try {

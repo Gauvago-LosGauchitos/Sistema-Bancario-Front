@@ -1,6 +1,6 @@
 import { useState } from "react"
 import toast from "react-hot-toast"
-import { deposit } from "../../services/api"
+import { deposit, reverDeposit } from "../../services/api"
 
 export const useDeposit = () => {
     const [isLoading, setIsLoading] = useState(false)
@@ -25,8 +25,25 @@ export const useDeposit = () => {
         }
     }
 
+    const revert = async(idDeposit)=>{
+        setIsLoading(true)
+        try {
+            const response =  await reverDeposit(idDeposit)
+            if(response.error) {
+                throw new Error(response.error)
+            }
+            toast.success('Deposit successfully reversed')
+            console.log(response)
+        }catch(error) {
+            toast.error('Failed to reverse deposit')
+        } finally {
+            setIsLoading(false)
+        }    
+    }
+
     return {
         deposito,
+        revert,
         isLoading
     }
 }

@@ -12,7 +12,6 @@ import {
     accountNumberValidationMessage
 } from "../../shared/validators/validator"
 import "./Transfer.css"
-import { BackHand } from "@mui/icons-material"
 import { useNavigate } from 'react-router-dom'; // Ajusta la importación según tu librería de enrutamiento
 
 export const Transfer = () => {
@@ -90,13 +89,13 @@ export const Transfer = () => {
                 formData.recipientAccount.value,
                 formData.amount.value
             )
-            if (idTransfer.data.newTransfer.rootAccount === idTransfer.data.newTransfer.recipientAccount) {
+            if (idTransfer.data.newTransfer.recipientAccount === idTransfer.data.newTransfer.rootAccount) {
                 Swal.fire({
                     title: 'Error',
                     text: 'The origin and recipient accounts cannot be the same.',
                     icon: 'error',
-                });
-                return;
+                })
+                return
             }
             console.log(idTransfer.data.newTransfer.rootAccount)
             console.log(idTransfer.data.newTransfer._id)
@@ -163,6 +162,10 @@ export const Transfer = () => {
                     <br />
                     <center>
                         <div className="modal">
+                        <button className="return-button" onClick={handleGoBack}>
+                                    <svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1024 1024"><path d="M874.690416 495.52477c0 11.2973-9.168824 20.466124-20.466124 20.466124l-604.773963 0 188.083679 188.083679c7.992021 7.992021 7.992021 20.947078 0 28.939099-4.001127 3.990894-9.240455 5.996574-14.46955 5.996574-5.239328 0-10.478655-1.995447-14.479783-5.996574l-223.00912-223.00912c-3.837398-3.837398-5.996574-9.046027-5.996574-14.46955 0-5.433756 2.159176-10.632151 5.996574-14.46955l223.019353-223.029586c7.992021-7.992021 20.957311-7.992021 28.949332 0 7.992021 8.002254 7.992021 20.957311 0 28.949332l-188.073446 188.073446 604.753497 0C865.521592 475.058646 874.690416 484.217237 874.690416 495.52477z"></path></svg>
+                                    <span>Back</span>
+                                </button>
                             <form className="form" onSubmit={handleTranfer}>
                                 <div class="separator">
                                     <hr className="line" />
@@ -204,11 +207,6 @@ export const Transfer = () => {
                                 <button className="Btn"
                                     disabled={isSubmitButtonDisabled || isLoading}>
                                     Transferir
-                                    <svg className="svgIcon" viewBox="0 0 576 512"><path d="M512 80c8.8 0 16 7.2 16 16v32H48V96c0-8.8 7.2-16 16-16H512zm16 144V416c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V224H528zM64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm56 304c-13.3 0-24 10.7-24 24s10.7 24 24 24h48c13.3 0 24-10.7 24-24s-10.7-24-24-24H120zm128 0c-13.3 0-24 10.7-24 24s10.7 24 24 24H360c13.3 0 24-10.7 24-24s-10.7-24-24-24H248z"></path></svg>
-                                </button>
-                                <button className="Btn"
-                                   onClick={handleGoBack}>
-                                    Regresar
                                     <svg className="svgIcon" viewBox="0 0 576 512"><path d="M512 80c8.8 0 16 7.2 16 16v32H48V96c0-8.8 7.2-16 16-16H512zm16 144V416c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V224H528zM64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm56 304c-13.3 0-24 10.7-24 24s10.7 24 24 24h48c13.3 0 24-10.7 24-24s-10.7-24-24-24H120zm128 0c-13.3 0-24 10.7-24 24s10.7 24 24 24H360c13.3 0 24-10.7 24-24s-10.7-24-24-24H248z"></path></svg>
                                 </button>
                             </form>
